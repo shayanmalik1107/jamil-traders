@@ -89,7 +89,6 @@ canvas {
 }
 
 /* Hero elements clearly visible right from start, illuminating to 100% */
-.hero-header,
 .hero-body,
 .hero-footer {
   opacity: calc(0.65 + var(--light-level, 0) * 0.35);
@@ -113,6 +112,7 @@ canvas {
   background: transparent;
   border-radius: 999px;
   pointer-events: none;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* Background Spread Pseudo-Element (Floating Rounded Pill Container) */
@@ -131,7 +131,7 @@ canvas {
   pointer-events: none;
 }
 
-/* Floating Glass Pill Active After Scroll (Covers Logo, Nav, & Buttons with Margins from Walls) */
+/* Floating Glass Pill Active After Scroll (Encloses Logo, Nav & Buttons in Floating Capsule) */
 .hero-header.is-scrolled::before {
   background: rgba(18, 18, 18, 0.85);
   backdrop-filter: blur(24px) saturate(180%);
@@ -156,7 +156,7 @@ canvas {
   width: clamp(28px, 3.8vh, 34px);
   height: clamp(28px, 3.8vh, 34px);
   color: var(--gold-accent);
-  filter: drop-shadow(0 0 8px var(--gold-glow));
+  filter: drop-shadow(0 2px 10px rgba(0, 0, 0, 0.95));
   flex-shrink: 0;
 }
 
@@ -173,17 +173,19 @@ canvas {
   color: #ffffff;
   line-height: 1;
   text-transform: uppercase;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.98);
 }
 
 .hero-brand-sub {
   font-size: clamp(0.55rem, 0.95vh, 0.6rem);
   font-weight: 400;
   letter-spacing: 0.25em;
-  color: #94a3b8;
+  color: #cbd5e1;
   text-transform: uppercase;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.98);
 }
 
-/* Nav Menu Links - Glass Pill Container Around Header Options */
+/* Nav Menu Links - True Glassmorphism Floating Pill */
 .desktop-nav {
   display: flex;
   align-items: center;
@@ -194,17 +196,17 @@ canvas {
   align-items: center;
   gap: clamp(1rem, 1.8vw, 2.2rem);
   list-style: none;
-  background: rgba(18, 18, 18, 0.78);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  background: rgba(18, 18, 18, 0.65);
+  backdrop-filter: blur(14px) saturate(180%);
+  -webkit-backdrop-filter: blur(14px) saturate(180%);
   padding: 0.65rem 2.2rem;
   border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.22);
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.15);
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* When Scrolled: Inner Glass Pill Merges Seamlessly into Outer Expanded Glass Bar */
+/* Seamless Inner Adjustments When Floating Capsule Spreads */
 .hero-header.is-scrolled .hero-nav {
   background: transparent;
   backdrop-filter: none;
@@ -214,7 +216,6 @@ canvas {
   padding: 0;
 }
 
-/* When Scrolled: Buttons Drop Inner Borders to Ensure Uniform Glass Background Everywhere */
 .hero-header.is-scrolled .hero-talk-btn {
   background: transparent;
   border-color: transparent;
@@ -301,8 +302,8 @@ canvas {
   align-items: center;
   gap: 0.6rem;
   padding: 0.45rem 0.55rem 0.45rem 1.1rem;
-  background: rgba(18, 18, 18, 0.45);
-  border: 1px solid var(--glass-border);
+  background: rgba(18, 18, 18, 0.65);
+  border: 1px solid rgba(255, 255, 255, 0.18);
   border-radius: 999px;
   color: #ffffff;
   font-size: clamp(0.68rem, 1.1vh, 0.74rem);
@@ -310,10 +311,18 @@ canvas {
   letter-spacing: 0.14em;
   text-transform: uppercase;
   text-decoration: none;
-  backdrop-filter: blur(10px);
-  transition: all 0.3s ease;
+  backdrop-filter: blur(14px) saturate(180%);
+  -webkit-backdrop-filter: blur(14px) saturate(180%);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   cursor: pointer;
   white-space: nowrap;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+.hero-header.is-scrolled .hero-talk-btn {
+  background: rgba(12, 12, 12, 0.85);
+  border-color: rgba(212, 175, 55, 0.35);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.7);
 }
 
 .hero-talk-btn-arrow {
@@ -378,26 +387,44 @@ canvas {
   color: var(--gold-light);
 }
 
-/* Main Hero Typography Content Area */
+/* Main Hero Typography & Content Grid Area */
 .hero-body {
-  max-width: 640px;
+  width: 100%;
   display: flex;
-  flex-direction: column;
-  gap: clamp(0.5rem, 1.4vh, 1rem);
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
   margin-top: auto;
   margin-bottom: auto;
+}
+
+.hero-body-left {
+  max-width: 580px;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(0.55rem, 1.4vh, 1rem);
 }
 
 .hero-eyebrow {
   font-size: clamp(0.6rem, 1.1vh, 0.72rem);
   font-weight: 600;
-  letter-spacing: 0.3em;
+  letter-spacing: 0.25em;
   color: var(--gold-accent);
   text-transform: uppercase;
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.6rem;
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9);
+}
+
+.hero-eyebrow-pill {
+  padding: 0.15rem 0.5rem;
+  background: rgba(212, 175, 55, 0.15);
+  border: 1px solid var(--glass-border);
+  border-radius: 999px;
+  font-size: 0.58rem;
+  letter-spacing: 0.15em;
+  color: var(--gold-light);
 }
 
 .hero-title {
@@ -431,6 +458,13 @@ canvas {
   max-width: 480px;
 }
 
+.hero-cta-group {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  margin-top: 0.2rem;
+}
+
 /* Explore Our Work CTA Button */
 .hero-cta-btn {
   display: inline-flex;
@@ -450,8 +484,108 @@ canvas {
   backdrop-filter: blur(12px);
   cursor: pointer;
   transition: all 0.3s ease;
-  margin-top: 0.2rem;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+.hero-secondary-btn {
+  display: inline-flex;
+  align-items: center;
+  padding: clamp(0.45rem, 1vh, 0.6rem) clamp(1.2rem, 2vw, 1.5rem);
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(18, 18, 18, 0.35);
+  backdrop-filter: blur(8px);
+  color: #e2e8f0;
+  font-size: clamp(0.7rem, 1.1vh, 0.76rem);
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.hero-secondary-btn:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.35);
+  color: #ffffff;
+}
+
+/* Hero Right Floating Glass Card */
+.hero-floating-card {
+  background: rgba(14, 14, 14, 0.55);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 20px;
+  padding: 1.4rem 1.6rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.95rem;
+  width: clamp(260px, 22vw, 310px);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.65), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  transition: transform 0.35s ease, border-color 0.35s ease;
+  flex-shrink: 0;
+}
+
+.hero-floating-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--gold-accent);
+}
+
+.hero-card-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  color: var(--gold-accent);
+  text-transform: uppercase;
+}
+
+.hero-card-icon {
+  color: var(--gold-light);
+  filter: drop-shadow(0 0 6px var(--gold-glow));
+}
+
+.hero-card-stats-grid {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.hero-card-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.hero-stat-num {
+  font-family: var(--font-serif);
+  font-size: 1.7rem;
+  font-weight: 500;
+  color: #ffffff;
+  line-height: 1;
+}
+
+.hero-stat-sub {
+  font-size: 0.65rem;
+  color: #94a3b8;
+  letter-spacing: 0.04em;
+}
+
+.hero-card-divider {
+  width: 1px;
+  height: 28px;
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.hero-card-desc {
+  font-size: 0.76rem;
+  line-height: 1.45;
+  color: #cbd5e1;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 0.75rem;
 }
 
 .hero-cta-arrow {
@@ -900,6 +1034,12 @@ canvas {
 }
 
 /* Responsive Media Queries */
+@media (max-width: 960px) {
+  .hero-floating-card {
+    display: none;
+  }
+}
+
 @media (max-width: 1150px) {
   .desktop-nav {
     display: none;

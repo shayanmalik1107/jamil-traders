@@ -329,6 +329,93 @@ export default function FramePlayer() {
 
   return (
     <>
+      {/* Permanent Fixed Header Navbar Across All Sections */}
+      <header className={`hero-header ${isScrolled ? 'is-scrolled' : ''}`}>
+        <a href="#" className="hero-logo">
+          <svg
+            className="hero-logo-icon"
+            viewBox="0 0 48 48"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M12 40V18L24 8L36 18V40H30V22L24 17L18 22V40H12Z"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinejoin="round"
+            />
+            <path
+              d="M6 40H42"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+            />
+          </svg>
+          <div className="hero-logo-text">
+            <span className="hero-brand-name">JAMEEL</span>
+            <span className="hero-brand-sub">TRADERS</span>
+          </div>
+        </a>
+
+        {/* Desktop Nav Links */}
+        <nav className="desktop-nav">
+          <ul className="hero-nav">
+            {navLinks.map((item) => (
+              <li key={item.label}>
+                <a
+                  href={item.href}
+                  className={`hero-nav-item ${activeNav === item.label ? 'active' : ''}`}
+                  onClick={() => setActiveNav(item.label)}
+                >
+                  <span>{item.label}</span>
+                  {activeNav === item.label && <div className="hero-nav-active-dot" />}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+
+        {/* Header Right Actions */}
+        <div className="hero-header-actions">
+          <a href="#contact" className="hero-talk-btn">
+            <span>LET'S TALK</span>
+            <div className="hero-talk-btn-arrow">
+              <ArrowRight size={13} />
+            </div>
+          </a>
+
+          <button
+            className="hero-icon-btn mobile-menu-toggle"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            aria-label="Toggle menu"
+          >
+            {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+          </button>
+        </div>
+      </header>
+
+      {/* Mobile Overlay Menu */}
+      {mobileMenuOpen && (
+        <div className="mobile-nav-overlay">
+          <ul className="mobile-nav-list">
+            {navLinks.map((item) => (
+              <li key={item.label}>
+                <a
+                  href={item.href}
+                  className={`mobile-nav-link ${activeNav === item.label ? 'active' : ''}`}
+                  onClick={() => {
+                    setActiveNav(item.label);
+                    setMobileMenuOpen(false);
+                  }}
+                >
+                  {item.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
       {/* 1. FIRST VIEW: HERO SECTION WITH FRAME ANIMATION */}
       <section className="hero-section">
         {/* Hero Background Frame Canvas */}
@@ -360,118 +447,63 @@ export default function FramePlayer() {
             '--light-level': currentLightLevel,
           } as React.CSSProperties}
         >
-          {/* Header Navigation Bar */}
-          <header className={`hero-header ${isScrolled ? 'is-scrolled' : ''}`}>
-            <a href="#" className="hero-logo">
-              <svg
-                className="hero-logo-icon"
-                viewBox="0 0 48 48"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M12 40V18L24 8L36 18V40H30V22L24 17L18 22V40H12Z"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinejoin="round"
-                />
-                <path
-                  d="M6 40H42"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                />
-              </svg>
-              <div className="hero-logo-text">
-                <span className="hero-brand-name">JAMEEL</span>
-                <span className="hero-brand-sub">TRADERS</span>
-              </div>
-            </a>
-
-            {/* Desktop Nav Links */}
-            <nav className="desktop-nav">
-              <ul className="hero-nav">
-                {navLinks.map((item) => (
-                  <li key={item.label}>
-                    <a
-                      href={item.href}
-                      className={`hero-nav-item ${activeNav === item.label ? 'active' : ''}`}
-                      onClick={() => setActiveNav(item.label)}
-                    >
-                      <span>{item.label}</span>
-                      {activeNav === item.label && <div className="hero-nav-active-dot" />}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </nav>
-
-            {/* Header Right Actions */}
-            <div className="hero-header-actions">
-              <a href="#contact" className="hero-talk-btn">
-                <span>LET'S TALK</span>
-                <div className="hero-talk-btn-arrow">
-                  <ArrowRight size={13} />
-                </div>
-              </a>
-
-              <button
-                className="hero-icon-btn mobile-menu-toggle"
-                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                aria-label="Toggle menu"
-              >
-                {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
-              </button>
-            </div>
-          </header>
-
-          {/* Mobile Overlay Menu */}
-          {mobileMenuOpen && (
-            <div className="mobile-nav-overlay">
-              <ul className="mobile-nav-list">
-                {navLinks.map((item) => (
-                  <li key={item.label}>
-                    <a
-                      href={item.href}
-                      className={`mobile-nav-link ${activeNav === item.label ? 'active' : ''}`}
-                      onClick={() => {
-                        setActiveNav(item.label);
-                        setMobileMenuOpen(false);
-                      }}
-                    >
-                      {item.label}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-
           {/* Hero Main Content */}
           <main className="hero-body">
-            <div className="hero-eyebrow">
-              <span>TIMELESS</span>
-              <span>•</span>
-              <span>FUNCTIONAL</span>
-              <span>•</span>
-              <span>EXTRAORDINARY</span>
+            <div className="hero-body-left">
+              <div className="hero-eyebrow">
+                <span className="hero-eyebrow-pill">EST. 1998</span>
+                <span>TIMELESS</span>
+                <span>•</span>
+                <span>FUNCTIONAL</span>
+                <span>•</span>
+                <span>EXTRAORDINARY</span>
+              </div>
+
+              <h1 className="hero-title">
+                Spaces<br />
+                That <span className="hero-title-italic">Inspire.</span>
+              </h1>
+
+              <p className="hero-description">
+                We craft timeless interiors that blend function, beauty and purpose — turning spaces into stories.
+              </p>
+
+              <div className="hero-cta-group">
+                <a href="#projects" className="hero-cta-btn">
+                  <span>EXPLORE OUR WORK</span>
+                  <div className="hero-cta-arrow">
+                    <ArrowRight size={15} />
+                  </div>
+                </a>
+                <a href="#about" className="hero-secondary-btn">
+                  <span>OUR CRAFT</span>
+                </a>
+              </div>
             </div>
 
-            <h1 className="hero-title">
-              Spaces<br />
-              That <span className="hero-title-italic">Inspire.</span>
-            </h1>
-
-            <p className="hero-description">
-              We craft timeless interiors that blend function, beauty and purpose — turning spaces into stories.
-            </p>
-
-            <a href="#projects" className="hero-cta-btn">
-              <span>EXPLORE OUR WORK</span>
-              <div className="hero-cta-arrow">
-                <ArrowRight size={15} />
+            {/* Hero Right Floating Glass Card */}
+            <div className="hero-floating-card">
+              <div className="hero-card-badge">
+                <Sparkles size={13} className="hero-card-icon" />
+                <span>EXCELLENCE IN DESIGN</span>
               </div>
-            </a>
+
+              <div className="hero-card-stats-grid">
+                <div className="hero-card-stat">
+                  <span className="hero-stat-num">25+</span>
+                  <span className="hero-stat-sub">Years Mastery</span>
+                </div>
+                <div className="hero-card-divider" />
+                <div className="hero-card-stat">
+                  <span className="hero-stat-num">150+</span>
+                  <span className="hero-stat-sub">Landmark Projects</span>
+                </div>
+              </div>
+
+              <p className="hero-card-desc">
+                Bespoke interior architecture and premium material trading for luxury residences and headquarters.
+              </p>
+            </div>
           </main>
 
           {/* Hero Footer Bar */}
