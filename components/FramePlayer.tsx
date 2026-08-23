@@ -79,15 +79,21 @@ export default function FramePlayer() {
     ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
   }, []);
 
-  // Render about frame
+  // Render about frame with instant fallback to prevent any black flash
   const renderAboutFrame = useCallback((frameIdx: number) => {
     const canvas = aboutCanvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    const img = aboutImagesRef.current[frameIdx];
-    if (!img || !img.complete || img.naturalWidth === 0 || img.naturalHeight === 0) return;
+    let img = aboutImagesRef.current[frameIdx];
+    if (!img || !img.complete || img.naturalWidth === 0) {
+      img = aboutImagesRef.current[0];
+    }
+    if (!img || !img.complete || img.naturalWidth === 0) {
+      img = aboutImagesRef.current.find((i) => i && i.complete && i.naturalWidth > 0) as HTMLImageElement;
+    }
+    if (!img || !img.complete || img.naturalWidth === 0) return;
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.imageSmoothingEnabled = true;
@@ -101,6 +107,9 @@ export default function FramePlayer() {
     const loadedHeroImages: HTMLImageElement[] = new Array(HERO_TOTAL_FRAMES);
     const loadedAboutImages: HTMLImageElement[] = new Array(ABOUT_TOTAL_FRAMES);
 
+    heroImagesRef.current = loadedHeroImages;
+    aboutImagesRef.current = loadedAboutImages;
+
     let heroCount = 0;
     let aboutCount = 0;
 
@@ -113,7 +122,6 @@ export default function FramePlayer() {
         heroCount++;
         setHeroLoadedCount(heroCount);
         if (heroCount === HERO_TOTAL_FRAMES) {
-          heroImagesRef.current = loadedHeroImages;
           setIsLoaded(true);
         }
       };
@@ -122,14 +130,13 @@ export default function FramePlayer() {
         heroCount++;
         setHeroLoadedCount(heroCount);
         if (heroCount === HERO_TOTAL_FRAMES) {
-          heroImagesRef.current = loadedHeroImages;
           setIsLoaded(true);
         }
       };
       loadedHeroImages[i] = img;
     }
 
-    // Preload About Section Frames in background
+    // Preload About Section Frames in background immediately as Hero finishes
     for (let i = 0; i < ABOUT_TOTAL_FRAMES; i++) {
       const img = new Image();
       img.src = getAboutFramePath(i);
@@ -137,17 +144,15 @@ export default function FramePlayer() {
         if (isCancelled) return;
         aboutCount++;
         setAboutLoadedCount(aboutCount);
-        if (aboutCount === ABOUT_TOTAL_FRAMES) {
-          aboutImagesRef.current = loadedAboutImages;
+        if (i === 0 || aboutCount === 1) {
+          resizeCanvas(aboutCanvasRef.current);
+          renderAboutFrame(0);
         }
       };
       img.onerror = () => {
         if (isCancelled) return;
         aboutCount++;
         setAboutLoadedCount(aboutCount);
-        if (aboutCount === ABOUT_TOTAL_FRAMES) {
-          aboutImagesRef.current = loadedAboutImages;
-        }
       };
       loadedAboutImages[i] = img;
     }
@@ -155,7 +160,7 @@ export default function FramePlayer() {
     return () => {
       isCancelled = true;
     };
-  }, []);
+  }, [renderAboutFrame, resizeCanvas]);
 
   // Scroll listener for Header styling
   useEffect(() => {
