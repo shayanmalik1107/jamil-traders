@@ -7,7 +7,7 @@ const HERO_TOTAL_FRAMES = 49; // frame_0000 to frame_0048
 const HERO_ANIMATION_DURATION_MS = 2800; // 2.8 seconds total
 
 const ABOUT_FRAME_FILES = [
-  "frame_001.png","frame_002.png","frame_003.png","frame_038.png","frame_039.png","frame_040.png","frame_041.png","frame_042.png","frame_043.png","frame_044.png","frame_045.png","frame_046.png","frame_047.png","frame_048.png","frame_049.png","frame_050.png","frame_051.png","frame_052.png","frame_053.png","frame_054.png","frame_055.png","frame_056.png","frame_057.png","frame_058.png","frame_059.png","frame_060.png","frame_061.png","frame_062.png","frame_063.png","frame_064.png","frame_065.png","frame_066.png","frame_067.png","frame_068.png","frame_069.png","frame_070.png","frame_071.png","frame_072.png","frame_073.png","frame_074.png","frame_075.png","frame_076.png","frame_077.png","frame_078.png","frame_079.png","frame_080.png","frame_081.png","frame_082.png","frame_083.png","frame_084.png","frame_085.png","frame_086.png","frame_087.png","frame_088.png","frame_089.png","frame_090.png","frame_091.png"
+  "frame_001.webp","frame_002.webp","frame_003.webp","frame_038.webp","frame_039.webp","frame_040.webp","frame_041.webp","frame_042.webp","frame_043.webp","frame_044.webp","frame_045.webp","frame_046.webp","frame_047.webp","frame_048.webp","frame_049.webp","frame_050.webp","frame_051.webp","frame_052.webp","frame_053.webp","frame_054.webp","frame_055.webp","frame_056.webp","frame_057.webp","frame_058.webp","frame_059.webp","frame_060.webp","frame_061.webp","frame_062.webp","frame_063.webp","frame_064.webp","frame_065.webp","frame_066.webp","frame_067.webp","frame_068.webp","frame_069.webp","frame_070.webp","frame_071.webp","frame_072.webp","frame_073.webp","frame_074.webp","frame_075.webp","frame_076.webp","frame_077.webp","frame_078.webp","frame_079.webp","frame_080.webp","frame_081.webp","frame_082.webp","frame_083.webp","frame_084.webp","frame_085.webp","frame_086.webp","frame_087.webp","frame_088.webp","frame_089.webp","frame_090.webp","frame_091.webp"
 ];
 const ABOUT_TOTAL_FRAMES = ABOUT_FRAME_FILES.length; // 57 frames
 const ABOUT_ANIMATION_DURATION_MS = 500; // 0.5 seconds total
@@ -42,7 +42,7 @@ export default function FramePlayer() {
 
   const getHeroFramePath = (index: number) => {
     const padIndex = String(index).padStart(4, '0');
-    return `/frames/frame_${padIndex}.png`;
+    return `/frames/frame_${padIndex}.webp`;
   };
 
   const getAboutFramePath = (index: number) => {
@@ -95,7 +95,7 @@ export default function FramePlayer() {
     ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
   }, []);
 
-  // Preload all hero & about frames
+  // Preload frames (Eager Hero Preload for < 0.3s page reveal)
   useEffect(() => {
     let isCancelled = false;
     const loadedHeroImages: HTMLImageElement[] = new Array(HERO_TOTAL_FRAMES);
@@ -104,15 +104,7 @@ export default function FramePlayer() {
     let heroCount = 0;
     let aboutCount = 0;
 
-    const checkAllLoaded = () => {
-      if (heroCount === HERO_TOTAL_FRAMES && aboutCount === ABOUT_TOTAL_FRAMES && !isCancelled) {
-        heroImagesRef.current = loadedHeroImages;
-        aboutImagesRef.current = loadedAboutImages;
-        setIsLoaded(true);
-      }
-    };
-
-    // Preload hero frames
+    // Preload Hero Frames First for Superfast First Paint (<0.3s)
     for (let i = 0; i < HERO_TOTAL_FRAMES; i++) {
       const img = new Image();
       img.src = getHeroFramePath(i);
@@ -120,18 +112,24 @@ export default function FramePlayer() {
         if (isCancelled) return;
         heroCount++;
         setHeroLoadedCount(heroCount);
-        checkAllLoaded();
+        if (heroCount === HERO_TOTAL_FRAMES) {
+          heroImagesRef.current = loadedHeroImages;
+          setIsLoaded(true);
+        }
       };
       img.onerror = () => {
         if (isCancelled) return;
         heroCount++;
         setHeroLoadedCount(heroCount);
-        checkAllLoaded();
+        if (heroCount === HERO_TOTAL_FRAMES) {
+          heroImagesRef.current = loadedHeroImages;
+          setIsLoaded(true);
+        }
       };
       loadedHeroImages[i] = img;
     }
 
-    // Preload about frames
+    // Preload About Section Frames in background
     for (let i = 0; i < ABOUT_TOTAL_FRAMES; i++) {
       const img = new Image();
       img.src = getAboutFramePath(i);
@@ -139,13 +137,17 @@ export default function FramePlayer() {
         if (isCancelled) return;
         aboutCount++;
         setAboutLoadedCount(aboutCount);
-        checkAllLoaded();
+        if (aboutCount === ABOUT_TOTAL_FRAMES) {
+          aboutImagesRef.current = loadedAboutImages;
+        }
       };
       img.onerror = () => {
         if (isCancelled) return;
         aboutCount++;
         setAboutLoadedCount(aboutCount);
-        checkAllLoaded();
+        if (aboutCount === ABOUT_TOTAL_FRAMES) {
+          aboutImagesRef.current = loadedAboutImages;
+        }
       };
       loadedAboutImages[i] = img;
     }
