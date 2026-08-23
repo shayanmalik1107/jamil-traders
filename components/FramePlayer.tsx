@@ -481,27 +481,27 @@ export default function FramePlayer() {
               </div>
             </div>
 
-            {/* Hero Right Floating Glass Card */}
+            {/* Hero Right Floating Glass Card — Product Specifications */}
             <div className="hero-floating-card">
               <div className="hero-card-badge">
                 <Sparkles size={13} className="hero-card-icon" />
-                <span>EXCELLENCE IN DESIGN</span>
+                <span>FEATURED SPECIFICATION</span>
               </div>
 
-              <div className="hero-card-stats-grid">
-                <div className="hero-card-stat">
-                  <span className="hero-stat-num">25+</span>
-                  <span className="hero-stat-sub">Years Mastery</span>
+              <div className="hero-card-product-specs">
+                <div className="hero-product-spec-item">
+                  <span className="hero-spec-label">COLLECTION</span>
+                  <span className="hero-spec-value">Calacatta & Onyx</span>
                 </div>
                 <div className="hero-card-divider" />
-                <div className="hero-card-stat">
-                  <span className="hero-stat-num">150+</span>
-                  <span className="hero-stat-sub">Landmark Projects</span>
+                <div className="hero-product-spec-item">
+                  <span className="hero-spec-label">FINISH</span>
+                  <span className="hero-spec-value">Hand-Honed Brass</span>
                 </div>
               </div>
 
               <p className="hero-card-desc">
-                Bespoke interior architecture and premium material trading for luxury residences and headquarters.
+                Direct importers of Italian marble, architectural wood veneers, and bespoke brass metalwork engineered for elite luxury interiors.
               </p>
             </div>
           </main>
