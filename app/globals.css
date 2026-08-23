@@ -516,97 +516,81 @@ canvas {
   color: #ffffff;
 }
 
-/* Light Bulb Pendulum Swing Animation */
-@keyframes lightbulb-shake {
-  0% {
-    transform: rotate(-1.8deg) translateY(0);
-    box-shadow: 
-      0 25px 60px rgba(0, 0, 0, 0.65),
-      inset 0 1.5px 2.5px rgba(255, 240, 190, 0.5),
-      inset 0 -1px 2px rgba(0, 0, 0, 0.4),
-      0 0 30px rgba(212, 175, 55, 0.18);
-  }
-  25% {
-    transform: rotate(0deg) translateY(-3px);
-    box-shadow: 
-      0 30px 65px rgba(0, 0, 0, 0.7),
-      inset 0 2px 3px rgba(255, 240, 190, 0.65),
-      0 0 45px rgba(212, 175, 55, 0.32);
-  }
-  50% {
-    transform: rotate(1.8deg) translateY(0);
-    box-shadow: 
-      0 25px 60px rgba(0, 0, 0, 0.65),
-      inset 0 1.5px 2.5px rgba(255, 240, 190, 0.5),
-      inset 0 -1px 2px rgba(0, 0, 0, 0.4),
-      0 0 30px rgba(212, 175, 55, 0.18);
-  }
-  75% {
-    transform: rotate(0deg) translateY(-2px);
-    box-shadow: 
-      0 28px 65px rgba(0, 0, 0, 0.68),
-      inset 0 1.8px 2.8px rgba(255, 240, 190, 0.6),
-      0 0 40px rgba(212, 175, 55, 0.25);
-  }
-  100% {
-    transform: rotate(-1.8deg) translateY(0);
-    box-shadow: 
-      0 25px 60px rgba(0, 0, 0, 0.65),
-      inset 0 1.5px 2.5px rgba(255, 240, 190, 0.5),
-      inset 0 -1px 2px rgba(0, 0, 0, 0.4),
-      0 0 30px rgba(212, 175, 55, 0.18);
-  }
-}
-
-/* Hero Right Floating Glass Card — High-Opacity Warm Luxury Glassmorphism */
+/* Hero Right Floating Glass Card — Authentic Light Bulb Shaped Container */
 .hero-floating-card {
+  position: relative;
   background: linear-gradient(
     135deg,
-    rgba(30, 26, 20, 0.88) 0%,
-    rgba(16, 14, 12, 0.82) 50%,
-    rgba(10, 8, 6, 0.88) 100%
+    rgba(34, 28, 22, 0.9) 0%,
+    rgba(18, 16, 14, 0.85) 50%,
+    rgba(12, 10, 8, 0.9) 100%
   );
   backdrop-filter: blur(30px) saturate(190%);
   -webkit-backdrop-filter: blur(30px) saturate(190%);
-  border-radius: 28px;
-  border: 1px solid rgba(212, 175, 55, 0.38);
-  border-top-color: rgba(255, 240, 180, 0.7);
-  border-left-color: rgba(212, 175, 55, 0.5);
-  border-bottom-color: rgba(212, 175, 55, 0.2);
-  border-right-color: rgba(212, 175, 55, 0.2);
-  padding: 1.6rem 1.8rem;
+  
+  /* Authentic Light Bulb Silhouette Geometry (Rounded Dome Head & Tapered Base) */
+  border-radius: 140px 140px 48px 48px;
+  border: 1.5px solid rgba(212, 175, 55, 0.45);
+  border-top-color: rgba(255, 245, 200, 0.85);
+  border-left-color: rgba(255, 240, 180, 0.6);
+  border-bottom-color: rgba(212, 175, 55, 0.35);
+  border-right-color: rgba(212, 175, 55, 0.35);
+  
+  padding: 2.2rem 1.8rem 2rem 1.8rem;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  text-align: center;
   gap: 1rem;
-  width: clamp(270px, 23vw, 325px);
-  transform-origin: top center;
-  animation: lightbulb-shake 4.5s ease-in-out infinite;
+  width: clamp(280px, 23vw, 325px);
+  box-shadow: 
+    0 25px 60px rgba(0, 0, 0, 0.7),
+    inset 0 2px 4px rgba(255, 245, 200, 0.6),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.5),
+    0 0 45px rgba(212, 175, 55, 0.25);
   transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   flex-shrink: 0;
-  position: relative;
-  overflow: hidden;
 }
 
+/* Light Bulb Top Filament Glow Ring */
 .hero-floating-card::before {
   content: '';
   position: absolute;
-  top: -40%;
-  left: -40%;
-  width: 180%;
-  height: 180%;
-  background: radial-gradient(circle at 25% 20%, rgba(255, 240, 180, 0.2) 0%, transparent 60%);
+  top: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 54px;
+  height: 6px;
+  background: linear-gradient(90deg, transparent, #fff7d6, #d4af37, #f3e5ab, transparent);
+  border-radius: 999px;
+  box-shadow: 0 0 15px #d4af37, 0 0 25px #f3e5ab;
+  pointer-events: none;
+}
+
+/* Light Bulb Metallic Screw Base Cap at Bottom */
+.hero-floating-card::after {
+  content: '';
+  position: absolute;
+  bottom: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 72px;
+  height: 14px;
+  background: linear-gradient(90deg, #aa820a, #f3e5ab 30%, #d4af37 70%, #886504);
+  border-radius: 0 0 10px 10px;
+  border: 1px solid rgba(255, 240, 180, 0.5);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.8), 0 0 10px rgba(212, 175, 55, 0.4);
   pointer-events: none;
 }
 
 .hero-floating-card:hover {
-  animation-play-state: paused;
-  transform: translateY(-6px) scale(1.02);
-  border-top-color: rgba(255, 240, 180, 0.95);
-  border-left-color: rgba(212, 175, 55, 0.75);
+  transform: translateY(-4px) scale(1.02);
+  border-top-color: rgba(255, 245, 200, 0.95);
+  border-left-color: rgba(212, 175, 55, 0.8);
   box-shadow: 
     0 35px 80px rgba(0, 0, 0, 0.75),
-    inset 0 2px 3px rgba(255, 240, 190, 0.8),
-    0 0 45px rgba(212, 175, 55, 0.35);
+    inset 0 2px 4px rgba(255, 245, 200, 0.85),
+    0 0 50px rgba(212, 175, 55, 0.35);
 }
 
 .hero-card-badge {
@@ -635,12 +619,15 @@ canvas {
 .hero-card-product-specs {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-around;
+  width: 100%;
 }
 
 .hero-product-spec-item {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  text-align: center;
   gap: 0.2rem;
 }
 
@@ -674,6 +661,7 @@ canvas {
   font-weight: 400;
   border-top: 1px solid rgba(255, 255, 255, 0.12);
   padding-top: 0.85rem;
+  text-align: center;
 }
 
 .hero-cta-arrow {
