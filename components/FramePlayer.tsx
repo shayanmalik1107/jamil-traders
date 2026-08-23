@@ -5,7 +5,7 @@ import { Search, ArrowRight, ArrowDown, Menu, X, Sparkles, Building2, ShieldChec
 import Lenis from 'lenis';
 
 const HERO_TOTAL_FRAMES = 49; // frame_0000 to frame_0048
-const HERO_ANIMATION_DURATION_MS = 2800; // 2.8 seconds total
+const HERO_ANIMATION_DURATION_MS = 1500; // 1.5 seconds total
 
 const ABOUT_FRAME_FILES = [
   "frame_001.webp","frame_002.webp","frame_003.webp","frame_038.webp","frame_039.webp","frame_040.webp","frame_041.webp","frame_042.webp","frame_043.webp","frame_044.webp","frame_045.webp","frame_046.webp","frame_047.webp","frame_048.webp","frame_049.webp","frame_050.webp","frame_051.webp","frame_052.webp","frame_053.webp","frame_054.webp","frame_055.webp","frame_056.webp","frame_057.webp","frame_058.webp","frame_059.webp","frame_060.webp","frame_061.webp","frame_062.webp","frame_063.webp","frame_064.webp","frame_065.webp","frame_066.webp","frame_067.webp","frame_068.webp","frame_069.webp","frame_070.webp","frame_071.webp","frame_072.webp","frame_073.webp","frame_074.webp","frame_075.webp","frame_076.webp","frame_077.webp","frame_078.webp","frame_079.webp","frame_080.webp","frame_081.webp","frame_082.webp","frame_083.webp","frame_084.webp","frame_085.webp","frame_086.webp","frame_087.webp","frame_088.webp","frame_089.webp","frame_090.webp","frame_091.webp"

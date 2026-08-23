@@ -68,28 +68,32 @@ canvas {
   object-fit: fill;
 }
 
-/* Hero Section Outer Container */
+/* Hero Section Outer Container — Perfectly Aligned with Header Grid */
 .hero-container {
   position: absolute;
-  inset: 0;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
   z-index: 20;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: clamp(1rem, 2.5vh, 2rem) clamp(1.25rem, 3.5vw, 3.5rem);
-  padding-top: clamp(4.5rem, 9vh, 6rem);
+  width: clamp(88%, 90vw, 1200px);
+  padding: clamp(1rem, 2.5vh, 2rem) 1.6rem;
+  padding-top: clamp(5rem, 10vh, 6.5rem);
   box-sizing: border-box;
   height: 100vh;
   height: 100dvh;
   overflow: hidden;
 }
 
-/* Hero elements pre-exist on screen, illuminated by room lights */
+/* Hero elements clearly visible right from start, illuminating to 100% */
 .hero-header,
 .hero-body,
 .hero-footer {
-  opacity: calc(0.04 + var(--light-level, 0) * 0.96);
-  filter: brightness(calc(0.05 + var(--light-level, 0) * 0.95));
+  opacity: calc(0.65 + var(--light-level, 0) * 0.35);
+  filter: brightness(calc(0.7 + var(--light-level, 0) * 0.3));
   transition: opacity 0.05s linear, filter 0.05s linear;
 }
 
