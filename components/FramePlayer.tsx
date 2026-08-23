@@ -2,6 +2,7 @@
 
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { Search, ArrowRight, ArrowDown, Menu, X, Sparkles, Building2, ShieldCheck } from 'lucide-react';
+import Lenis from 'lenis';
 
 const HERO_TOTAL_FRAMES = 49; // frame_0000 to frame_0048
 const HERO_ANIMATION_DURATION_MS = 2800; // 2.8 seconds total
@@ -38,6 +39,32 @@ export default function FramePlayer() {
 
   useEffect(() => {
     setMounted(true);
+  }, []);
+
+  // Initialize Lenis Inertial Smooth Scrolling physics
+  useEffect(() => {
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      orientation: 'vertical',
+      gestureOrientation: 'vertical',
+      smoothWheel: true,
+      wheelMultiplier: 1.0,
+      touchMultiplier: 1.5,
+    });
+
+    let rafId: number;
+    function raf(time: number) {
+      lenis.raf(time);
+      rafId = requestAnimationFrame(raf);
+    }
+
+    rafId = requestAnimationFrame(raf);
+
+    return () => {
+      cancelAnimationFrame(rafId);
+      lenis.destroy();
+    };
   }, []);
 
   const getHeroFramePath = (index: number) => {
