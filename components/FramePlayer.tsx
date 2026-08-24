@@ -486,9 +486,6 @@ export default function FramePlayer() {
 
             {/* Hero Right Light Bulb Container Wrapper */}
             <div className="bulb-card-wrapper">
-              {/* Semi-Transparent Glass Backdrop Fill with Active 20px Blur */}
-              <div className="bulb-glass-backdrop" />
-
               {/* User Light Bulb PNG Image Asset Rotated Upside-Down */}
               <img
                 src="/bulb.png"
