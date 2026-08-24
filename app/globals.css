@@ -552,7 +552,8 @@ canvas {
 /* Text Content Floating Deeply Inside Center Glass Dome (Zero Overflow!) */
 .hero-floating-card {
   position: absolute;
-  top: 50%;
+  top: 54%;
+  /* Controls top position of the content */
   left: 50%;
   transform: translate(-50%, -50%);
   width: 82%;
