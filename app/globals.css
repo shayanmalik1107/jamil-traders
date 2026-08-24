@@ -553,13 +553,11 @@ canvas {
 .hero-floating-card {
   position: absolute;
   top: 41%;
-  /* Controls top position of the content */
   left: 50%;
   transform: translateX(-50%);
   width: 85%;
   max-width: 230px;
   bottom: 17%;
-  /* Controls bottom position of the button */
   display: flex;
   flex-direction: column;
   align-items: center;
