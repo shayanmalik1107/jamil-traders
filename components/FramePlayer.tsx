@@ -8,7 +8,7 @@ const HERO_TOTAL_FRAMES = 49; // frame_0000 to frame_0048
 const HERO_ANIMATION_DURATION_MS = 1500; // 1.5 seconds total
 
 const ABOUT_FRAME_FILES = [
-  "frame_001.webp","frame_002.webp","frame_003.webp","frame_038.webp","frame_039.webp","frame_040.webp","frame_041.webp","frame_042.webp","frame_043.webp","frame_044.webp","frame_045.webp","frame_046.webp","frame_047.webp","frame_048.webp","frame_049.webp","frame_050.webp","frame_051.webp","frame_052.webp","frame_053.webp","frame_054.webp","frame_055.webp","frame_056.webp","frame_057.webp","frame_058.webp","frame_059.webp","frame_060.webp","frame_061.webp","frame_062.webp","frame_063.webp","frame_064.webp","frame_065.webp","frame_066.webp","frame_067.webp","frame_068.webp","frame_069.webp","frame_070.webp","frame_071.webp","frame_072.webp","frame_073.webp","frame_074.webp","frame_075.webp","frame_076.webp","frame_077.webp","frame_078.webp","frame_079.webp","frame_080.webp","frame_081.webp","frame_082.webp","frame_083.webp","frame_084.webp","frame_085.webp","frame_086.webp","frame_087.webp","frame_088.webp","frame_089.webp","frame_090.webp","frame_091.webp"
+  "frame_001.webp", "frame_002.webp", "frame_003.webp", "frame_038.webp", "frame_039.webp", "frame_040.webp", "frame_041.webp", "frame_042.webp", "frame_043.webp", "frame_044.webp", "frame_045.webp", "frame_046.webp", "frame_047.webp", "frame_048.webp", "frame_049.webp", "frame_050.webp", "frame_051.webp", "frame_052.webp", "frame_053.webp", "frame_054.webp", "frame_055.webp", "frame_056.webp", "frame_057.webp", "frame_058.webp", "frame_059.webp", "frame_060.webp", "frame_061.webp", "frame_062.webp", "frame_063.webp", "frame_064.webp", "frame_065.webp", "frame_066.webp", "frame_067.webp", "frame_068.webp", "frame_069.webp", "frame_070.webp", "frame_071.webp", "frame_072.webp", "frame_073.webp", "frame_074.webp", "frame_075.webp", "frame_076.webp", "frame_077.webp", "frame_078.webp", "frame_079.webp", "frame_080.webp", "frame_081.webp", "frame_082.webp", "frame_083.webp", "frame_084.webp", "frame_085.webp", "frame_086.webp", "frame_087.webp", "frame_088.webp", "frame_089.webp", "frame_090.webp", "frame_091.webp"
 ];
 const ABOUT_TOTAL_FRAMES = ABOUT_FRAME_FILES.length; // 57 frames
 const ABOUT_ANIMATION_DURATION_MS = 500; // 0.5 seconds total
@@ -140,30 +140,35 @@ export default function FramePlayer() {
     let heroCount = 0;
     let aboutCount = 0;
 
+    // Safety Fallback: Force reveal page after 400ms so screen NEVER stays stuck black
+    const safetyTimer = setTimeout(() => {
+      if (!isCancelled) {
+        setIsLoaded(true);
+      }
+    }, 400);
+
     // Preload Hero Frames First for Superfast First Paint (<0.3s)
     for (let i = 0; i < HERO_TOTAL_FRAMES; i++) {
       const img = new Image();
       img.src = getHeroFramePath(i);
-      img.onload = () => {
+      const handleLoad = () => {
         if (isCancelled) return;
         heroCount++;
         setHeroLoadedCount(heroCount);
-        if (heroCount === HERO_TOTAL_FRAMES) {
+        if (heroCount >= HERO_TOTAL_FRAMES) {
           setIsLoaded(true);
+          clearTimeout(safetyTimer);
         }
       };
-      img.onerror = () => {
-        if (isCancelled) return;
-        heroCount++;
-        setHeroLoadedCount(heroCount);
-        if (heroCount === HERO_TOTAL_FRAMES) {
-          setIsLoaded(true);
-        }
-      };
+      img.onload = handleLoad;
+      img.onerror = handleLoad;
+      if (img.complete) {
+        handleLoad();
+      }
       loadedHeroImages[i] = img;
     }
 
-    // Preload About Section Frames in background immediately as Hero finishes
+    // Preload About Section Frames in background
     for (let i = 0; i < ABOUT_TOTAL_FRAMES; i++) {
       const img = new Image();
       img.src = getAboutFramePath(i);
@@ -186,6 +191,7 @@ export default function FramePlayer() {
 
     return () => {
       isCancelled = true;
+      clearTimeout(safetyTimer);
     };
   }, [renderAboutFrame, resizeCanvas]);
 
@@ -475,34 +481,40 @@ export default function FramePlayer() {
                     <ArrowRight size={15} />
                   </div>
                 </a>
-                <a href="#about" className="hero-secondary-btn">
-                  <span>OUR CRAFT</span>
-                </a>
               </div>
             </div>
 
-            {/* Hero Right Floating Glass Card — Product Specifications */}
-            <div className="hero-floating-card">
-              <div className="hero-card-badge">
-                <Sparkles size={13} className="hero-card-icon" />
-                <span>FEATURED SPECIFICATION</span>
-              </div>
+            {/* Hero Right Light Bulb Container Wrapper */}
+            <div className="bulb-card-wrapper">
+              {/* Semi-Transparent Glass Backdrop Fill with Active 20px Blur */}
+              <div className="bulb-glass-backdrop" />
 
-              <div className="hero-card-product-specs">
-                <div className="hero-product-spec-item">
-                  <span className="hero-spec-label">COLLECTION</span>
-                  <span className="hero-spec-value">Calacatta & Onyx</span>
-                </div>
-                <div className="hero-card-divider" />
-                <div className="hero-product-spec-item">
-                  <span className="hero-spec-label">FINISH</span>
-                  <span className="hero-spec-value">Hand-Honed Brass</span>
-                </div>
-              </div>
+              {/* User Light Bulb PNG Image Asset Rotated Upside-Down */}
+              <img
+                src="/bulb.png"
+                alt="Light Bulb"
+                className="bulb-bg-img"
+              />
 
-              <p className="hero-card-desc">
-                Direct importers of Italian marble, architectural wood veneers, and bespoke brass metalwork engineered for elite luxury interiors.
-              </p>
+              {/* Text Content & Button Floating Gracefully Inside Large Bulb Dome */}
+              <div className="hero-floating-card">
+                <div className="bulb-card-headline-group">
+                  <h3 className="bulb-card-title">
+                    Then Light<br />
+                    <span className="hero-title-italic">Changes Everything.</span>
+                  </h3>
+                  <p className="bulb-card-sub">
+                    Creating atmosphere, defining architecture, and transforming the way spaces are experienced.
+                  </p>
+                </div>
+
+                <a href="#services" className="hero-cta-btn bulb-discover-btn">
+                  <span>DISCOVER LIGHTING</span>
+                  <div className="hero-cta-arrow">
+                    <ArrowRight size={13} />
+                  </div>
+                </a>
+              </div>
             </div>
           </main>
 
