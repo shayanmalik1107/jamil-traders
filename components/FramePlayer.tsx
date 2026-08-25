@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useRef, useState, useCallback } from 'react';
-import { Search, ArrowRight, ArrowDown, Menu, X, Sparkles, Building2, ShieldCheck } from 'lucide-react';
+import { Search, ArrowRight, ArrowDown, Menu, X, Sparkles, Building2, ShieldCheck, Award, FileCheck, CheckCircle2 } from 'lucide-react';
 import Lenis from 'lenis';
 
 const HERO_TOTAL_FRAMES = 49; // frame_0000 to frame_0048
@@ -36,6 +36,9 @@ export default function FramePlayer() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
   const [animProgress, setAnimProgress] = useState<number>(0);
   const [isScrolled, setIsScrolled] = useState<boolean>(false);
+  const [aboutTab, setAboutTab] = useState<'PHILOSOPHY' | 'CRAFT' | 'LEGACY'>('PHILOSOPHY');
+  const [certModalOpen, setCertModalOpen] = useState<boolean>(false);
+  const lenisRef = useRef<Lenis | null>(null);
 
   useEffect(() => {
     setMounted(true);
@@ -52,6 +55,7 @@ export default function FramePlayer() {
       wheelMultiplier: 1.0,
       touchMultiplier: 1.5,
     });
+    lenisRef.current = lenis;
 
     let rafId: number;
     function raf(time: number) {
@@ -64,8 +68,31 @@ export default function FramePlayer() {
     return () => {
       cancelAnimationFrame(rafId);
       lenis.destroy();
+      lenisRef.current = null;
     };
   }, []);
+
+  // Lock background scroll completely when certificate modal is active
+  useEffect(() => {
+    if (certModalOpen) {
+      lenisRef.current?.stop();
+      document.body.style.overflow = 'hidden';
+      document.documentElement.style.overflow = 'hidden';
+      document.documentElement.classList.add('lenis-stopped');
+    } else {
+      lenisRef.current?.start();
+      document.body.style.overflow = '';
+      document.documentElement.style.overflow = '';
+      document.documentElement.classList.remove('lenis-stopped');
+    }
+
+    return () => {
+      lenisRef.current?.start();
+      document.body.style.overflow = '';
+      document.documentElement.style.overflow = '';
+      document.documentElement.classList.remove('lenis-stopped');
+    };
+  }, [certModalOpen]);
 
   const getHeroFramePath = (index: number) => {
     const padIndex = String(index).padStart(4, '0');
@@ -563,16 +590,138 @@ export default function FramePlayer() {
         </div>
       </section>
 
-      {/* 2. ABOUT SECTION WITH 1-SECOND VIDEO FRAME BACKGROUND */}
+      {/* 2. ABOUT SECTION WITH CEO FEATURE & VIDEO FRAME CANVAS BACKDROP */}
       <section id="about" ref={aboutSectionRef} className="about-frame-section">
-        {/* Canvas for 1s Video Frame Background */}
+        {/* Canvas for Video Frame Ambient Background */}
         <canvas ref={aboutCanvasRef} className="about-canvas" />
 
-        {/* Minimal Overlay Badge as Requested */}
-        <div className="about-overlay-content">
-          <div className="about-badge">
-            <span className="about-badge-dot" />
-            <span>ABOUT • 0.5s FRAME SEQUENCE</span>
+        {/* Ambient Dark Gradient Overlay */}
+        <div className="about-canvas-overlay" />
+
+        {/* Unique Luxury Content Grid Container */}
+        <div className="about-hero-container">
+          <div className="about-content-left">
+            <div className="hero-eyebrow">
+              <span className="hero-eyebrow-pill">EST. 1998</span>
+              <span>THE LEADERSHIP</span>
+              <span>•</span>
+              <span>VISIONARY CRAFT</span>
+            </div>
+
+            <h2 className="about-hero-title">
+              Architecture Is <br />
+              <span className="hero-title-italic">The Silence Between Lights.</span>
+            </h2>
+
+            {/* Interactive Tab Selector */}
+            <div className="about-tab-selector">
+              <button
+                type="button"
+                className={`about-tab-btn ${aboutTab === 'PHILOSOPHY' ? 'active' : ''}`}
+                onClick={() => setAboutTab('PHILOSOPHY')}
+              >
+                PHILOSOPHY
+              </button>
+              <button
+                type="button"
+                className={`about-tab-btn ${aboutTab === 'CRAFT' ? 'active' : ''}`}
+                onClick={() => setAboutTab('CRAFT')}
+              >
+                BESPOKE CRAFT
+              </button>
+              <button
+                type="button"
+                className={`about-tab-btn ${aboutTab === 'LEGACY' ? 'active' : ''}`}
+                onClick={() => setAboutTab('LEGACY')}
+              >
+                OUR LEGACY
+              </button>
+            </div>
+
+            {/* Tab Content Box */}
+            <div className="about-tab-card">
+              {aboutTab === 'PHILOSOPHY' && (
+                <p className="about-tab-desc">
+                  “We do not simply build spaces — we curate atmosphere. Every interior should feel like a timeless composition where light, material, and human emotion seamlessly converge.”
+                </p>
+              )}
+              {aboutTab === 'CRAFT' && (
+                <p className="about-tab-desc">
+                  “Mastery lies in the unseen details. From hand-selected Italian marbles to precision acoustic architecture, our contracting standards honor absolute perfection without compromise.”
+                </p>
+              )}
+              {aboutTab === 'LEGACY' && (
+                <p className="about-tab-desc">
+                  “Over two decades of pioneering luxury trading and bespoke interiors across Asia & the Middle East. Building enduring partnerships rooted in integrity and distinction.”
+                </p>
+              )}
+            </div>
+
+            {/* Unique Architectural Excellence & Gold Seal Block */}
+            <div className="about-excellence-block">
+              <div className="about-excellence-item">
+                <div className="about-excellence-badge">
+                  <span className="about-excellence-dot" />
+                  <span className="about-excellence-tag">OUR COMMITMENT</span>
+                </div>
+                <span className="about-excellence-title">Precision • Artistry • Uncompromising Luxury</span>
+              </div>
+
+              <button
+                type="button"
+                className="about-seal-badge"
+                onClick={() => setCertModalOpen(true)}
+                title="Click to view official certificates"
+              >
+                <svg className="about-seal-icon" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="20" cy="20" r="18" stroke="var(--gold-accent)" strokeWidth="1.5" strokeDasharray="3 3" />
+                  <path d="M20 8L23.5 15H31L25 19.5L27 27L20 22.5L13 27L15 19.5L9 15H16.5L20 8Z" fill="var(--gold-accent)" />
+                </svg>
+                <div className="about-seal-text">
+                  <span>VIEW CERTIFICATES</span>
+                  <strong>GOLD STANDARD ↗</strong>
+                </div>
+              </button>
+            </div>
+
+            {/* Stats Metrics */}
+            <div className="about-stats-grid">
+              <div className="about-stat-item">
+                <span className="about-stat-num">25+</span>
+                <span className="about-stat-label">YEARS OF LEGACY</span>
+              </div>
+              <div className="about-stat-divider" />
+              <div className="about-stat-item">
+                <span className="about-stat-num">450+</span>
+                <span className="about-stat-label">PROJECTS DELIVERED</span>
+              </div>
+              <div className="about-stat-divider" />
+              <div className="about-stat-item">
+                <span className="about-stat-num">100%</span>
+                <span className="about-stat-label">BESPOKE QUALITY</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Right Column: CEO Portrait Card */}
+          <div className="about-ceo-card-wrapper">
+            <div className="about-ceo-frame">
+              <img
+                src="/ceo.png"
+                alt="Jameel Malik - Founder & CEO"
+                className="about-ceo-img"
+              />
+              <div className="about-ceo-img-glow" />
+
+              {/* Floating Quote Badge */}
+              <div className="about-ceo-quote-badge">
+                <div className="about-quote-dot" />
+                <div className="about-quote-text">
+                  <span>EXCELLENCE IN DESIGN & TRADING</span>
+                  <strong>JAMEEL TRADERS LEADERSHIP</strong>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -627,6 +776,122 @@ export default function FramePlayer() {
           </div>
         </div>
       </section>
+
+      {/* 4. CERTIFICATES MODAL POPUP */}
+      {certModalOpen && (
+        <div className="cert-modal-overlay" data-lenis-prevent onClick={() => setCertModalOpen(false)}>
+          <div className="cert-modal-content" data-lenis-prevent onClick={(e) => e.stopPropagation()}>
+            <header className="cert-modal-header">
+              <div className="cert-modal-header-left">
+                <div className="hero-eyebrow">
+                  <span className="hero-eyebrow-pill">VERIFIED ACCREDITATIONS</span>
+                  <span>JAMEEL TRADERS</span>
+                </div>
+                <h3 className="cert-modal-title">Official Certificates & Standards</h3>
+                <p className="cert-modal-sub">
+                  Recognized internationally for quality management systems, luxury contracting standards, and architectural material compliance.
+                </p>
+              </div>
+
+              <button
+                type="button"
+                className="cert-modal-close-btn"
+                onClick={() => setCertModalOpen(false)}
+                aria-label="Close certificates modal"
+              >
+                <X size={20} />
+              </button>
+            </header>
+
+            <div className="cert-grid">
+              {/* Certificate 1 */}
+              <div className="cert-card">
+                <div className="cert-card-badge">
+                  <CheckCircle2 size={12} />
+                  <span>VERIFIED ACTIVE</span>
+                </div>
+                <div className="cert-preview-frame">
+                  <Award size={36} className="cert-icon-gold" />
+                  <span className="cert-watermark">ISO 9001:2015</span>
+                  <div className="cert-stamp">GOLD CERTIFIED</div>
+                </div>
+                <div className="cert-card-info">
+                  <h4 className="cert-title">ISO 9001:2015 Quality Management</h4>
+                  <span className="cert-issuer">International Organization for Standardization</span>
+                  <p className="cert-desc">Official certification for rigorous quality control across luxury interior contracting and bespoke material trading operations.</p>
+                </div>
+              </div>
+
+              {/* Certificate 2 */}
+              <div className="cert-card">
+                <div className="cert-card-badge">
+                  <CheckCircle2 size={12} />
+                  <span>VERIFIED ACTIVE</span>
+                </div>
+                <div className="cert-preview-frame">
+                  <ShieldCheck size={36} className="cert-icon-gold" />
+                  <span className="cert-watermark">LUXURY CONTRACTING</span>
+                  <div className="cert-stamp">ACCREDITED</div>
+                </div>
+                <div className="cert-card-info">
+                  <h4 className="cert-title">Middle East Luxury Contracting Accreditation</h4>
+                  <span className="cert-issuer">Global Architectural & Engineering Council</span>
+                  <p className="cert-desc">Certified excellence in turnkey execution, structural integrity, and acoustic precision for high-end estate interiors.</p>
+                </div>
+              </div>
+
+              {/* Certificate 3 */}
+              <div className="cert-card">
+                <div className="cert-card-badge">
+                  <CheckCircle2 size={12} />
+                  <span>VERIFIED ACTIVE</span>
+                </div>
+                <div className="cert-preview-frame">
+                  <Building2 size={36} className="cert-icon-gold" />
+                  <span className="cert-watermark">MATERIAL TRADING</span>
+                  <div className="cert-stamp">COMPLIANT</div>
+                </div>
+                <div className="cert-card-info">
+                  <h4 className="cert-title">International Material Compliance Standard</h4>
+                  <span className="cert-issuer">European Marble & Timber Sourcing Board</span>
+                  <p className="cert-desc">Ethical sourcing & premium grade authentication for Italian marble, architectural brass, and sustainable hardwoods.</p>
+                </div>
+              </div>
+
+              {/* Certificate 4 */}
+              <div className="cert-card">
+                <div className="cert-card-badge">
+                  <CheckCircle2 size={12} />
+                  <span>VERIFIED ACTIVE</span>
+                </div>
+                <div className="cert-preview-frame">
+                  <Sparkles size={36} className="cert-icon-gold" />
+                  <span className="cert-watermark">DESIGN EXCELLENCE</span>
+                  <div className="cert-stamp">HONOR AWARD</div>
+                </div>
+                <div className="cert-card-info">
+                  <h4 className="cert-title">Bespoke Architectural Excellence Shield</h4>
+                  <span className="cert-issuer">Architectural Distinction Forum</span>
+                  <p className="cert-desc">Awarded for 25+ years of landmark interior craftsmanship and extraordinary client satisfaction.</p>
+                </div>
+              </div>
+            </div>
+
+            <footer className="cert-modal-footer">
+              <span className="cert-footer-note">
+                🔒 All certificates issued under license to Jameel Traders (Pvt) Ltd.
+              </span>
+              <button
+                type="button"
+                className="hero-talk-btn"
+                onClick={() => setCertModalOpen(false)}
+              >
+                <span>CLOSE WINDOW</span>
+              </button>
+            </footer>
+          </div>
+        </div>
+      )}
     </>
   );
 }
