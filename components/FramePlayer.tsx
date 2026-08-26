@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useRef, useState, useCallback } from 'react';
-import { Search, ArrowRight, ArrowDown, Menu, X, Sparkles, Building2, ShieldCheck, Award, FileCheck, CheckCircle2 } from 'lucide-react';
+import { Search, ArrowRight, ArrowDown, Menu, X, Sparkles, Building2, ShieldCheck, Award, FileCheck, CheckCircle2, Quote } from 'lucide-react';
 import Lenis from 'lenis';
 
 const HERO_TOTAL_FRAMES = 49; // frame_0000 to frame_0048
@@ -484,7 +484,7 @@ export default function FramePlayer() {
           <main className="hero-body">
             <div className="hero-body-left">
               <div className="hero-eyebrow">
-                <span className="hero-eyebrow-pill">EST. 1998</span>
+                <span className="hero-eyebrow-pill">EST. 2002</span>
                 <span>TIMELESS</span>
                 <span>•</span>
                 <span>FUNCTIONAL</span>
@@ -602,7 +602,7 @@ export default function FramePlayer() {
         <div className="about-hero-container">
           <div className="about-content-left">
             <div className="hero-eyebrow">
-              <span className="hero-eyebrow-pill">EST. 1998</span>
+              <span className="hero-eyebrow-pill">EST. 2002</span>
               <span>THE LEADERSHIP</span>
               <span>•</span>
               <span>VISIONARY CRAFT</span>
@@ -613,8 +613,19 @@ export default function FramePlayer() {
               <span className="hero-title-italic">The Silence Between Lights.</span>
             </h2>
 
-            {/* Interactive Tab Selector */}
+            {/* Interactive Tab Selector with Animated Sliding Background */}
             <div className="about-tab-selector">
+              <div
+                className="about-tab-slider-bg"
+                style={{
+                  transform:
+                    aboutTab === 'PHILOSOPHY'
+                      ? 'translateX(0%)'
+                      : aboutTab === 'CRAFT'
+                        ? 'translateX(100%)'
+                        : 'translateX(200%)',
+                }}
+              />
               <button
                 type="button"
                 className={`about-tab-btn ${aboutTab === 'PHILOSOPHY' ? 'active' : ''}`}
@@ -638,23 +649,26 @@ export default function FramePlayer() {
               </button>
             </div>
 
-            {/* Tab Content Box */}
+            {/* Tab Content Box with Large Gold Quote Icon */}
             <div className="about-tab-card">
-              {aboutTab === 'PHILOSOPHY' && (
-                <p className="about-tab-desc">
-                  “We do not simply build spaces — we curate atmosphere. Every interior should feel like a timeless composition where light, material, and human emotion seamlessly converge.”
-                </p>
-              )}
-              {aboutTab === 'CRAFT' && (
-                <p className="about-tab-desc">
-                  “Mastery lies in the unseen details. From hand-selected Italian marbles to precision acoustic architecture, our contracting standards honor absolute perfection without compromise.”
-                </p>
-              )}
-              {aboutTab === 'LEGACY' && (
-                <p className="about-tab-desc">
-                  “Over two decades of pioneering luxury trading and bespoke interiors across Asia & the Middle East. Building enduring partnerships rooted in integrity and distinction.”
-                </p>
-              )}
+              <Quote className="about-card-quote-mark" size={32} />
+              <div className="about-tab-quote-body">
+                {aboutTab === 'PHILOSOPHY' && (
+                  <p className="about-tab-desc">
+                    We do not simply build spaces — we curate atmosphere. Every interior should feel like a timeless composition where light, material, and human emotion seamlessly converge.
+                  </p>
+                )}
+                {aboutTab === 'CRAFT' && (
+                  <p className="about-tab-desc">
+                    Mastery lies in the unseen details. From hand-selected Italian marbles to precision acoustic architecture, our contracting standards honor absolute perfection without compromise.
+                  </p>
+                )}
+                {aboutTab === 'LEGACY' && (
+                  <p className="about-tab-desc">
+                    Over two decades of pioneering luxury trading and bespoke interiors across Asia & the Middle East. Building enduring partnerships rooted in integrity and distinction.
+                  </p>
+                )}
+              </div>
             </div>
 
             {/* Unique Architectural Excellence & Gold Seal Block */}
