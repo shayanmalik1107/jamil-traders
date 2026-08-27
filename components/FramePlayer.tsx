@@ -13,6 +13,10 @@ const ABOUT_FRAME_FILES = [
 const ABOUT_TOTAL_FRAMES = ABOUT_FRAME_FILES.length; // 57 frames
 const ABOUT_ANIMATION_DURATION_MS = 500; // 0.5 seconds total
 
+// Last frame paths for mobile static display
+const HERO_LAST_FRAME = '/frames/frame_0048.webp';
+const ABOUT_LAST_FRAME = '/video_frames/frame_091.webp';
+
 export default function FramePlayer() {
   // Hero canvas refs
   const heroCanvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -29,6 +33,7 @@ export default function FramePlayer() {
   const [aboutHasPlayed, setAboutHasPlayed] = useState<boolean>(false);
 
   const [mounted, setMounted] = useState<boolean>(false);
+  const [isMobile, setIsMobile] = useState<boolean>(false);
   const [heroLoadedCount, setHeroLoadedCount] = useState<number>(0);
   const [aboutLoadedCount, setAboutLoadedCount] = useState<number>(0);
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
@@ -42,6 +47,11 @@ export default function FramePlayer() {
 
   useEffect(() => {
     setMounted(true);
+    // Detect mobile on mount and resize
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
   // Initialize Lenis Inertial Smooth Scrolling physics
@@ -155,8 +165,14 @@ export default function FramePlayer() {
     ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
   }, []);
 
-  // Preload frames (Eager Hero Preload for < 0.3s page reveal)
+  // Preload frames — skip on mobile (use static img instead)
   useEffect(() => {
+    if (isMobile) {
+      // On mobile we use static images, no need to preload frame sequences
+      setIsLoaded(true);
+      return;
+    }
+
     let isCancelled = false;
     const loadedHeroImages: HTMLImageElement[] = new Array(HERO_TOTAL_FRAMES);
     const loadedAboutImages: HTMLImageElement[] = new Array(ABOUT_TOTAL_FRAMES);
@@ -220,7 +236,7 @@ export default function FramePlayer() {
       isCancelled = true;
       clearTimeout(safetyTimer);
     };
-  }, [renderAboutFrame, resizeCanvas]);
+  }, [isMobile, renderAboutFrame, resizeCanvas]);
 
   // Scroll listener for Header styling
   useEffect(() => {
@@ -232,8 +248,10 @@ export default function FramePlayer() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Resize listener for both canvases
+  // Resize listener for both canvases (desktop only)
   useEffect(() => {
+    if (isMobile) return;
+
     const handleResize = () => {
       resizeCanvas(heroCanvasRef.current);
       renderHeroFrame(HERO_TOTAL_FRAMES - 1);
@@ -245,7 +263,7 @@ export default function FramePlayer() {
     handleResize();
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
-  }, [resizeCanvas, renderHeroFrame, renderAboutFrame]);
+  }, [isMobile, resizeCanvas, renderHeroFrame, renderAboutFrame]);
 
   // Hero Animation loop
   const animateHero = useCallback((timestamp: number) => {
@@ -272,21 +290,21 @@ export default function FramePlayer() {
     }
   }, [renderHeroFrame]);
 
-  // Start Hero Animation once preloader completes
+  // Start Hero Animation once preloader completes (desktop only)
   useEffect(() => {
-    if (isLoaded) {
-      resizeCanvas(heroCanvasRef.current);
-      renderHeroFrame(0);
-      heroStartTimeRef.current = performance.now();
-      heroRequestRef.current = requestAnimationFrame(animateHero);
-    }
+    if (isMobile || !isLoaded) return;
+
+    resizeCanvas(heroCanvasRef.current);
+    renderHeroFrame(0);
+    heroStartTimeRef.current = performance.now();
+    heroRequestRef.current = requestAnimationFrame(animateHero);
 
     return () => {
       if (heroRequestRef.current) {
         cancelAnimationFrame(heroRequestRef.current);
       }
     };
-  }, [isLoaded, resizeCanvas, renderHeroFrame, animateHero]);
+  }, [isMobile, isLoaded, resizeCanvas, renderHeroFrame, animateHero]);
 
   // About Animation Loop (Strictly 1 Second Duration: 1000ms)
   const animateAbout = useCallback((timestamp: number) => {
@@ -311,9 +329,9 @@ export default function FramePlayer() {
     }
   }, [renderAboutFrame]);
 
-  // Trigger About section animation when section scrolls into view
+  // Trigger About section animation when section scrolls into view (desktop only)
   useEffect(() => {
-    if (!isLoaded || !aboutSectionRef.current) return;
+    if (isMobile || !isLoaded || !aboutSectionRef.current) return;
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -341,7 +359,7 @@ export default function FramePlayer() {
         cancelAnimationFrame(aboutRequestRef.current);
       }
     };
-  }, [isLoaded, resizeCanvas, renderAboutFrame, animateAbout]);
+  }, [isMobile, isLoaded, resizeCanvas, renderAboutFrame, animateAbout]);
 
   const totalAllFrames = HERO_TOTAL_FRAMES + ABOUT_TOTAL_FRAMES;
   const currentLoadedAll = heroLoadedCount + aboutLoadedCount;
@@ -356,106 +374,31 @@ export default function FramePlayer() {
     { label: 'CONTACT', href: '#contact' },
   ];
 
-  const currentLightLevel = isLoaded ? animProgress : 0;
+  const currentLightLevel = isLoaded ? (isMobile ? 1 : animProgress) : 0;
 
   if (!mounted) return null;
 
   return (
     <>
-      {/* Permanent Fixed Header Navbar Across All Sections */}
-      <header className={`hero-header ${isScrolled ? 'is-scrolled' : ''}`}>
-        <a href="#" className="hero-logo">
-          <svg
-            className="hero-logo-icon"
-            viewBox="0 0 48 48"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M12 40V18L24 8L36 18V40H30V22L24 17L18 22V40H12Z"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinejoin="round"
-            />
-            <path
-              d="M6 40H42"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-            />
-          </svg>
-          <div className="hero-logo-text">
-            <span className="hero-brand-name">JAMEEL</span>
-            <span className="hero-brand-sub">TRADERS</span>
-          </div>
-        </a>
-
-        {/* Desktop Nav Links */}
-        <nav className="desktop-nav">
-          <ul className="hero-nav">
-            {navLinks.map((item) => (
-              <li key={item.label}>
-                <a
-                  href={item.href}
-                  className={`hero-nav-item ${activeNav === item.label ? 'active' : ''}`}
-                  onClick={() => setActiveNav(item.label)}
-                >
-                  <span>{item.label}</span>
-                  {activeNav === item.label && <div className="hero-nav-active-dot" />}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </nav>
-
-        {/* Header Right Actions */}
-        <div className="hero-header-actions">
-          <a href="#contact" className="hero-talk-btn">
-            <span>LET'S TALK</span>
-            <div className="hero-talk-btn-arrow">
-              <ArrowRight size={13} />
-            </div>
-          </a>
-
-          <button
-            className="hero-icon-btn mobile-menu-toggle"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            aria-label="Toggle menu"
-          >
-            {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
-          </button>
-        </div>
-      </header>
-
-      {/* Mobile Overlay Menu */}
-      {mobileMenuOpen && (
-        <div className="mobile-nav-overlay">
-          <ul className="mobile-nav-list">
-            {navLinks.map((item) => (
-              <li key={item.label}>
-                <a
-                  href={item.href}
-                  className={`mobile-nav-link ${activeNav === item.label ? 'active' : ''}`}
-                  onClick={() => {
-                    setActiveNav(item.label);
-                    setMobileMenuOpen(false);
-                  }}
-                >
-                  {item.label}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
-
-      {/* 1. FIRST VIEW: HERO SECTION WITH FRAME ANIMATION */}
+      {/* 1. FIRST VIEW: HERO SECTION WITH FRAME ANIMATION (desktop) or STATIC IMAGE (mobile) */}
       <section className="hero-section">
-        {/* Hero Background Frame Canvas */}
-        <canvas ref={heroCanvasRef} />
+        {/* Desktop: animated canvas */}
+        {!isMobile && <canvas ref={heroCanvasRef} />}
 
-        {/* Preloader Overlay */}
-        {!isLoaded && (
+        {/* Mobile: static last frame image as full background */}
+        {isMobile && (
+          <div className="hero-mobile-bg">
+            <img
+              src={HERO_LAST_FRAME}
+              alt="Jameel Traders Lighting"
+              className="hero-mobile-bg-img"
+            />
+            <div className="hero-mobile-bg-overlay" />
+          </div>
+        )}
+
+        {/* Preloader Overlay (desktop only) */}
+        {!isMobile && !isLoaded && (
           <div className="loader-overlay">
             <div className="loader-content">
               <div className="loader-spinner" />
@@ -485,25 +428,25 @@ export default function FramePlayer() {
             <div className="hero-body-left">
               <div className="hero-eyebrow">
                 <span className="hero-eyebrow-pill">EST. 2002</span>
-                <span>TIMELESS</span>
+                <span>BESPOKE LIGHTING</span>
                 <span>•</span>
-                <span>FUNCTIONAL</span>
+                <span>ARCHITECTURAL LUMINAIRES</span>
                 <span>•</span>
-                <span>EXTRAORDINARY</span>
+                <span>ILLUMINATION</span>
               </div>
 
               <h1 className="hero-title">
-                Spaces<br />
-                That <span className="hero-title-italic">Inspire.</span>
+                Light That<br />
+                <span className="hero-title-italic">Transforms.</span>
               </h1>
 
               <p className="hero-description">
-                We craft timeless interiors that blend function, beauty and purpose — turning spaces into stories.
+                We engineer bespoke lighting systems that blend optics, beauty and purpose — bringing spaces to life.
               </p>
 
               <div className="hero-cta-group">
                 <a href="#projects" className="hero-cta-btn">
-                  <span>EXPLORE OUR WORK</span>
+                  <span>EXPLORE LUMINAIRES</span>
                   <div className="hero-cta-arrow">
                     <ArrowRight size={15} />
                   </div>
@@ -511,7 +454,7 @@ export default function FramePlayer() {
               </div>
             </div>
 
-            {/* Hero Right Light Bulb Container Wrapper */}
+            {/* Hero Right Light Bulb Container Wrapper — hidden on mobile */}
             <div className="bulb-card-wrapper">
               {/* User Light Bulb PNG Image Asset Rotated Upside-Down */}
               <img
@@ -524,11 +467,11 @@ export default function FramePlayer() {
               <div className="hero-floating-card">
                 <div className="bulb-card-headline-group">
                   <h3 className="bulb-card-title">
-                    Then Light<br />
-                    <span className="hero-title-italic">Changes Everything.</span>
+                    Where Light<br />
+                    <span className="hero-title-italic">Meets Masterpiece.</span>
                   </h3>
                   <p className="bulb-card-sub">
-                    Creating atmosphere, defining architecture, and transforming the way spaces are experienced.
+                    Sculpting atmosphere, highlighting architecture, and elevating how illuminated spaces are felt.
                   </p>
                 </div>
 
@@ -550,8 +493,8 @@ export default function FramePlayer() {
                   <Sparkles size={14} />
                 </div>
                 <div className="hero-capability-text">
-                  <span className="hero-capability-tag">01 • INTERIORS</span>
-                  <span className="hero-capability-title">Bespoke Design</span>
+                  <span className="hero-capability-tag">01 • LUMINAIRES</span>
+                  <span className="hero-capability-title">Bespoke Light Design</span>
                 </div>
               </a>
 
@@ -562,8 +505,8 @@ export default function FramePlayer() {
                   <Building2 size={14} />
                 </div>
                 <div className="hero-capability-text">
-                  <span className="hero-capability-tag">02 • TRADING</span>
-                  <span className="hero-capability-title">World-Class Materials</span>
+                  <span className="hero-capability-tag">02 • OPTICS</span>
+                  <span className="hero-capability-title">World-Class Fixtures</span>
                 </div>
               </a>
 
@@ -574,8 +517,8 @@ export default function FramePlayer() {
                   <ShieldCheck size={14} />
                 </div>
                 <div className="hero-capability-text">
-                  <span className="hero-capability-tag">03 • CONTRACTING</span>
-                  <span className="hero-capability-title">Turnkey Execution</span>
+                  <span className="hero-capability-tag">03 • SOLUTIONS</span>
+                  <span className="hero-capability-title">Turnkey Illumination</span>
                 </div>
               </a>
             </div>
@@ -592,8 +535,19 @@ export default function FramePlayer() {
 
       {/* 2. ABOUT SECTION WITH CEO FEATURE & VIDEO FRAME CANVAS BACKDROP */}
       <section id="about" ref={aboutSectionRef} className="about-frame-section">
-        {/* Canvas for Video Frame Ambient Background */}
-        <canvas ref={aboutCanvasRef} className="about-canvas" />
+        {/* Desktop: Canvas for Video Frame Ambient Background */}
+        {!isMobile && <canvas ref={aboutCanvasRef} className="about-canvas" />}
+
+        {/* Mobile: Static last frame image */}
+        {isMobile && (
+          <div className="about-mobile-bg">
+            <img
+              src={ABOUT_LAST_FRAME}
+              alt="About Background"
+              className="about-mobile-bg-img"
+            />
+          </div>
+        )}
 
         {/* Ambient Dark Gradient Overlay */}
         <div className="about-canvas-overlay" />
@@ -655,17 +609,17 @@ export default function FramePlayer() {
               <div className="about-tab-quote-body">
                 {aboutTab === 'PHILOSOPHY' && (
                   <p className="about-tab-desc">
-                    We do not simply build spaces — we curate atmosphere. Every interior should feel like a timeless composition where light, material, and human emotion seamlessly converge.
+                    We do not simply illuminate spaces — we curate atmosphere. Every room should feel like a timeless composition where optics, luminaire craft, and human emotion seamlessly converge.
                   </p>
                 )}
                 {aboutTab === 'CRAFT' && (
                   <p className="about-tab-desc">
-                    Mastery lies in the unseen details. From hand-selected Italian marbles to precision acoustic architecture, our contracting standards honor absolute perfection without compromise.
+                    Mastery lies in optical precision. From hand-blown crystal chandeliers to architectural LED integration, our lighting standards honor absolute perfection without compromise.
                   </p>
                 )}
                 {aboutTab === 'LEGACY' && (
                   <p className="about-tab-desc">
-                    Over two decades of pioneering luxury trading and bespoke interiors across Asia & the Middle East. Building enduring partnerships rooted in integrity and distinction.
+                    Over two decades of pioneering luxury lighting solutions and turnkey architectural illumination across Asia & the Middle East. Building enduring partnerships rooted in brilliance.
                   </p>
                 )}
               </div>
@@ -678,7 +632,7 @@ export default function FramePlayer() {
                   <span className="about-excellence-dot" />
                   <span className="about-excellence-tag">OUR COMMITMENT</span>
                 </div>
-                <span className="about-excellence-title">Precision • Artistry • Uncompromising Luxury</span>
+                <span className="about-excellence-title">Optical Precision • Luminaire Artistry • Uncompromising Brilliance</span>
               </div>
 
               <button
@@ -702,17 +656,17 @@ export default function FramePlayer() {
             <div className="about-stats-grid">
               <div className="about-stat-item">
                 <span className="about-stat-num">25+</span>
-                <span className="about-stat-label">YEARS OF LEGACY</span>
+                <span className="about-stat-label">YEARS OF ILLUMINATION</span>
               </div>
               <div className="about-stat-divider" />
               <div className="about-stat-item">
                 <span className="about-stat-num">450+</span>
-                <span className="about-stat-label">PROJECTS DELIVERED</span>
+                <span className="about-stat-label">LIGHTING PROJECTS</span>
               </div>
               <div className="about-stat-divider" />
               <div className="about-stat-item">
                 <span className="about-stat-num">100%</span>
-                <span className="about-stat-label">BESPOKE QUALITY</span>
+                <span className="about-stat-label">BESPOKE LUMINAIRES</span>
               </div>
             </div>
           </div>
@@ -731,7 +685,7 @@ export default function FramePlayer() {
               <div className="about-ceo-quote-badge">
                 <div className="about-quote-dot" />
                 <div className="about-quote-text">
-                  <span>EXCELLENCE IN DESIGN & TRADING</span>
+                  <span>EXCELLENCE IN LIGHTING & DESIGN</span>
                   <strong>JAMEEL TRADERS LEADERSHIP</strong>
                 </div>
               </div>
@@ -740,56 +694,7 @@ export default function FramePlayer() {
         </div>
       </section>
 
-      {/* 3. FEATURED PROJECTS PLACEHOLDER SECTION */}
-      <section id="projects" className="projects-section">
-        <div className="about-container">
-          <div className="about-header">
-            <span className="about-eyebrow">SELECTED PORTFOLIO</span>
-            <h2 className="about-title">Crafted for Distinction</h2>
-          </div>
 
-          <div className="projects-grid">
-            <div
-              className="project-card"
-              style={{
-                backgroundImage: 'linear-gradient(180deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.85) 100%), url(https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1000&q=80)',
-              }}
-            >
-              <div className="project-overlay" />
-              <div className="project-info">
-                <span className="project-category">RESIDENTIAL VILLA</span>
-                <h3 className="project-title">The Grand Horizon Estate</h3>
-              </div>
-            </div>
-
-            <div
-              className="project-card"
-              style={{
-                backgroundImage: 'linear-gradient(180deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.85) 100%), url(https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1000&q=80)',
-              }}
-            >
-              <div className="project-overlay" />
-              <div className="project-info">
-                <span className="project-category">COMMERCIAL TOWER</span>
-                <h3 className="project-title">Aura Executive Suites</h3>
-              </div>
-            </div>
-
-            <div
-              className="project-card"
-              style={{
-                backgroundImage: 'linear-gradient(180deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.85) 100%), url(https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?auto=format&fit=crop&w=1000&q=80)',
-              }}
-            >
-              <div className="project-overlay" />
-              <div className="project-info">
-                <span className="project-category">HOSPITALITY</span>
-                <h3 className="project-title">Luxe Lounge & Spa</h3>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* 4. CERTIFICATES MODAL POPUP */}
       {certModalOpen && (
@@ -803,7 +708,7 @@ export default function FramePlayer() {
                 </div>
                 <h3 className="cert-modal-title">Official Certificates & Standards</h3>
                 <p className="cert-modal-sub">
-                  Recognized internationally for quality management systems, luxury contracting standards, and architectural material compliance.
+                  Recognized internationally for optical quality management systems, luxury luminaire standards, and architectural lighting compliance.
                 </p>
               </div>
 
@@ -830,9 +735,9 @@ export default function FramePlayer() {
                   <div className="cert-stamp">GOLD CERTIFIED</div>
                 </div>
                 <div className="cert-card-info">
-                  <h4 className="cert-title">ISO 9001:2015 Quality Management</h4>
+                  <h4 className="cert-title">ISO 9001:2015 Lighting Quality Management</h4>
                   <span className="cert-issuer">International Organization for Standardization</span>
-                  <p className="cert-desc">Official certification for rigorous quality control across luxury interior contracting and bespoke material trading operations.</p>
+                  <p className="cert-desc">Official certification for rigorous quality control across luxury luminaire design and architectural lighting trading operations.</p>
                 </div>
               </div>
 
@@ -844,13 +749,13 @@ export default function FramePlayer() {
                 </div>
                 <div className="cert-preview-frame">
                   <ShieldCheck size={36} className="cert-icon-gold" />
-                  <span className="cert-watermark">LUXURY CONTRACTING</span>
+                  <span className="cert-watermark">LUXURY LIGHTING</span>
                   <div className="cert-stamp">ACCREDITED</div>
                 </div>
                 <div className="cert-card-info">
-                  <h4 className="cert-title">Middle East Luxury Contracting Accreditation</h4>
+                  <h4 className="cert-title">Middle East Luxury Illumination Accreditation</h4>
                   <span className="cert-issuer">Global Architectural & Engineering Council</span>
-                  <p className="cert-desc">Certified excellence in turnkey execution, structural integrity, and acoustic precision for high-end estate interiors.</p>
+                  <p className="cert-desc">Certified excellence in turnkey lighting execution, optical engineering, and acoustic luminaire integration for high-end spaces.</p>
                 </div>
               </div>
 
@@ -862,13 +767,13 @@ export default function FramePlayer() {
                 </div>
                 <div className="cert-preview-frame">
                   <Building2 size={36} className="cert-icon-gold" />
-                  <span className="cert-watermark">MATERIAL TRADING</span>
+                  <span className="cert-watermark">LUMINAIRE TRADING</span>
                   <div className="cert-stamp">COMPLIANT</div>
                 </div>
                 <div className="cert-card-info">
-                  <h4 className="cert-title">International Material Compliance Standard</h4>
-                  <span className="cert-issuer">European Marble & Timber Sourcing Board</span>
-                  <p className="cert-desc">Ethical sourcing & premium grade authentication for Italian marble, architectural brass, and sustainable hardwoods.</p>
+                  <h4 className="cert-title">International Luminaire Compliance Standard</h4>
+                  <span className="cert-issuer">European Lighting & Optical Sourcing Board</span>
+                  <p className="cert-desc">Ethical sourcing & premium grade authentication for Italian crystal, architectural brass, and optical LED systems.</p>
                 </div>
               </div>
 
@@ -880,13 +785,13 @@ export default function FramePlayer() {
                 </div>
                 <div className="cert-preview-frame">
                   <Sparkles size={36} className="cert-icon-gold" />
-                  <span className="cert-watermark">DESIGN EXCELLENCE</span>
+                  <span className="cert-watermark">LIGHTING EXCELLENCE</span>
                   <div className="cert-stamp">HONOR AWARD</div>
                 </div>
                 <div className="cert-card-info">
-                  <h4 className="cert-title">Bespoke Architectural Excellence Shield</h4>
-                  <span className="cert-issuer">Architectural Distinction Forum</span>
-                  <p className="cert-desc">Awarded for 25+ years of landmark interior craftsmanship and extraordinary client satisfaction.</p>
+                  <h4 className="cert-title">Bespoke Lighting Design Excellence Shield</h4>
+                  <span className="cert-issuer">Architectural Lighting Forum</span>
+                  <p className="cert-desc">Awarded for 20+ years of landmark architectural lighting craftsmanship and extraordinary client satisfaction.</p>
                 </div>
               </div>
             </div>
@@ -909,4 +814,3 @@ export default function FramePlayer() {
     </>
   );
 }
-
