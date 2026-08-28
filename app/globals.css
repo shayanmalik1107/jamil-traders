@@ -1,13 +1,19 @@
 :root {
-  --background: #080808;
-  --foreground: #f8fafc;
-  --gold-accent: #d4af37;
-  --gold-light: #f3e5ab;
-  --gold-glow: rgba(212, 175, 55, 0.35);
-  --glass-bg: rgba(18, 18, 18, 0.6);
-  --glass-border: rgba(212, 175, 55, 0.25);
-  --font-serif: 'Cormorant Garamond', Georgia, serif;
-  --font-sans: 'Plus Jakarta Sans', -apple-system, sans-serif;
+  --background: #ffffff;
+  --foreground: #18181b;
+  --brand-red: #C8102E;
+  --brand-red-bright: #E31B23;
+  --brand-red-dark: #800000;
+  --brand-red-light-bg: #fff6f6;
+  --brand-red-subtle-border: rgba(200, 16, 46, 0.15);
+  --brand-red-glow: rgba(200, 16, 46, 0.12);
+  --gold-accent: #C8102E;
+  --gold-light: #E31B23;
+  --gold-glow: rgba(200, 16, 46, 0.25);
+  --glass-bg: rgba(255, 255, 255, 0.92);
+  --glass-border: rgba(200, 16, 46, 0.2);
+  --font-serif: 'Cinzel', Georgia, serif;
+  --font-sans: 'Montserrat', -apple-system, sans-serif;
 }
 
 * {
@@ -137,14 +143,13 @@ canvas {
   pointer-events: none;
 }
 
-/* Floating Glass Pill Active After Scroll (High-Opacity Warm Luxury Glass) */
+/* Floating Glass Pill Active After Scroll (Clean White Luxury Glass with Crimson Border) */
 .hero-header.is-scrolled::before {
-  background: linear-gradient(135deg, rgba(26, 22, 18, 0.92) 0%, rgba(14, 12, 10, 0.88) 100%);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.96) 0%, rgba(253, 246, 246, 0.94) 100%);
   backdrop-filter: blur(28px) saturate(190%);
   -webkit-backdrop-filter: blur(28px) saturate(190%);
-  border: 1px solid rgba(212, 175, 55, 0.4);
-  border-top-color: rgba(255, 240, 180, 0.7);
-  box-shadow: 0 15px 45px rgba(0, 0, 0, 0.75), inset 0 1.5px 2px rgba(255, 240, 180, 0.45), 0 0 30px rgba(212, 175, 55, 0.2);
+  border: 1px solid rgba(200, 16, 46, 0.25);
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.06), 0 0 20px rgba(200, 16, 46, 0.08);
 }
 
 .hero-header>* {
@@ -159,12 +164,11 @@ canvas {
   text-decoration: none;
 }
 
-.hero-logo-icon {
-  width: clamp(28px, 3.8vh, 34px);
-  height: clamp(28px, 3.8vh, 34px);
-  color: var(--gold-accent);
-  filter: drop-shadow(0 2px 10px rgba(0, 0, 0, 0.95));
-  flex-shrink: 0;
+.hero-logo-img {
+  height: clamp(34px, 4.8vh, 44px);
+  width: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 8px rgba(200, 16, 46, 0.25));
 }
 
 .hero-logo-text {
@@ -173,26 +177,25 @@ canvas {
 }
 
 .hero-brand-name {
-  font-family: var(--font-serif);
+  font-family: var(--font-sans);
   font-size: clamp(1.15rem, 2.1vh, 1.4rem);
-  font-weight: 500;
-  letter-spacing: 0.2em;
-  color: #ffffff;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  color: #18181b;
   line-height: 1;
   text-transform: uppercase;
-  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.98);
 }
 
 .hero-brand-sub {
+  font-family: var(--font-sans);
   font-size: clamp(0.55rem, 0.95vh, 0.6rem);
-  font-weight: 400;
-  letter-spacing: 0.25em;
-  color: #cbd5e1;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  color: var(--brand-red);
   text-transform: uppercase;
-  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.98);
 }
 
-/* Nav Menu Links - High-Opacity Warm Luxury Glassmorphism Pill */
+/* Nav Menu Links - Clean Luxury Glassmorphism Pill */
 .desktop-nav {
   display: flex;
   align-items: center;
@@ -203,14 +206,13 @@ canvas {
   align-items: center;
   gap: clamp(1rem, 1.8vw, 2.2rem);
   list-style: none;
-  background: linear-gradient(135deg, rgba(28, 24, 20, 0.85) 0%, rgba(16, 14, 12, 0.82) 100%);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.92) 0%, rgba(253, 246, 246, 0.88) 100%);
   backdrop-filter: blur(20px) saturate(180%);
   -webkit-backdrop-filter: blur(20px) saturate(180%);
   padding: 0.65rem 2.2rem;
   border-radius: 999px;
-  border: 1px solid rgba(212, 175, 55, 0.35);
-  border-top-color: rgba(255, 240, 180, 0.6);
-  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.6), inset 0 1.5px 2px rgba(255, 240, 180, 0.4), 0 0 20px rgba(212, 175, 55, 0.12);
+  border: 1px solid rgba(200, 16, 46, 0.2);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05), inset 0 1.5px 2px rgba(255, 255, 255, 0.8);
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -235,17 +237,24 @@ canvas {
   border-color: var(--gold-accent);
 }
 
+.hero-header.is-scrolled .hero-talk-btn:hover {
+  background: linear-gradient(135deg, #ff3b3b 0%, #E31B23 60%, #C8102E 100%);
+  box-shadow: 0 10px 30px rgba(200, 16, 46, 0.4);
+}
+
 .hero-header.is-scrolled .hero-icon-btn {
-  background: transparent;
-  border-color: transparent;
+  background: rgba(255, 255, 255, 0.9);
+  border-color: rgba(200, 16, 46, 0.2);
+  color: #18181b;
 }
 
 .hero-nav-item {
   position: relative;
+  font-family: var(--font-sans);
   font-size: clamp(0.72rem, 1.15vh, 0.82rem);
   font-weight: 600;
-  letter-spacing: 0.15em;
-  color: #e2e8f0;
+  letter-spacing: 0.14em;
+  color: #3f3f46;
   text-transform: uppercase;
   text-decoration: none;
   cursor: pointer;
@@ -254,26 +263,20 @@ canvas {
   flex-direction: column;
   align-items: center;
   gap: 4px;
-  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
 }
 
-.hero-nav-item:hover {
-  color: #ffffff;
-  text-shadow: 0 0 12px rgba(255, 255, 255, 0.8);
-}
-
+.hero-nav-item:hover,
 .hero-nav-item.active {
-  color: #ffffff;
+  color: #C8102E;
   font-weight: 700;
-  text-shadow: 0 0 14px rgba(255, 255, 255, 0.9), 0 0 25px rgba(212, 175, 55, 0.6);
 }
 
 .hero-nav-active-dot {
   width: 6px;
   height: 6px;
-  background: var(--gold-light);
+  background: #C8102E;
   border-radius: 50%;
-  box-shadow: 0 0 10px var(--gold-accent), 0 0 4px #ffffff;
+  box-shadow: 0 0 8px rgba(200, 16, 46, 0.6);
 }
 
 /* Header Right Actions */
@@ -284,10 +287,9 @@ canvas {
 }
 
 .hero-icon-btn {
-  background: rgba(28, 24, 20, 0.85);
-  border: 1px solid rgba(212, 175, 55, 0.35);
-  border-top-color: rgba(255, 240, 180, 0.6);
-  color: #e2e8f0;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(200, 16, 46, 0.25);
+  color: #18181b;
   width: clamp(34px, 4vh, 38px);
   height: clamp(34px, 4vh, 38px);
   border-radius: 50%;
@@ -298,61 +300,60 @@ canvas {
   backdrop-filter: blur(12px);
   transition: all 0.25s ease;
   flex-shrink: 0;
-  box-shadow: inset 0 1px 1.5px rgba(255, 240, 180, 0.35);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
 }
 
 .hero-icon-btn:hover {
-  background: rgba(212, 175, 55, 0.25);
-  border-color: var(--gold-accent);
-  color: var(--gold-light);
+  background: #C8102E;
+  border-color: #C8102E;
+  color: #ffffff;
 }
 
-/* Header LET'S TALK Button — High-Opacity Warm Glassmorphism */
+/* Header START A PROJECT Button — Crimson Brand Red Gradient */
 .hero-talk-btn {
   display: flex;
   align-items: center;
   gap: 0.6rem;
-  padding: 0.45rem 0.55rem 0.45rem 1.1rem;
-  background: linear-gradient(135deg, rgba(32, 28, 22, 0.88) 0%, rgba(18, 16, 14, 0.85) 100%);
-  border: 1px solid rgba(212, 175, 55, 0.4);
-  border-top-color: rgba(255, 240, 180, 0.65);
+  padding: 0.5rem 0.6rem 0.5rem 1.25rem;
+  background: linear-gradient(135deg, #E31B23 0%, #C8102E 60%, #990000 100%);
+  border: 1px solid rgba(227, 27, 35, 0.5);
   border-radius: 999px;
-  color: #ffffff;
+  color: #ffffff !important;
+  font-family: var(--font-sans);
   font-size: clamp(0.68rem, 1.1vh, 0.74rem);
-  font-weight: 600;
+  font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   text-decoration: none;
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  backdrop-filter: blur(20px);
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   cursor: pointer;
   white-space: nowrap;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.55), inset 0 1.5px 2px rgba(255, 240, 180, 0.4), 0 0 18px rgba(212, 175, 55, 0.12);
+  box-shadow: 0 8px 25px rgba(200, 16, 46, 0.35);
 }
 
 .hero-talk-btn-arrow {
   width: clamp(24px, 2.8vh, 28px);
   height: clamp(24px, 2.8vh, 28px);
-  background: rgba(212, 175, 55, 0.28);
+  background: rgba(255, 255, 255, 0.25);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--gold-light);
+  color: #ffffff;
   transition: transform 0.3s ease;
 }
 
 .hero-talk-btn:hover {
-  background: rgba(212, 175, 55, 0.28);
-  border-color: var(--gold-accent);
-  box-shadow: 0 0 25px rgba(212, 175, 55, 0.35);
+  background: linear-gradient(135deg, #ff3b3b 0%, #E31B23 60%, #C8102E 100%);
+  box-shadow: 0 12px 30px rgba(200, 16, 46, 0.5);
+  transform: translateY(-2px);
 }
 
 .hero-talk-btn:hover .hero-talk-btn-arrow {
-  background: var(--gold-accent);
-  color: #000000;
-  transform: translateX(2px) rotate(-45deg);
+  background: #ffffff;
+  color: #C8102E;
+  transform: translateX(2px);
 }
 
 .mobile-menu-toggle {
@@ -1986,103 +1987,22 @@ button.about-seal-badge:hover .about-seal-icon {
 .bg-industries,
 .bg-contact {
   position: relative;
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
-  background-repeat: no-repeat;
-}
-
-/* About Page — Corporate Architectural Headquarters Illumination */
-.bg-about {
-  background-image:
-    linear-gradient(180deg, rgba(6, 5, 3, 0.88) 0%, rgba(8, 7, 4, 0.84) 40%, rgba(6, 5, 3, 0.90) 100%),
-    url('https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1920&q=80');
-}
-
-/* Projects Page — High-End Villa Architectural Interior Lighting */
-.bg-projects {
-  background-image:
-    linear-gradient(180deg, rgba(6, 5, 3, 0.88) 0%, rgba(8, 7, 4, 0.84) 40%, rgba(6, 5, 3, 0.90) 100%),
-    url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1920&q=80');
-}
-
-/* Products Page — Precision Downlights & Optical Baffles */
-.bg-products {
-  background-image:
-    linear-gradient(180deg, rgba(6, 5, 3, 0.88) 0%, rgba(8, 7, 4, 0.84) 40%, rgba(6, 5, 3, 0.90) 100%),
-    url('https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=1920&q=80');
-}
-
-/* Expertise Page — Warm Architectural Linear Cove & Lighting Design */
-.bg-expertise {
-  background-image:
-    linear-gradient(180deg, rgba(6, 5, 3, 0.88) 0%, rgba(8, 7, 4, 0.84) 40%, rgba(6, 5, 3, 0.90) 100%),
-    url('https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1920&q=80');
-}
-
-/* Industries Page — Exterior Facade Grazing & Monumental Illumination */
-.bg-industries {
-  background-image:
-    linear-gradient(180deg, rgba(6, 5, 3, 0.88) 0%, rgba(8, 7, 4, 0.84) 40%, rgba(6, 5, 3, 0.90) 100%),
-    url('https://images.unsplash.com/photo-1518005020951-eccb494ad742?auto=format&fit=crop&w=1920&q=80');
-}
-
-/* Contact Page — Luxury Hotel Lounge & Warm Chandelier Ambience */
-.bg-contact {
-  background-image:
-    linear-gradient(180deg, rgba(6, 5, 3, 0.88) 0%, rgba(8, 7, 4, 0.84) 40%, rgba(6, 5, 3, 0.90) 100%),
-    url('https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=1920&q=80');
+  background: linear-gradient(180deg, #ffffff 0%, #fff9f9 50%, #fdf5f5 100%) !important;
+  color: #18181b !important;
 }
 
 /* Home Section background styling */
-.home-section-expertise {
-  background-image: linear-gradient(180deg, rgba(8, 11, 18, 0.96) 0%, rgba(8, 11, 18, 0.95) 100%), url('https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1920&q=80');
-  background-size: cover;
-  background-position: center;
-  border-top: 1px solid rgba(212, 175, 55, 0.3);
-}
-
-.home-section-projects {
-  background-image: linear-gradient(180deg, rgba(9, 8, 7, 0.97) 0%, rgba(9, 8, 7, 0.95) 100%), url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1920&q=80');
-  background-size: cover;
-  background-position: center;
-  border-top: 1px solid rgba(212, 175, 55, 0.3);
-}
-
-.home-section-spotlight {
-  background-image: linear-gradient(180deg, rgba(14, 11, 7, 0.97) 0%, rgba(14, 11, 7, 0.95) 100%), url('https://images.unsplash.com/photo-1540932239986-30128078f3c5?auto=format&fit=crop&w=1920&q=80');
-  background-size: cover;
-  background-position: center;
-  border-top: 1px solid rgba(212, 175, 55, 0.3);
-}
-
-.home-section-numbers {
-  background-image: linear-gradient(90deg, rgba(28, 22, 12, 0.97) 0%, rgba(18, 14, 7, 0.96) 100%), url('https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=1920&q=80');
-  background-size: cover;
-  background-position: center;
-  border-y: 1px solid rgba(212, 175, 55, 0.4);
-  padding: 5rem 0;
-}
-
-.home-section-clients {
-  background-image: linear-gradient(180deg, rgba(9, 11, 17, 0.97) 0%, rgba(6, 8, 13, 0.95) 100%), url('https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1920&q=80');
-  background-size: cover;
-  background-position: center;
-  border-top: 1px solid rgba(212, 175, 55, 0.3);
-}
-
-.home-section-ceo {
-  background-image: linear-gradient(180deg, rgba(22, 17, 10, 0.96) 0%, rgba(12, 9, 5, 0.94) 100%), url('https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1920&q=80');
-  background-size: cover;
-  background-position: center;
-  border-top: 1px solid rgba(212, 175, 55, 0.3);
-}
-
-.home-section-final-cta {
-  background-image: linear-gradient(180deg, rgba(28, 20, 10, 0.97) 0%, rgba(12, 9, 4, 0.97) 100%), url('https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=1920&q=80');
-  background-size: cover;
-  background-position: center;
-  border-top: 1px solid rgba(212, 175, 55, 0.4);
+.home-section-expertise,
+.home-section-projects,
+.home-section-spotlight,
+.home-section-numbers,
+.home-section-clients,
+.home-section-ceo,
+.home-section-final-cta,
+.main-site-footer {
+  background: linear-gradient(180deg, #ffffff 0%, #fff9f9 50%, #fdf5f5 100%) !important;
+  color: #18181b !important;
+  border-top: 1px solid rgba(200, 16, 46, 0.12) !important;
 }
 
 /* ------------------------------------------
@@ -2100,10 +2020,9 @@ button.about-seal-badge:hover .about-seal-icon {
   justify-content: space-between;
   height: 250px;
   min-height: 250px;
-  background: rgba(14, 16, 22, 0.85);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.09);
+  background: #ffffff !important;
+  border: 1px solid rgba(200, 16, 46, 0.15) !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04), 0 0 15px rgba(200, 16, 46, 0.03) !important;
   border-radius: 26px;
   text-decoration: none;
   transition: all 0.45s cubic-bezier(0.16, 1, 0.3, 1);
@@ -2112,9 +2031,9 @@ button.about-seal-badge:hover .about-seal-icon {
 }
 
 .expertise-line-card:hover {
-  background: rgba(22, 26, 36, 0.95);
-  border-color: var(--gold-accent);
-  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.9), 0 0 35px rgba(212, 175, 55, 0.25);
+  background: #ffffff !important;
+  border-color: rgba(200, 16, 46, 0.4) !important;
+  box-shadow: 0 20px 50px rgba(200, 16, 46, 0.12) !important;
   transform: translateX(8px);
 }
 
@@ -2130,9 +2049,9 @@ button.about-seal-badge:hover .about-seal-icon {
 .expertise-line-num {
   font-family: var(--font-serif);
   font-size: 3rem;
-  font-weight: 700;
-  color: var(--gold-accent);
-  opacity: 0.85;
+  font-weight: 800;
+  color: #C8102E;
+  opacity: 0.95;
   line-height: 1;
   transition: all 0.35s ease;
   min-width: 50px;
@@ -2141,7 +2060,7 @@ button.about-seal-badge:hover .about-seal-icon {
 .expertise-line-card:hover .expertise-line-num {
   opacity: 1;
   transform: scale(1.1);
-  color: var(--gold-light);
+  color: #E31B23;
 }
 
 .expertise-line-info {
@@ -2153,23 +2072,27 @@ button.about-seal-badge:hover .about-seal-icon {
 }
 
 .expertise-line-subtitle {
+  font-family: var(--font-sans);
   font-size: 0.68rem;
   font-weight: 700;
   letter-spacing: 0.2em;
-  color: var(--gold-accent);
+  color: #C8102E;
   text-transform: uppercase;
 }
 
 .expertise-line-title {
-  font-family: var(--font-serif);
+  font-family: var(--font-sans);
   font-size: 1.75rem;
-  color: #ffffff;
+  font-weight: 800;
+  color: #09090b;
   line-height: 1.2;
 }
 
 .expertise-line-desc {
+  font-family: var(--font-sans);
   font-size: 0.92rem;
-  color: #cbd5e1;
+  font-weight: 500;
+  color: #3f3f46;
   line-height: 1.45;
   max-width: 620px;
   display: -webkit-box;
@@ -2190,18 +2113,19 @@ button.about-seal-badge:hover .about-seal-icon {
   align-items: center;
   gap: 0.4rem;
   padding: 0.35rem 0.85rem;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(200, 16, 46, 0.06);
+  border: 1px solid rgba(200, 16, 46, 0.2);
   border-radius: 999px;
   font-size: 0.75rem;
-  color: #e2e8f0;
+  font-weight: 600;
+  color: #C8102E;
 }
 
 .expertise-line-card-right {
   flex: 0 0 380px;
   position: relative;
   overflow: hidden;
-  border-left: 1px solid rgba(212, 175, 55, 0.3);
+  border-left: 1px solid rgba(200, 16, 46, 0.15);
 }
 
 /* Full View Image Box with Zoom Animation on Hover */
@@ -2225,41 +2149,45 @@ button.about-seal-badge:hover .about-seal-icon {
   bottom: 1rem;
   right: 1rem;
   padding: 0.3rem 0.75rem;
-  background: rgba(10, 10, 12, 0.85);
+  background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(12px);
-  border: 1px solid rgba(212, 175, 55, 0.5);
+  border: 1px solid rgba(200, 16, 46, 0.3);
   border-radius: 999px;
   font-size: 0.6rem;
   font-weight: 800;
   letter-spacing: 0.15em;
-  color: var(--gold-light);
+  color: #C8102E;
   z-index: 5;
 }
 
 /* FULL IMAGE ZOOM ANIMATION ON HOVER */
 .expertise-line-card:hover .expertise-line-img {
   transform: scale(1.15);
-  filter: brightness(1.18) contrast(1.05);
+  filter: brightness(1.05) contrast(1.02);
 }
 
 .expertise-card-subtitle {
+  font-family: var(--font-sans);
   font-size: 0.68rem;
   font-weight: 700;
   letter-spacing: 0.18em;
-  color: var(--gold-accent);
+  color: #C8102E;
   text-transform: uppercase;
 }
 
 .expertise-card-title {
-  font-family: var(--font-serif);
+  font-family: var(--font-sans);
   font-size: 1.5rem;
-  color: #ffffff;
+  font-weight: 800;
+  color: #09090b;
   line-height: 1.25;
 }
 
 .expertise-card-desc {
+  font-family: var(--font-sans);
   font-size: 0.9rem;
-  color: #a1a1aa;
+  font-weight: 500;
+  color: #3f3f46;
   line-height: 1.5;
   margin-top: 0.2rem;
 }
@@ -2268,7 +2196,7 @@ button.about-seal-badge:hover .about-seal-icon {
   display: flex;
   align-items: center;
   gap: 0.4rem;
-  color: var(--gold-light);
+  color: #C8102E;
   font-size: 0.72rem;
   font-weight: 700;
   letter-spacing: 0.15em;
@@ -2294,10 +2222,11 @@ button.about-seal-badge:hover .about-seal-icon {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  background: rgba(255, 255, 255, 0.04);
+  background: #ffffff;
   padding: 0.4rem;
   border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(200, 16, 46, 0.18);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
 }
 
 .filter-tab-btn {
@@ -2305,7 +2234,8 @@ button.about-seal-badge:hover .about-seal-icon {
   border-radius: 999px;
   border: none;
   background: transparent;
-  color: #a1a1aa;
+  color: #52525b;
+  font-family: var(--font-sans);
   font-size: 0.72rem;
   font-weight: 700;
   letter-spacing: 0.12em;
@@ -2314,13 +2244,13 @@ button.about-seal-badge:hover .about-seal-icon {
 }
 
 .filter-tab-btn:hover {
-  color: #ffffff;
+  color: #C8102E;
 }
 
 .filter-tab-btn.active {
-  background: var(--gold-accent);
-  color: #0a0a0c;
-  box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+  background: linear-gradient(135deg, #E31B23 0%, #C8102E 60%, #990000 100%);
+  color: #ffffff;
+  box-shadow: 0 4px 15px rgba(200, 16, 46, 0.35);
 }
 
 .home-projects-grid {
@@ -2330,8 +2260,9 @@ button.about-seal-badge:hover .about-seal-icon {
 }
 
 .home-project-card {
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: #ffffff;
+  border: 1px solid rgba(200, 16, 46, 0.15);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
   border-radius: 20px;
   overflow: hidden;
   cursor: pointer;
@@ -2341,9 +2272,9 @@ button.about-seal-badge:hover .about-seal-icon {
 }
 
 .home-project-card:hover {
-  border-color: var(--gold-accent);
+  border-color: rgba(200, 16, 46, 0.4);
   transform: translateY(-6px);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), 0 0 25px rgba(212, 175, 55, 0.15);
+  box-shadow: 0 20px 40px rgba(200, 16, 46, 0.12);
 }
 
 .project-card-img-wrap {
@@ -2368,14 +2299,15 @@ button.about-seal-badge:hover .about-seal-icon {
   top: 1rem;
   left: 1rem;
   padding: 0.35rem 0.85rem;
-  background: rgba(10, 10, 12, 0.85);
+  background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(12px);
-  border: 1px solid rgba(212, 175, 55, 0.4);
+  border: 1px solid rgba(200, 16, 46, 0.3);
   border-radius: 999px;
+  font-family: var(--font-sans);
   font-size: 0.65rem;
   font-weight: 700;
   letter-spacing: 0.12em;
-  color: var(--gold-light);
+  color: #C8102E;
   text-transform: uppercase;
 }
 
@@ -2388,18 +2320,19 @@ button.about-seal-badge:hover .about-seal-icon {
 }
 
 .project-card-location {
+  font-family: var(--font-sans);
   font-size: 0.72rem;
   font-weight: 600;
   letter-spacing: 0.15em;
-  color: var(--gold-accent);
+  color: #C8102E;
   text-transform: uppercase;
 }
 
 .project-card-title {
-  font-family: var(--font-serif);
-  font-size: 1.45rem;
-  color: #ffffff;
-  line-height: 1.25;
+  font-family: var(--font-sans);
+  font-weight: 800;
+  color: #09090b;
+  font-size: 1.25rem;
 }
 
 .project-card-excerpt {
@@ -2438,17 +2371,19 @@ button.about-seal-badge:hover .about-seal-icon {
   height: 420px;
   border-radius: 24px;
   overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(200, 16, 46, 0.15);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
   display: flex;
   align-items: flex-end;
   padding: 2.25rem;
   transition: all 0.4s ease;
+  background: #ffffff;
 }
 
 .spotlight-card:hover {
-  border-color: var(--gold-accent);
+  border-color: rgba(200, 16, 46, 0.4);
   transform: translateY(-5px);
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
+  box-shadow: 0 20px 50px rgba(200, 16, 46, 0.12);
 }
 
 .spotlight-card-bg {
@@ -2469,24 +2404,34 @@ button.about-seal-badge:hover .about-seal-icon {
   display: flex;
   flex-direction: column;
   gap: 0.6rem;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(12px);
+  padding: 1.5rem;
+  border-radius: 18px;
+  border: 1px solid rgba(200, 16, 46, 0.15);
 }
 
 .spotlight-cat-tag {
+  font-family: var(--font-sans);
   font-size: 0.68rem;
   font-weight: 800;
   letter-spacing: 0.25em;
-  color: var(--gold-accent);
+  color: #C8102E;
+  text-transform: uppercase;
 }
 
 .spotlight-title {
-  font-family: var(--font-serif);
-  font-size: 1.8rem;
-  color: #ffffff;
+  font-family: var(--font-sans);
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: #09090b;
 }
 
 .spotlight-desc {
+  font-family: var(--font-sans);
   font-size: 0.92rem;
-  color: #d4d4d8;
+  font-weight: 500;
+  color: #3f3f46;
   line-height: 1.45;
 }
 
@@ -2494,7 +2439,8 @@ button.about-seal-badge:hover .about-seal-icon {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  color: var(--gold-light);
+  color: #C8102E;
+  font-family: var(--font-sans);
   font-size: 0.78rem;
   font-weight: 700;
   letter-spacing: 0.15em;
@@ -2522,24 +2468,27 @@ button.about-seal-badge:hover .about-seal-icon {
 
 .stat-big-val {
   font-family: var(--font-serif);
-  font-size: clamp(2rem, 4vw, 3rem);
-  font-weight: 700;
-  color: #ffffff;
+  font-size: clamp(2.2rem, 4.5vw, 3.2rem);
+  font-weight: 800;
+  background: linear-gradient(135deg, #E31B23 0%, #C8102E 60%, #800000 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
   letter-spacing: 0.04em;
 }
 
 .stat-big-lbl {
+  font-family: var(--font-sans);
   font-size: 0.85rem;
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  color: var(--gold-accent);
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: #27272a;
   text-transform: uppercase;
 }
 
 .number-divider {
   width: 1px;
   height: 60px;
-  background: rgba(212, 175, 55, 0.3);
+  background: rgba(200, 16, 46, 0.2);
 }
 
 /* ------------------------------------------
@@ -2552,17 +2501,19 @@ button.about-seal-badge:hover .about-seal-icon {
 }
 
 .client-logo-card {
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: #ffffff;
+  border: 1px solid rgba(200, 16, 46, 0.14);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.03);
   border-radius: 18px;
   padding: 1.75rem 1.5rem;
   transition: all 0.35s ease;
 }
 
 .client-logo-card:hover {
-  border-color: var(--gold-accent);
-  background: rgba(212, 175, 55, 0.05);
+  border-color: rgba(200, 16, 46, 0.4);
+  background: #ffffff;
   transform: translateY(-3px);
+  box-shadow: 0 15px 35px rgba(200, 16, 46, 0.1);
 }
 
 .client-card-inner {
@@ -2572,22 +2523,26 @@ button.about-seal-badge:hover .about-seal-icon {
 }
 
 .client-card-cat {
+  font-family: var(--font-sans);
   font-size: 0.65rem;
   font-weight: 700;
   letter-spacing: 0.18em;
-  color: var(--gold-accent);
+  color: #C8102E;
   text-transform: uppercase;
 }
 
 .client-card-name {
-  font-family: var(--font-serif);
+  font-family: var(--font-sans);
   font-size: 1.35rem;
-  color: #ffffff;
+  font-weight: 800;
+  color: #09090b;
 }
 
 .client-card-highlight {
+  font-family: var(--font-sans);
   font-size: 0.8rem;
-  color: #a1a1aa;
+  font-weight: 500;
+  color: #52525b;
 }
 
 /* ------------------------------------------
@@ -2598,8 +2553,9 @@ button.about-seal-badge:hover .about-seal-icon {
   grid-template-columns: 1fr 1.3fr;
   gap: 4rem;
   align-items: center;
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(212, 175, 55, 0.35);
+  background: #ffffff;
+  border: 1px solid rgba(200, 16, 46, 0.18);
+  box-shadow: 0 15px 45px rgba(0, 0, 0, 0.05);
   border-radius: 32px;
   padding: 3.5rem;
 }
@@ -2615,8 +2571,8 @@ button.about-seal-badge:hover .about-seal-icon {
   max-width: 360px;
   border-radius: 24px;
   object-fit: cover;
-  border: 1px solid rgba(212, 175, 55, 0.4);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8);
+  border: 1px solid rgba(200, 16, 46, 0.2);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
 }
 
 .ceo-card-right {
@@ -2629,28 +2585,31 @@ button.about-seal-badge:hover .about-seal-icon {
   font-family: var(--font-serif);
   font-size: clamp(1.6rem, 2.8vw, 2.4rem);
   font-style: italic;
-  font-weight: 400;
+  font-weight: 600;
   line-height: 1.35;
-  color: #ffffff;
+  color: #09090b;
 }
 
 .ceo-signature-block {
   display: flex;
   flex-direction: column;
   gap: 0.2rem;
-  border-left: 3px solid var(--gold-accent);
+  border-left: 3px solid #C8102E;
   padding-left: 1rem;
 }
 
 .ceo-name-text {
-  font-family: var(--font-serif);
-  font-size: 1.3rem;
-  color: var(--gold-light);
+  font-family: var(--font-sans);
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: #C8102E;
 }
 
 .ceo-title-text {
+  font-family: var(--font-sans);
   font-size: 0.85rem;
-  color: #a1a1aa;
+  font-weight: 500;
+  color: #52525b;
 }
 
 /* ------------------------------------------
@@ -2667,15 +2626,18 @@ button.about-seal-badge:hover .about-seal-icon {
 }
 
 .final-cta-title {
-  font-family: var(--font-serif);
-  font-size: clamp(2.8rem, 5vw, 4.2rem);
-  font-weight: 400;
-  color: #ffffff;
+  font-family: var(--font-sans);
+  font-size: clamp(2.4rem, 5vw, 3.8rem);
+  font-weight: 800;
+  color: #09090b;
+  text-transform: uppercase;
 }
 
 .final-cta-subtitle {
-  font-size: 1.15rem;
-  color: #d4d4d8;
+  font-family: var(--font-sans);
+  font-size: 1.05rem;
+  font-weight: 500;
+  color: #3f3f46;
   line-height: 1.6;
 }
 
@@ -2694,19 +2656,21 @@ button.about-seal-badge:hover .about-seal-icon {
   justify-content: center;
   padding: 0.9rem 1.8rem;
   border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  background: transparent;
-  color: #ffffff;
+  border: 1px solid rgba(200, 16, 46, 0.25);
+  background: #ffffff;
+  color: #18181b;
+  font-family: var(--font-sans);
   font-size: 0.78rem;
   font-weight: 700;
   letter-spacing: 0.15em;
   transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
 }
 
 .hero-secondary-btn:hover {
-  border-color: var(--gold-accent);
-  color: var(--gold-light);
-  background: rgba(255, 255, 255, 0.05);
+  border-color: #C8102E;
+  color: #C8102E;
+  background: rgba(200, 16, 46, 0.05);
 }
 
 /* ------------------------------------------
@@ -2718,19 +2682,22 @@ button.about-seal-badge:hover .about-seal-icon {
   gap: 0.5rem;
   padding: 0.65rem 1.1rem;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(212, 175, 55, 0.4);
-  color: #ffffff;
+  background: #ffffff;
+  border: 1px solid rgba(200, 16, 46, 0.25);
+  color: #18181b;
+  font-family: var(--font-sans);
   font-size: 0.72rem;
   font-weight: 700;
   letter-spacing: 0.12em;
   cursor: pointer;
   transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
 }
 
 .project-list-header-btn:hover {
-  background: rgba(212, 175, 55, 0.2);
-  border-color: var(--gold-accent);
+  background: rgba(200, 16, 46, 0.06);
+  border-color: #C8102E;
+  color: #C8102E;
 }
 
 .project-list-badge {
@@ -2740,8 +2707,8 @@ button.about-seal-badge:hover .about-seal-icon {
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  background: var(--gold-accent);
-  color: #0a0a0c;
+  background: #C8102E;
+  color: #ffffff;
   font-size: 0.7rem;
   font-weight: 800;
 }
@@ -2754,11 +2721,13 @@ button.about-seal-badge:hover .about-seal-icon {
   width: 100%;
   padding: 0.85rem;
   border-radius: 999px;
-  background: var(--gold-accent);
-  color: #0a0a0c;
+  background: linear-gradient(135deg, #E31B23 0%, #C8102E 60%, #990000 100%);
+  color: #ffffff;
+  font-family: var(--font-sans);
   font-weight: 700;
   border: none;
   font-size: 0.85rem;
+  box-shadow: 0 6px 20px rgba(200, 16, 46, 0.35);
 }
 
 /* ------------------------------------------
@@ -2767,8 +2736,8 @@ button.about-seal-badge:hover .about-seal-icon {
 .drawer-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.8);
-  backdrop-filter: blur(16px);
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(12px);
   z-index: 300;
   display: flex;
   justify-content: flex-end;
@@ -2779,17 +2748,18 @@ button.about-seal-badge:hover .about-seal-icon {
   width: 100%;
   max-width: 520px;
   height: 100%;
-  background: #0d0e12;
-  border-left: 1px solid rgba(212, 175, 55, 0.35);
+  background: #ffffff;
+  border-left: 1px solid rgba(200, 16, 46, 0.2);
   display: flex;
   flex-direction: column;
-  box-shadow: -20px 0 50px rgba(0, 0, 0, 0.9);
+  box-shadow: -20px 0 50px rgba(0, 0, 0, 0.15);
   animation: slideLeft 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  color: #18181b;
 }
 
 .drawer-header {
   padding: 1.5rem 2rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid rgba(200, 16, 46, 0.15);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -2802,25 +2772,28 @@ button.about-seal-badge:hover .about-seal-icon {
 }
 
 .drawer-header-title h3 {
-  font-family: var(--font-serif);
+  font-family: var(--font-sans);
+  font-weight: 800;
   font-size: 1.25rem;
-  color: #ffffff;
+  color: #09090b;
 }
 
 .drawer-badge {
+  font-family: var(--font-sans);
   font-size: 0.62rem;
   font-weight: 800;
   letter-spacing: 0.15em;
   padding: 0.2rem 0.6rem;
-  background: rgba(212, 175, 55, 0.2);
-  color: var(--gold-light);
+  background: rgba(200, 16, 46, 0.08);
+  color: #C8102E;
   border-radius: 999px;
+  border: 1px solid rgba(200, 16, 46, 0.2);
 }
 
 .drawer-close-btn {
-  background: transparent;
-  border: none;
-  color: #a1a1aa;
+  background: rgba(200, 16, 46, 0.08);
+  border: 1px solid rgba(200, 16, 46, 0.2);
+  color: #C8102E;
   cursor: pointer;
 }
 
@@ -2832,6 +2805,7 @@ button.about-seal-badge:hover .about-seal-icon {
   flex-grow: 1;
   overflow-y: auto;
   padding: 1.5rem 2rem;
+  background: #ffffff;
 }
 
 .drawer-empty-state {
@@ -2842,12 +2816,12 @@ button.about-seal-badge:hover .about-seal-icon {
   justify-content: center;
   height: 100%;
   gap: 1rem;
-  color: #a1a1aa;
+  color: #71717a;
 }
 
 .drawer-empty-icon {
-  color: var(--gold-accent);
-  opacity: 0.5;
+  color: #C8102E;
+  opacity: 0.7;
 }
 
 .drawer-items-list {
@@ -2860,9 +2834,10 @@ button.about-seal-badge:hover .about-seal-icon {
   display: flex;
   gap: 1.25rem;
   padding: 1rem;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: #ffffff;
+  border: 1px solid rgba(200, 16, 46, 0.15);
   border-radius: 14px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
 }
 
 .drawer-item-img {
@@ -2880,21 +2855,25 @@ button.about-seal-badge:hover .about-seal-icon {
 }
 
 .drawer-item-cat {
+  font-family: var(--font-sans);
   font-size: 0.62rem;
   font-weight: 700;
   letter-spacing: 0.15em;
-  color: var(--gold-accent);
+  color: #C8102E;
+  text-transform: uppercase;
 }
 
 .drawer-item-name {
-  font-family: var(--font-serif);
+  font-family: var(--font-sans);
   font-size: 1.05rem;
-  color: #ffffff;
+  font-weight: 800;
+  color: #09090b;
 }
 
 .drawer-item-spec {
+  font-family: var(--font-sans);
   font-size: 0.75rem;
-  color: #a1a1aa;
+  color: #52525b;
 }
 
 .drawer-item-qty-row {
@@ -2908,23 +2887,24 @@ button.about-seal-badge:hover .about-seal-icon {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  background: rgba(255, 255, 255, 0.06);
+  background: rgba(200, 16, 46, 0.08);
   padding: 0.2rem 0.5rem;
   border-radius: 8px;
-
+  border: 1px solid rgba(200, 16, 46, 0.2);
 }
 
 .qty-picker button {
   background: transparent;
   border: none;
-  color: #ffffff;
+  color: #C8102E;
   cursor: pointer;
 }
 
 .qty-picker span {
+  font-family: var(--font-sans);
   font-size: 0.82rem;
   font-weight: 700;
-  color: var(--gold-light);
+  color: #C8102E;
   min-width: 16px;
   text-align: center;
 }
@@ -2932,14 +2912,14 @@ button.about-seal-badge:hover .about-seal-icon {
 .drawer-item-remove {
   background: transparent;
   border: none;
-  color: #ef4444;
+  color: #dc2626;
   cursor: pointer;
 }
 
 .drawer-footer {
   padding: 1.5rem 2rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-  background: #090a0d;
+  border-top: 1px solid rgba(200, 16, 46, 0.15);
+  background: #ffffff;
   display: flex;
   flex-direction: column;
   gap: 1rem;
@@ -2950,11 +2930,11 @@ button.about-seal-badge:hover .about-seal-icon {
   align-items: center;
   justify-content: space-between;
   font-size: 0.9rem;
-  color: #a1a1aa;
+  color: #52525b;
 }
 
 .drawer-summary-row strong {
-  color: #ffffff;
+  color: #09090b;
   font-size: 1.1rem;
 }
 
@@ -2967,9 +2947,10 @@ button.about-seal-badge:hover .about-seal-icon {
 .drawer-clear-btn {
   padding: 0.85rem 1.25rem;
   border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  background: transparent;
-  color: #a1a1aa;
+  border: 1px solid rgba(200, 16, 46, 0.25);
+  background: #ffffff;
+  color: #52525b;
+  font-family: var(--font-sans);
   font-size: 0.72rem;
   font-weight: 700;
   letter-spacing: 0.12em;
@@ -2996,24 +2977,28 @@ button.about-seal-badge:hover .about-seal-icon {
 }
 
 .form-group label {
+  font-family: var(--font-sans);
   font-size: 0.65rem;
   font-weight: 700;
   letter-spacing: 0.15em;
-  color: var(--gold-accent);
+  color: #C8102E;
+  text-transform: uppercase;
 }
 
 .form-group input, .form-group textarea, .form-field-group input, .form-field-group select, .form-field-group textarea {
   padding: 0.75rem 1rem;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: #ffffff;
+  border: 1px solid rgba(200, 16, 46, 0.2);
   border-radius: 10px;
-  color: #ffffff;
+  color: #18181b;
+  font-family: var(--font-sans);
   font-size: 0.9rem;
   outline: none;
 }
 
 .form-group input:focus, .form-group textarea:focus, .form-field-group input:focus, .form-field-group select:focus, .form-field-group textarea:focus {
-  border-color: var(--gold-accent);
+  border-color: #C8102E;
+  box-shadow: 0 0 12px rgba(200, 16, 46, 0.2);
 }
 
 .drawer-form-actions {
@@ -3026,7 +3011,8 @@ button.about-seal-badge:hover .about-seal-icon {
 .drawer-back-btn {
   background: transparent;
   border: none;
-  color: #a1a1aa;
+  color: #52525b;
+  font-family: var(--font-sans);
   font-size: 0.78rem;
   font-weight: 700;
   cursor: pointer;
@@ -3046,9 +3032,11 @@ button.about-seal-badge:hover .about-seal-icon {
    ------------------------------------------ */
 .catalogue-filter-bar {
   padding: 1.5rem 0;
-  border-y: 1px solid rgba(255, 255, 255, 0.08);
-  background: rgba(255, 255, 255, 0.015);
+  border-y: 1px solid rgba(200, 16, 46, 0.15);
+  background: #ffffff;
   margin-bottom: 3rem;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
 }
 
 .filter-controls-row {
@@ -3057,6 +3045,7 @@ button.about-seal-badge:hover .about-seal-icon {
   justify-content: space-between;
   gap: 2rem;
   flex-wrap: wrap;
+  padding: 0 1rem;
 }
 
 .filter-group-item {
@@ -3066,29 +3055,33 @@ button.about-seal-badge:hover .about-seal-icon {
 }
 
 .filter-label-text {
+  font-family: var(--font-sans);
   font-size: 0.7rem;
   font-weight: 700;
   letter-spacing: 0.15em;
-  color: #a1a1aa;
+  color: #52525b;
+  text-transform: uppercase;
 }
 
 .filter-select {
   padding: 0.5rem 1rem;
-  background: #12141a;
-  border: 1px solid rgba(212, 175, 55, 0.3);
+  background: #ffffff;
+  border: 1px solid rgba(200, 16, 46, 0.25);
   border-radius: 8px;
-  color: #ffffff;
+  color: #18181b;
+  font-family: var(--font-sans);
   font-size: 0.85rem;
   outline: none;
 }
 
 .filter-summary-text {
+  font-family: var(--font-sans);
   font-size: 0.85rem;
-  color: #a1a1aa;
+  color: #52525b;
 }
 
 .filter-summary-text strong {
-  color: var(--gold-light);
+  color: #C8102E;
 }
 
 .products-grid {
@@ -3098,8 +3091,9 @@ button.about-seal-badge:hover .about-seal-icon {
 }
 
 .product-card {
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: #ffffff;
+  border: 1px solid rgba(200, 16, 46, 0.15);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
   border-radius: 20px;
   overflow: hidden;
   display: flex;
@@ -3108,9 +3102,9 @@ button.about-seal-badge:hover .about-seal-icon {
 }
 
 .product-card:hover {
-  border-color: var(--gold-accent);
+  border-color: rgba(200, 16, 46, 0.4);
   transform: translateY(-5px);
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 18px 40px rgba(200, 16, 46, 0.12);
 }
 
 .product-card-img-wrap {
@@ -3136,12 +3130,13 @@ button.about-seal-badge:hover .about-seal-icon {
   top: 0.85rem;
   right: 0.85rem;
   padding: 0.25rem 0.65rem;
-  background: rgba(10, 10, 12, 0.85);
-  border: 1px solid rgba(212, 175, 55, 0.4);
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(200, 16, 46, 0.3);
   border-radius: 999px;
+  font-family: var(--font-sans);
   font-size: 0.6rem;
   font-weight: 700;
-  color: var(--gold-light);
+  color: #C8102E;
 }
 
 .product-card-body {
@@ -3153,23 +3148,26 @@ button.about-seal-badge:hover .about-seal-icon {
 }
 
 .product-card-category {
+  font-family: var(--font-sans);
   font-size: 0.65rem;
   font-weight: 700;
   letter-spacing: 0.15em;
-  color: var(--gold-accent);
+  color: #C8102E;
   text-transform: uppercase;
 }
 
 .product-card-name {
-  font-family: var(--font-serif);
+  font-family: var(--font-sans);
   font-size: 1.25rem;
-  color: #ffffff;
+  font-weight: 800;
+  color: #09090b;
   cursor: pointer;
 }
 
 .product-card-specs-preview {
+  font-family: var(--font-sans);
   font-size: 0.78rem;
-  color: #a1a1aa;
+  color: #52525b;
   display: flex;
   align-items: center;
   gap: 0.4rem;
@@ -3187,7 +3185,8 @@ button.about-seal-badge:hover .about-seal-icon {
 .product-card-details-btn {
   background: transparent;
   border: none;
-  color: #a1a1aa;
+  color: #52525b;
+  font-family: var(--font-sans);
   font-size: 0.7rem;
   font-weight: 700;
   letter-spacing: 0.12em;
@@ -3195,7 +3194,7 @@ button.about-seal-badge:hover .about-seal-icon {
 }
 
 .product-card-details-btn:hover {
-  color: #ffffff;
+  color: #C8102E;
 }
 
 .product-card-add-list-btn {
@@ -3204,18 +3203,21 @@ button.about-seal-badge:hover .about-seal-icon {
   gap: 0.4rem;
   padding: 0.45rem 0.85rem;
   border-radius: 999px;
-  background: rgba(212, 175, 55, 0.15);
-  border: 1px solid rgba(212, 175, 55, 0.4);
-  color: var(--gold-light);
+  background: linear-gradient(135deg, #E31B23 0%, #C8102E 60%, #990000 100%);
+  border: 1px solid rgba(227, 27, 35, 0.4);
+  color: #ffffff;
+  font-family: var(--font-sans);
   font-size: 0.68rem;
   font-weight: 700;
   cursor: pointer;
   transition: all 0.25s ease;
+  box-shadow: 0 4px 15px rgba(200, 16, 46, 0.25);
 }
 
 .product-card-add-list-btn:hover, .product-card-add-list-btn.added {
-  background: var(--gold-accent);
-  color: #0a0a0c;
+  background: #09090b;
+  color: #ffffff;
+  border-color: #09090b;
 }
 
 /* ------------------------------------------
@@ -3224,8 +3226,8 @@ button.about-seal-badge:hover .about-seal-icon {
 .project-modal-overlay, .product-modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.88);
-  backdrop-filter: blur(20px);
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(12px);
   z-index: 250;
   display: flex;
   align-items: center;
@@ -3234,8 +3236,8 @@ button.about-seal-badge:hover .about-seal-icon {
 }
 
 .project-modal-content, .product-modal-content {
-  background: #0e0f14;
-  border: 1px solid rgba(212, 175, 55, 0.4);
+  background: #ffffff;
+  border: 1px solid rgba(200, 16, 46, 0.2);
   border-radius: 28px;
   width: 100%;
   max-width: 900px;
@@ -3245,39 +3247,49 @@ button.about-seal-badge:hover .about-seal-icon {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
-  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.95);
+  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.15);
+  color: #18181b;
 }
 
 .project-modal-header, .product-modal-header {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid rgba(200, 16, 46, 0.15);
   padding-bottom: 1rem;
 }
 
 .project-modal-cat, .product-modal-cat {
+  font-family: var(--font-sans);
   font-size: 0.7rem;
   font-weight: 700;
   letter-spacing: 0.18em;
-  color: var(--gold-accent);
+  color: #C8102E;
   text-transform: uppercase;
 }
 
 .project-modal-title, .product-modal-title {
-  font-family: var(--font-serif);
+  font-family: var(--font-sans);
+  font-weight: 800;
   font-size: 2rem;
-  color: #ffffff;
+  color: #09090b;
 }
 
 .project-modal-close, .product-modal-close {
-  background: transparent;
-  border: none;
-  color: #a1a1aa;
+  background: rgba(200, 16, 46, 0.08);
+  border: 1px solid rgba(200, 16, 46, 0.2);
+  color: #C8102E;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
 }
 
 .project-modal-close:hover, .product-modal-close:hover {
+  background: #C8102E;
   color: #ffffff;
 }
 
@@ -3301,16 +3313,19 @@ button.about-seal-badge:hover .about-seal-icon {
 }
 
 .project-modal-sec h4, .product-modal-sec h4 {
+  font-family: var(--font-sans);
   font-size: 0.72rem;
   font-weight: 800;
   letter-spacing: 0.18em;
-  color: var(--gold-accent);
+  color: #C8102E;
   margin-bottom: 0.5rem;
+  text-transform: uppercase;
 }
 
 .project-modal-sec p, .product-modal-description {
+  font-family: var(--font-sans);
   font-size: 0.95rem;
-  color: #cbd5e1;
+  color: #3f3f46;
   line-height: 1.6;
 }
 
@@ -3324,8 +3339,9 @@ button.about-seal-badge:hover .about-seal-icon {
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  font-family: var(--font-sans);
   font-size: 0.9rem;
-  color: #ffffff;
+  color: #18181b;
 }
 
 .project-modal-gallery-grid {
@@ -3362,19 +3378,21 @@ button.about-seal-badge:hover .about-seal-icon {
 
 .app-tag {
   padding: 0.3rem 0.7rem;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(200, 16, 46, 0.08);
+  border: 1px solid rgba(200, 16, 46, 0.2);
   border-radius: 999px;
+  font-family: var(--font-sans);
   font-size: 0.75rem;
-  color: #cbd5e1;
+  font-weight: 600;
+  color: #C8102E;
 }
 
 .product-specs-table {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: #ffffff;
+  border: 1px solid rgba(200, 16, 46, 0.15);
   border-radius: 12px;
   padding: 1rem;
 }
@@ -3383,17 +3401,18 @@ button.about-seal-badge:hover .about-seal-icon {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  font-family: var(--font-sans);
   font-size: 0.82rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  border-bottom: 1px solid rgba(200, 16, 46, 0.1);
   padding-bottom: 0.35rem;
 }
 
 .spec-row span {
-  color: #a1a1aa;
+  color: #52525b;
 }
 
 .spec-row strong {
-  color: #ffffff;
+  color: #09090b;
 }
 
 .product-modal-actions-row {
@@ -3416,13 +3435,18 @@ button.about-seal-badge:hover .about-seal-icon {
   position: relative;
   padding: 3rem;
   border-radius: 28px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(200, 16, 46, 0.18);
   overflow: hidden;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  isolation: isolate;
+  background: #ffffff;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
   transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
+  color: #18181b;
+}
+
+.expertise-detail-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(200, 16, 46, 0.4);
+  box-shadow: 0 20px 50px rgba(200, 16, 46, 0.12);
 }
 
 /* Dark gradient overlay sits between background image and content */
@@ -3534,8 +3558,9 @@ button.about-seal-badge:hover .about-seal-icon {
 .timeline-step-item {
   position: relative;
   padding: 2rem 1.5rem;
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(212, 175, 55, 0.3);
+  background: #ffffff;
+  border: 1px solid rgba(200, 16, 46, 0.18);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.03);
   border-radius: 20px;
   display: flex;
   flex-direction: column;
@@ -3545,19 +3570,22 @@ button.about-seal-badge:hover .about-seal-icon {
 .timeline-year-badge {
   font-family: var(--font-serif);
   font-size: 2rem;
-  font-weight: 700;
-  color: var(--gold-accent);
+  font-weight: 800;
+  color: #C8102E;
 }
 
 .timeline-title {
-  font-family: var(--font-serif);
+  font-family: var(--font-sans);
   font-size: 1.25rem;
-  color: #ffffff;
+  font-weight: 800;
+  color: #09090b;
 }
 
 .timeline-desc {
+  font-family: var(--font-sans);
   font-size: 0.88rem;
-  color: #a1a1aa;
+  font-weight: 500;
+  color: #52525b;
   line-height: 1.5;
 }
 
@@ -3573,7 +3601,8 @@ button.about-seal-badge:hover .about-seal-icon {
 .ceo-feature-img {
   width: 100%;
   border-radius: 24px;
-  border: 1px solid rgba(212, 175, 55, 0.4);
+  border: 1px solid rgba(200, 16, 46, 0.2);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
 }
 
 .ceo-feature-content {
@@ -3583,40 +3612,46 @@ button.about-seal-badge:hover .about-seal-icon {
 }
 
 .ceo-feature-heading {
-  font-family: var(--font-serif);
+  font-family: var(--font-sans);
   font-size: 2.8rem;
-  color: #ffffff;
+  font-weight: 800;
+  color: #09090b;
 }
 
 .ceo-feature-p {
+  font-family: var(--font-sans);
   font-size: 1.05rem;
-  color: #cbd5e1;
+  font-weight: 500;
+  color: #3f3f46;
   line-height: 1.7;
 }
 
 .ceo-author-tag {
   display: flex;
   flex-direction: column;
-  border-left: 3px solid var(--gold-accent);
+  border-left: 3px solid #C8102E;
   padding-left: 1rem;
 }
 
 .ceo-author-tag strong {
-  font-family: var(--font-serif);
+  font-family: var(--font-sans);
   font-size: 1.3rem;
-  color: #ffffff;
+  font-weight: 800;
+  color: #09090b;
 }
 
 .ceo-author-tag span {
+  font-family: var(--font-sans);
   font-size: 0.85rem;
-  color: var(--gold-accent);
+  font-weight: 600;
+  color: #C8102E;
 }
 
 /* Mission Statement */
 .about-mission-statement-section {
   padding: 6rem 0;
-  background: radial-gradient(circle at 50% 50%, rgba(40, 30, 15, 0.6) 0%, rgba(10, 10, 12, 1) 80%);
-  border-y: 1px solid rgba(212, 175, 55, 0.3);
+  background: linear-gradient(180deg, #ffffff 0%, #fff6f6 100%);
+  border-y: 1px solid rgba(200, 16, 46, 0.15);
 }
 
 .mission-statement-box {
@@ -3629,15 +3664,18 @@ button.about-seal-badge:hover .about-seal-icon {
 }
 
 .mission-statement-headline {
-  font-family: var(--font-serif);
+  font-family: var(--font-sans);
   font-size: clamp(2.2rem, 4.5vw, 3.6rem);
-  color: #ffffff;
+  font-weight: 800;
+  color: #09090b;
   line-height: 1.2;
 }
 
 .mission-statement-desc {
+  font-family: var(--font-sans);
   font-size: 1.15rem;
-  color: #d4d4d8;
+  font-weight: 500;
+  color: #3f3f46;
   line-height: 1.75;
 }
 
@@ -3650,36 +3688,50 @@ button.about-seal-badge:hover .about-seal-icon {
 
 .principle-card {
   padding: 2.25rem;
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: #ffffff;
+  border: 1px solid rgba(200, 16, 46, 0.15);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
   border-radius: 20px;
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  transition: all 0.35s ease;
+}
+
+.principle-card:hover {
+  border-color: rgba(200, 16, 46, 0.4);
+  transform: translateY(-4px);
+  box-shadow: 0 18px 40px rgba(200, 16, 46, 0.12);
 }
 
 .principle-num {
   font-family: var(--font-serif);
   font-size: 1.8rem;
-  color: var(--gold-accent);
+  font-weight: 800;
+  color: #C8102E;
 }
 
 .principle-title {
-  font-family: var(--font-serif);
+  font-family: var(--font-sans);
   font-size: 1.6rem;
-  color: #ffffff;
+  font-weight: 800;
+  color: #09090b;
 }
 
 .principle-subtitle {
+  font-family: var(--font-sans);
   font-size: 0.78rem;
   font-weight: 700;
   letter-spacing: 0.15em;
-  color: var(--gold-light);
+  color: #C8102E;
+  text-transform: uppercase;
 }
 
 .principle-desc {
+  font-family: var(--font-sans);
   font-size: 0.92rem;
-  color: #a1a1aa;
+  font-weight: 500;
+  color: #52525b;
   line-height: 1.6;
 }
 
@@ -3691,8 +3743,9 @@ button.about-seal-badge:hover .about-seal-icon {
 }
 
 .team-member-card {
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: #ffffff;
+  border: 1px solid rgba(200, 16, 46, 0.15);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
   border-radius: 20px;
   overflow: hidden;
 }
@@ -3715,20 +3768,23 @@ button.about-seal-badge:hover .about-seal-icon {
 }
 
 .team-name {
-  font-family: var(--font-serif);
+  font-family: var(--font-sans);
   font-size: 1.35rem;
-  color: #ffffff;
+  font-weight: 800;
+  color: #09090b;
 }
 
 .team-role {
+  font-family: var(--font-sans);
   font-size: 0.78rem;
   font-weight: 700;
-  color: var(--gold-accent);
+  color: #C8102E;
 }
 
 .team-exp {
+  font-family: var(--font-sans);
   font-size: 0.82rem;
-  color: #a1a1aa;
+  color: #52525b;
   margin-top: 0.25rem;
 }
 
@@ -3745,11 +3801,19 @@ button.about-seal-badge:hover .about-seal-icon {
   display: grid;
   grid-template-columns: 1fr 1.4fr;
   gap: 3rem;
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: #ffffff;
+  border: 1px solid rgba(200, 16, 46, 0.15);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.04);
   border-radius: 28px;
   padding: 2.5rem;
   align-items: center;
+  transition: all 0.35s ease;
+}
+
+.industry-card:hover {
+  border-color: rgba(200, 16, 46, 0.4);
+  transform: translateY(-4px);
+  box-shadow: 0 20px 50px rgba(200, 16, 46, 0.12);
 }
 
 .industry-card-img-wrap {
@@ -3770,12 +3834,13 @@ button.about-seal-badge:hover .about-seal-icon {
   top: 1rem;
   left: 1rem;
   padding: 0.35rem 0.85rem;
-  background: rgba(10, 10, 12, 0.85);
-  border: 1px solid rgba(212, 175, 55, 0.4);
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(200, 16, 46, 0.3);
   border-radius: 999px;
+  font-family: var(--font-sans);
   font-size: 0.65rem;
   font-weight: 700;
-  color: var(--gold-light);
+  color: #C8102E;
 }
 
 .industry-card-body {
@@ -3785,21 +3850,26 @@ button.about-seal-badge:hover .about-seal-icon {
 }
 
 .industry-subtitle {
+  font-family: var(--font-sans);
   font-size: 0.72rem;
   font-weight: 700;
   letter-spacing: 0.2em;
-  color: var(--gold-accent);
+  color: #C8102E;
+  text-transform: uppercase;
 }
 
 .industry-title {
-  font-family: var(--font-serif);
+  font-family: var(--font-sans);
   font-size: 2.2rem;
-  color: #ffffff;
+  font-weight: 800;
+  color: #09090b;
 }
 
 .industry-desc {
+  font-family: var(--font-sans);
   font-size: 1.02rem;
-  color: #cbd5e1;
+  font-weight: 500;
+  color: #3f3f46;
   line-height: 1.6;
 }
 
@@ -3810,16 +3880,19 @@ button.about-seal-badge:hover .about-seal-icon {
 }
 
 .industry-detail-block h4 {
+  font-family: var(--font-sans);
   font-size: 0.68rem;
   font-weight: 800;
   letter-spacing: 0.18em;
-  color: var(--gold-accent);
+  color: #C8102E;
   margin-bottom: 0.35rem;
+  text-transform: uppercase;
 }
 
 .industry-detail-block p {
+  font-family: var(--font-sans);
   font-size: 0.88rem;
-  color: #a1a1aa;
+  color: #52525b;
   line-height: 1.5;
 }
 
@@ -3835,11 +3908,13 @@ button.about-seal-badge:hover .about-seal-icon {
   align-items: center;
   gap: 0.4rem;
   padding: 0.35rem 0.75rem;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(200, 16, 46, 0.08);
+  border: 1px solid rgba(200, 16, 46, 0.2);
   border-radius: 999px;
+  font-family: var(--font-sans);
   font-size: 0.78rem;
-  color: #ffffff;
+  font-weight: 600;
+  color: #C8102E;
 }
 
 /* ------------------------------------------
@@ -3852,8 +3927,9 @@ button.about-seal-badge:hover .about-seal-icon {
 }
 
 .contact-form-card {
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(212, 175, 55, 0.35);
+  background: #ffffff;
+  border: 1px solid rgba(200, 16, 46, 0.18);
+  box-shadow: 0 15px 45px rgba(0, 0, 0, 0.04);
   border-radius: 28px;
   padding: 3rem;
 }
@@ -3869,14 +3945,16 @@ button.about-seal-badge:hover .about-seal-icon {
 }
 
 .form-heading {
-  font-family: var(--font-serif);
+  font-family: var(--font-sans);
   font-size: 1.8rem;
-  color: #ffffff;
+  font-weight: 800;
+  color: #09090b;
 }
 
 .form-subheading {
+  font-family: var(--font-sans);
   font-size: 0.9rem;
-  color: #a1a1aa;
+  color: #52525b;
   margin-top: 0.25rem;
 }
 
@@ -3893,25 +3971,27 @@ button.about-seal-badge:hover .about-seal-icon {
 }
 
 .form-field-group label {
+  font-family: var(--font-sans);
   font-size: 0.65rem;
   font-weight: 700;
   letter-spacing: 0.15em;
-  color: var(--gold-accent);
+  color: #C8102E;
+  text-transform: uppercase;
 }
 
 .file-drop-zone {
   position: relative;
-  border: 2px dashed rgba(212, 175, 55, 0.4);
+  border: 2px dashed rgba(200, 16, 46, 0.3);
   border-radius: 14px;
   padding: 1.5rem;
   text-align: center;
-  background: rgba(255, 255, 255, 0.015);
+  background: rgba(200, 16, 46, 0.02);
   transition: all 0.3s ease;
 }
 
 .file-drop-zone:hover {
-  border-color: var(--gold-accent);
-  background: rgba(212, 175, 55, 0.04);
+  border-color: #C8102E;
+  background: rgba(200, 16, 46, 0.06);
 }
 
 .file-input-hidden {
@@ -3927,22 +4007,24 @@ button.about-seal-badge:hover .about-seal-icon {
 }
 
 .file-drop-icon {
-  color: var(--gold-accent);
+  color: #C8102E;
 }
 
 .file-drop-label strong {
   display: block;
+  font-family: var(--font-sans);
   font-size: 0.9rem;
-  color: #ffffff;
+  color: #09090b;
 }
 
 .file-drop-label span {
+  font-family: var(--font-sans);
   font-size: 0.78rem;
-  color: #a1a1aa;
+  color: #52525b;
 }
 
 .file-selected-text strong {
-  color: var(--gold-light);
+  color: #C8102E;
 }
 
 .form-submit-btn {
@@ -3962,17 +4044,18 @@ button.about-seal-badge:hover .about-seal-icon {
   align-items: center;
   gap: 1.25rem;
   padding: 1.75rem;
-  background: linear-gradient(135deg, rgba(34, 197, 94, 0.15) 0%, rgba(20, 83, 45, 0.25) 100%);
+  background: #ffffff;
   border: 1px solid rgba(34, 197, 94, 0.4);
+  box-shadow: 0 10px 30px rgba(34, 197, 94, 0.08);
   border-radius: 20px;
-  color: #ffffff;
+  color: #18181b;
   transition: all 0.3s ease;
 }
 
 .whatsapp-action-card:hover {
   border-color: #22c55e;
   transform: translateY(-3px);
-  box-shadow: 0 10px 30px rgba(34, 197, 94, 0.2);
+  box-shadow: 0 15px 35px rgba(34, 197, 94, 0.15);
 }
 
 .whatsapp-card-icon {
@@ -3988,33 +4071,39 @@ button.about-seal-badge:hover .about-seal-icon {
 }
 
 .whatsapp-badge {
+  font-family: var(--font-sans);
   font-size: 0.6rem;
   font-weight: 800;
   letter-spacing: 0.2em;
-  color: #4ade80;
+  color: #16a34a;
 }
 
 .whatsapp-title {
-  font-family: var(--font-serif);
+  font-family: var(--font-sans);
   font-size: 1.25rem;
+  font-weight: 800;
+  color: #09090b;
 }
 
 .whatsapp-desc {
+  font-family: var(--font-sans);
   font-size: 0.82rem;
-  color: #d1fae5;
+  color: #4b5563;
 }
 
 .info-box-card {
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: #ffffff;
+  border: 1px solid rgba(200, 16, 46, 0.15);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
   border-radius: 24px;
   padding: 2rem;
 }
 
 .info-box-heading {
-  font-family: var(--font-serif);
+  font-family: var(--font-sans);
   font-size: 1.4rem;
-  color: #ffffff;
+  font-weight: 800;
+  color: #09090b;
   margin-bottom: 1.5rem;
 }
 
@@ -4031,27 +4120,29 @@ button.about-seal-badge:hover .about-seal-icon {
 }
 
 .info-icon {
-  color: var(--gold-accent);
+  color: #C8102E;
   margin-top: 0.2rem;
   flex-shrink: 0;
 }
 
 .info-box-list strong {
   display: block;
+  font-family: var(--font-sans);
   font-size: 0.9rem;
-  color: #ffffff;
+  color: #09090b;
 }
 
 .info-box-list span {
+  font-family: var(--font-sans);
   font-size: 0.85rem;
-  color: #a1a1aa;
+  color: #52525b;
 }
 
 .map-placeholder-card {
   height: 200px;
   border-radius: 20px;
-  background: radial-gradient(circle at 50% 50%, rgba(212, 175, 55, 0.15) 0%, rgba(10, 10, 12, 0.9) 100%);
-  border: 1px solid rgba(212, 175, 55, 0.3);
+  background: linear-gradient(180deg, #ffffff 0%, #fff5f5 100%);
+  border: 1px solid rgba(200, 16, 46, 0.2);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -4066,20 +4157,22 @@ button.about-seal-badge:hover .about-seal-icon {
 }
 
 .map-pin-pulse {
-  color: var(--gold-accent);
+  color: #C8102E;
   animation: bounce 2s infinite;
 }
 
 .map-label {
+  font-family: var(--font-sans);
   font-size: 0.75rem;
   font-weight: 800;
   letter-spacing: 0.15em;
-  color: #ffffff;
+  color: #09090b;
 }
 
 .map-sub {
+  font-family: var(--font-sans);
   font-size: 0.75rem;
-  color: #a1a1aa;
+  color: #52525b;
 }
 
 /* ------------------------------------------
@@ -4096,18 +4189,18 @@ button.about-seal-badge:hover .about-seal-icon {
   max-width: 1320px;
   margin: 0 auto;
   border-radius: 28px;
-  border: 1px solid rgba(212, 175, 55, 0.4);
+  border: 1px solid rgba(200, 16, 46, 0.18);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
-  background: linear-gradient(135deg, rgba(20, 16, 12, 0.96) 0%, rgba(10, 8, 6, 0.95) 100%);
-  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.9), 0 0 35px rgba(212, 175, 55, 0.15);
+  background: linear-gradient(180deg, #ffffff 0%, #fff8f8 100%);
+  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.05), 0 0 25px rgba(200, 16, 46, 0.06);
   overflow: hidden;
 }
 
 .footer-top-strip {
   padding: 4rem 0;
-  background: radial-gradient(circle at 50% 50%, rgba(35, 28, 16, 0.6) 0%, rgba(10, 10, 12, 1) 80%);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  background: linear-gradient(180deg, #ffffff 0%, #fff5f5 100%);
+  border-bottom: 1px solid rgba(200, 16, 46, 0.15);
 }
 
 .footer-strip-content {
@@ -4119,9 +4212,10 @@ button.about-seal-badge:hover .about-seal-icon {
 }
 
 .footer-strip-title {
-  font-family: var(--font-serif);
+  font-family: var(--font-sans);
   font-size: clamp(1.8rem, 3.5vw, 2.8rem);
-  color: #ffffff;
+  font-weight: 800;
+  color: #09090b;
   margin-top: 0.5rem;
 }
 
@@ -4143,8 +4237,10 @@ button.about-seal-badge:hover .about-seal-icon {
 }
 
 .footer-brand-desc {
+  font-family: var(--font-sans);
   font-size: 0.92rem;
-  color: #a1a1aa;
+  font-weight: 500;
+  color: #52525b;
   line-height: 1.6;
 }
 
@@ -4153,21 +4249,23 @@ button.about-seal-badge:hover .about-seal-icon {
   align-items: center;
   gap: 0.5rem;
   padding: 0.4rem 0.85rem;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(212, 175, 55, 0.3);
+  background: rgba(200, 16, 46, 0.08);
+  border: 1px solid rgba(200, 16, 46, 0.25);
   border-radius: 999px;
+  font-family: var(--font-sans);
   font-size: 0.65rem;
   font-weight: 700;
   letter-spacing: 0.12em;
-  color: var(--gold-light);
+  color: #C8102E;
   width: fit-content;
 }
 
 .footer-col-title {
+  font-family: var(--font-sans);
   font-size: 0.72rem;
   font-weight: 800;
   letter-spacing: 0.2em;
-  color: var(--gold-accent);
+  color: #C8102E;
   text-transform: uppercase;
 }
 
@@ -4178,13 +4276,15 @@ button.about-seal-badge:hover .about-seal-icon {
 }
 
 .footer-links a {
-  color: #cbd5e1;
+  font-family: var(--font-sans);
+  color: #3f3f46;
   font-size: 0.9rem;
+  font-weight: 500;
   transition: color 0.25s ease;
 }
 
 .footer-links a:hover {
-  color: var(--gold-light);
+  color: #C8102E;
 }
 
 .footer-contact-list {
@@ -4197,12 +4297,14 @@ button.about-seal-badge:hover .about-seal-icon {
   display: flex;
   align-items: flex-start;
   gap: 0.75rem;
+  font-family: var(--font-sans);
   font-size: 0.88rem;
-  color: #cbd5e1;
+  font-weight: 500;
+  color: #3f3f46;
 }
 
 .footer-contact-icon {
-  color: var(--gold-accent);
+  color: #C8102E;
   flex-shrink: 0;
   margin-top: 0.15rem;
 }
@@ -4218,9 +4320,9 @@ button.about-seal-badge:hover .about-seal-icon {
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  color: #ffffff;
+  background: rgba(200, 16, 46, 0.08);
+  border: 1px solid rgba(200, 16, 46, 0.2);
+  color: #C8102E;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -4228,17 +4330,18 @@ button.about-seal-badge:hover .about-seal-icon {
 }
 
 .footer-social-icon:hover {
-  background: var(--gold-accent);
-  color: #0a0a0c;
-  border-color: var(--gold-accent);
+  background: #C8102E;
+  color: #ffffff;
+  border-color: #C8102E;
 }
 
 .footer-bottom-bar {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-top: 1px solid rgba(200, 16, 46, 0.15);
   padding-top: 2rem;
+  font-family: var(--font-sans);
   font-size: 0.82rem;
   color: #71717a;
 }

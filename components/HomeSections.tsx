@@ -158,7 +158,7 @@ export default function HomeSections() {
           <div className="spotlight-collections-grid">
             {/* Collection 1 */}
             <div className="spotlight-card">
-              <div className="spotlight-card-bg" style={{ backgroundImage: `linear-gradient(180deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.9) 100%), url(https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=800&q=80)` }} />
+              <div className="spotlight-card-bg" style={{ backgroundImage: `linear-gradient(180deg, rgba(255,255,255,0.2) 0%, rgba(0,0,0,0.35) 100%), url(https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=800&q=80)` }} />
               <div className="spotlight-card-content">
                 <span className="spotlight-cat-tag">COLLECTION 01</span>
                 <h3 className="spotlight-title">ARCHITECTURAL LIGHTING</h3>
@@ -172,7 +172,7 @@ export default function HomeSections() {
 
             {/* Collection 2 */}
             <div className="spotlight-card">
-              <div className="spotlight-card-bg" style={{ backgroundImage: `linear-gradient(180deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.9) 100%), url(https://images.unsplash.com/photo-1540932239986-30128078f3c5?auto=format&fit=crop&w=800&q=80)` }} />
+              <div className="spotlight-card-bg" style={{ backgroundImage: `linear-gradient(180deg, rgba(255,255,255,0.2) 0%, rgba(0,0,0,0.35) 100%), url(https://images.unsplash.com/photo-1540932239986-30128078f3c5?auto=format&fit=crop&w=800&q=80)` }} />
               <div className="spotlight-card-content">
                 <span className="spotlight-cat-tag">COLLECTION 02</span>
                 <h3 className="spotlight-title">INTERIOR LIGHTING</h3>
@@ -186,7 +186,7 @@ export default function HomeSections() {
 
             {/* Collection 3 */}
             <div className="spotlight-card">
-              <div className="spotlight-card-bg" style={{ backgroundImage: `linear-gradient(180deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.9) 100%), url(https://images.unsplash.com/photo-1518005020951-eccb494ad742?auto=format&fit=crop&w=800&q=80)` }} />
+              <div className="spotlight-card-bg" style={{ backgroundImage: `linear-gradient(180deg, rgba(255,255,255,0.2) 0%, rgba(0,0,0,0.35) 100%), url(https://images.unsplash.com/photo-1518005020951-eccb494ad742?auto=format&fit=crop&w=800&q=80)` }} />
               <div className="spotlight-card-content">
                 <span className="spotlight-cat-tag">COLLECTION 03</span>
                 <h3 className="spotlight-title">OUTDOOR LIGHTING</h3>
@@ -281,7 +281,7 @@ export default function HomeSections() {
 
               <div className="ceo-signature-block">
                 <strong className="ceo-name-text">Malik Abdul Jamil</strong>
-                <span className="ceo-title-text">Chief Executive Officer, Jameel Traders</span>
+                <span className="ceo-title-text">Chief Executive Officer, Jamil Traders</span>
               </div>
 
               <div className="ceo-cta-wrap">
