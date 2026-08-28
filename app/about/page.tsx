@@ -3,7 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { ArrowRight, Sparkles, CheckCircle2, Award, ShieldCheck, Building2 } from 'lucide-react';
-import { COMPANY_TIMELINE, CORE_PRINCIPLES, TEAM_MEMBERS } from '@/lib/data';
+import { COMPANY_TIMELINE, CORE_PRINCIPLES } from '@/lib/data';
 
 export default function AboutPage() {
   return (
@@ -127,35 +127,6 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* 6. Leadership & Technical Team */}
-      <section className="about-team-section">
-        <div className="home-container">
-          <div className="home-section-header">
-            <div className="hero-eyebrow">
-              <span className="hero-eyebrow-pill">THE TEAM</span>
-              <span>LIGHTING ENGINEERS & DESIGNERS</span>
-            </div>
-            <h2 className="home-section-title">
-              Craftsmanship in <span className="hero-title-italic">Good Hands.</span>
-            </h2>
-          </div>
-
-          <div className="team-members-grid">
-            {TEAM_MEMBERS.map((member) => (
-              <div key={member.name} className="team-member-card">
-                <div className="team-img-wrap">
-                  <img src={member.image} alt={member.name} className="team-img" />
-                </div>
-                <div className="team-info">
-                  <h4 className="team-name">{member.name}</h4>
-                  <span className="team-role">{member.role}</span>
-                  <p className="team-exp">{member.experience}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
 
       {/* 7. Recognition & Certifications */}
       <section className="about-recognition-section">

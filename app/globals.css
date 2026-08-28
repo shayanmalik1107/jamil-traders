@@ -1976,21 +1976,80 @@ button.about-seal-badge:hover .about-seal-icon {
 /* ------------------------------------------
    SPECIALIZED PHOTOGRAPHIC LIGHTING BACKGROUNDS (SUBTLE / LESS VISIBLE)
    ------------------------------------------ */
-.home-section-expertise, .bg-expertise {
+/* ------------------------------------------
+   UNIFORM STATIC-ON-SCROLL SUB-PAGE BACKGROUNDS
+   ------------------------------------------ */
+.bg-about,
+.bg-projects,
+.bg-products,
+.bg-expertise,
+.bg-industries,
+.bg-contact {
+  position: relative;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+}
+
+/* About Page — Corporate Architectural Headquarters Illumination */
+.bg-about {
+  background-image:
+    linear-gradient(180deg, rgba(6, 5, 3, 0.88) 0%, rgba(8, 7, 4, 0.84) 40%, rgba(6, 5, 3, 0.90) 100%),
+    url('https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1920&q=80');
+}
+
+/* Projects Page — High-End Villa Architectural Interior Lighting */
+.bg-projects {
+  background-image:
+    linear-gradient(180deg, rgba(6, 5, 3, 0.88) 0%, rgba(8, 7, 4, 0.84) 40%, rgba(6, 5, 3, 0.90) 100%),
+    url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1920&q=80');
+}
+
+/* Products Page — Precision Downlights & Optical Baffles */
+.bg-products {
+  background-image:
+    linear-gradient(180deg, rgba(6, 5, 3, 0.88) 0%, rgba(8, 7, 4, 0.84) 40%, rgba(6, 5, 3, 0.90) 100%),
+    url('https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=1920&q=80');
+}
+
+/* Expertise Page — Warm Architectural Linear Cove & Lighting Design */
+.bg-expertise {
+  background-image:
+    linear-gradient(180deg, rgba(6, 5, 3, 0.88) 0%, rgba(8, 7, 4, 0.84) 40%, rgba(6, 5, 3, 0.90) 100%),
+    url('https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1920&q=80');
+}
+
+/* Industries Page — Exterior Facade Grazing & Monumental Illumination */
+.bg-industries {
+  background-image:
+    linear-gradient(180deg, rgba(6, 5, 3, 0.88) 0%, rgba(8, 7, 4, 0.84) 40%, rgba(6, 5, 3, 0.90) 100%),
+    url('https://images.unsplash.com/photo-1518005020951-eccb494ad742?auto=format&fit=crop&w=1920&q=80');
+}
+
+/* Contact Page — Luxury Hotel Lounge & Warm Chandelier Ambience */
+.bg-contact {
+  background-image:
+    linear-gradient(180deg, rgba(6, 5, 3, 0.88) 0%, rgba(8, 7, 4, 0.84) 40%, rgba(6, 5, 3, 0.90) 100%),
+    url('https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=1920&q=80');
+}
+
+/* Home Section background styling */
+.home-section-expertise {
   background-image: linear-gradient(180deg, rgba(8, 11, 18, 0.96) 0%, rgba(8, 11, 18, 0.95) 100%), url('https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1920&q=80');
   background-size: cover;
   background-position: center;
   border-top: 1px solid rgba(212, 175, 55, 0.3);
 }
 
-.home-section-projects, .bg-projects {
+.home-section-projects {
   background-image: linear-gradient(180deg, rgba(9, 8, 7, 0.97) 0%, rgba(9, 8, 7, 0.95) 100%), url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1920&q=80');
   background-size: cover;
   background-position: center;
   border-top: 1px solid rgba(212, 175, 55, 0.3);
 }
 
-.home-section-spotlight, .bg-products {
+.home-section-spotlight {
   background-image: linear-gradient(180deg, rgba(14, 11, 7, 0.97) 0%, rgba(14, 11, 7, 0.95) 100%), url('https://images.unsplash.com/photo-1540932239986-30128078f3c5?auto=format&fit=crop&w=1920&q=80');
   background-size: cover;
   background-position: center;
@@ -2019,28 +2078,11 @@ button.about-seal-badge:hover .about-seal-icon {
   border-top: 1px solid rgba(212, 175, 55, 0.3);
 }
 
-/* About Page — full-page dim background image */
-.bg-about {
-  position: relative;
-  background-image:
-    linear-gradient(180deg, rgba(6, 5, 3, 0.88) 0%, rgba(8, 7, 4, 0.84) 40%, rgba(6, 5, 3, 0.90) 100%),
-    url('https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1920&q=80');
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
-}
-
-.home-section-final-cta, .bg-contact {
+.home-section-final-cta {
   background-image: linear-gradient(180deg, rgba(28, 20, 10, 0.97) 0%, rgba(12, 9, 4, 0.97) 100%), url('https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=1920&q=80');
   background-size: cover;
   background-position: center;
   border-top: 1px solid rgba(212, 175, 55, 0.4);
-}
-
-.bg-industries {
-  background-image: linear-gradient(180deg, rgba(9, 11, 17, 0.97) 0%, rgba(6, 8, 13, 0.95) 100%), url('https://images.unsplash.com/photo-1518005020951-eccb494ad742?auto=format&fit=crop&w=1920&q=80');
-  background-size: cover;
-  background-position: center;
 }
 
 /* ------------------------------------------
