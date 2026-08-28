@@ -1938,13 +1938,14 @@ button.about-seal-badge:hover .about-seal-icon {
 }
 
 .home-section-title {
-  font-family: var(--font-serif);
+  font-family: var(--font-sans);
   font-size: clamp(3.2rem, 6vw, 4.8rem);
-  font-weight: 400;
+  font-weight: 800;
   line-height: 1.05;
-  color: #ffffff;
+  color: #09090b !important;
   margin-top: 0.75rem;
   letter-spacing: -0.01em;
+  text-transform: uppercase;
 }
 
 .page-hero {
@@ -1952,17 +1953,20 @@ button.about-seal-badge:hover .about-seal-icon {
 }
 
 .page-title {
-  font-family: var(--font-serif);
+  font-family: var(--font-sans);
   font-size: clamp(3.2rem, 6.5vw, 5rem);
-  font-weight: 400;
+  font-weight: 800;
   line-height: 1.05;
-  color: #ffffff;
+  color: #09090b !important;
   margin-top: 0.5rem;
+  text-transform: uppercase;
 }
 
 .page-subtitle {
+  font-family: var(--font-sans);
   font-size: clamp(1.05rem, 1.8vw, 1.25rem);
-  color: #cbd5e1;
+  font-weight: 600;
+  color: #18181b !important;
   margin-top: 1.25rem;
   max-width: 760px;
   line-height: 1.65;
@@ -3443,37 +3447,10 @@ button.about-seal-badge:hover .about-seal-icon {
   box-shadow: 0 20px 50px rgba(200, 16, 46, 0.12);
 }
 
-/* Dark gradient overlay sits between background image and content */
 .expertise-detail-card::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    135deg,
-    rgba(5, 5, 8, 0.87) 0%,
-    rgba(10, 8, 5, 0.82) 50%,
-    rgba(5, 5, 8, 0.76) 100%
-  );
-  z-index: 0;
-  transition: background 0.4s ease;
+  display: none;
 }
 
-.expertise-detail-card:hover::before {
-  background: linear-gradient(
-    135deg,
-    rgba(5, 5, 8, 0.78) 0%,
-    rgba(10, 8, 5, 0.70) 50%,
-    rgba(5, 5, 8, 0.65) 100%
-  );
-}
-
-.expertise-detail-card:hover {
-  transform: translateY(-4px);
-  border-color: rgba(212, 175, 55, 0.45);
-  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.7);
-}
-
-/* All direct children sit above the overlay */
 .expertise-detail-card > * {
   position: relative;
   z-index: 1;
@@ -3489,7 +3466,8 @@ button.about-seal-badge:hover .about-seal-icon {
 .expertise-card-num-badge {
   font-family: var(--font-serif);
   font-size: 2.5rem;
-  color: var(--gold-accent);
+  font-weight: 800;
+  color: #C8102E;
 }
 
 .expertise-card-content-grid {
@@ -3499,32 +3477,40 @@ button.about-seal-badge:hover .about-seal-icon {
 }
 
 .expertise-card-subtitle {
+  font-family: var(--font-sans);
   font-size: 0.75rem;
-  font-weight: 700;
+  font-weight: 800;
   letter-spacing: 0.2em;
-  color: var(--gold-accent);
+  color: #C8102E;
+  text-transform: uppercase;
 }
 
 .expertise-card-title {
-  font-family: var(--font-serif);
+  font-family: var(--font-sans);
   font-size: 2.2rem;
-  color: #ffffff;
+  font-weight: 800;
+  color: #09090b;
   margin-top: 0.35rem;
+  text-transform: uppercase;
 }
 
 .expertise-card-desc {
+  font-family: var(--font-sans);
   font-size: 1.05rem;
-  color: #cbd5e1;
+  font-weight: 500;
+  color: #18181b;
   line-height: 1.65;
   margin-top: 0.75rem;
 }
 
 .features-title {
+  font-family: var(--font-sans);
   font-size: 0.7rem;
   font-weight: 800;
   letter-spacing: 0.2em;
-  color: var(--gold-accent);
+  color: #C8102E;
   margin-bottom: 0.85rem;
+  text-transform: uppercase;
 }
 
 .features-list {
@@ -3538,8 +3524,10 @@ button.about-seal-badge:hover .about-seal-icon {
   display: flex;
   align-items: center;
   gap: 0.6rem;
+  font-family: var(--font-sans);
   font-size: 0.92rem;
-  color: #ffffff;
+  font-weight: 500;
+  color: #18181b;
 }
 
 /* Timeline */
@@ -3863,7 +3851,7 @@ button.about-seal-badge:hover .about-seal-icon {
   font-family: var(--font-sans);
   font-size: 1.02rem;
   font-weight: 500;
-  color: #3f3f46;
+  color: #18181b;
   line-height: 1.6;
 }
 
@@ -3886,7 +3874,8 @@ button.about-seal-badge:hover .about-seal-icon {
 .industry-detail-block p {
   font-family: var(--font-sans);
   font-size: 0.88rem;
-  color: #52525b;
+  font-weight: 500;
+  color: #18181b;
   line-height: 1.5;
 }
 
@@ -3948,7 +3937,8 @@ button.about-seal-badge:hover .about-seal-icon {
 .form-subheading {
   font-family: var(--font-sans);
   font-size: 0.9rem;
-  color: #52525b;
+  font-weight: 500;
+  color: #18181b;
   margin-top: 0.25rem;
 }
 
@@ -4008,13 +3998,15 @@ button.about-seal-badge:hover .about-seal-icon {
   display: block;
   font-family: var(--font-sans);
   font-size: 0.9rem;
+  font-weight: 700;
   color: #09090b;
 }
 
 .file-drop-label span {
   font-family: var(--font-sans);
   font-size: 0.78rem;
-  color: #52525b;
+  font-weight: 500;
+  color: #18181b;
 }
 
 .file-selected-text strong {
@@ -4082,7 +4074,8 @@ button.about-seal-badge:hover .about-seal-icon {
 .whatsapp-desc {
   font-family: var(--font-sans);
   font-size: 0.82rem;
-  color: #4b5563;
+  font-weight: 500;
+  color: #18181b;
 }
 
 .info-box-card {
@@ -4123,13 +4116,15 @@ button.about-seal-badge:hover .about-seal-icon {
   display: block;
   font-family: var(--font-sans);
   font-size: 0.9rem;
+  font-weight: 700;
   color: #09090b;
 }
 
 .info-box-list span {
   font-family: var(--font-sans);
   font-size: 0.85rem;
-  color: #52525b;
+  font-weight: 500;
+  color: #18181b;
 }
 
 .map-placeholder-card {
