@@ -1849,15 +1849,15 @@ button.about-seal-badge:hover .about-seal-icon {
   font-size: 0.65rem;
   font-weight: 700;
   color: #C8102E;
-}
-  color: var(--gold-accent);
   text-transform: uppercase;
   letter-spacing: 0.1em;
 }
 
 .cert-desc {
+  font-family: var(--font-sans);
   font-size: 0.78rem;
-  color: #cbd5e1;
+  font-weight: 500;
+  color: #3f3f46;
   line-height: 1.45;
   margin-top: 0.2rem;
 }
