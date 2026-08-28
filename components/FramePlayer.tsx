@@ -376,8 +376,6 @@ export default function FramePlayer() {
 
   const currentLightLevel = isLoaded ? (isMobile ? 1 : animProgress) : 0;
 
-  if (!mounted) return null;
-
   return (
     <>
       {/* 1. FIRST VIEW: HERO SECTION WITH FRAME ANIMATION (desktop) or STATIC IMAGE (mobile) */}
