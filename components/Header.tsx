@@ -21,20 +21,27 @@ export default function Header() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Close mobile menu on route change
   useEffect(() => {
     setMobileMenuOpen(false);
   }, [pathname]);
 
-  const navLinks = [
+  // Line 1: HOME, PROJECTS, PRODUCTS, EXPERTISE, ABOUT
+  const line1Links = [
     { label: 'HOME', href: '/' },
     { label: 'PROJECTS', href: '/projects' },
     { label: 'PRODUCTS', href: '/products' },
     { label: 'EXPERTISE', href: '/expertise' },
     { label: 'ABOUT', href: '/about' },
+  ];
+
+  // Line 2: INDUSTRIES, CONTACT
+  const line2Links = [
     { label: 'INDUSTRIES', href: '/industries' },
     { label: 'CONTACT', href: '/contact' },
   ];
+
+  const allNavLinks = [...line1Links, ...line2Links];
+  const navLinks = allNavLinks;
 
   const isActive = (href: string) => {
     if (href === '/') return pathname === '/';
@@ -44,74 +51,14 @@ export default function Header() {
   return (
     <>
       <header className={`hero-header ${isScrolled ? 'is-scrolled' : ''}`}>
-        {/* Logo — always visible */}
-        <Link href="/" className="hero-logo">
-          <svg
-            className="hero-logo-icon"
-            viewBox="0 0 48 48"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M12 40V18L24 8L36 18V40H30V22L24 17L18 22V40H12Z"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinejoin="round"
+        {/* Extra Large Logo on Left */}
+        <div className="hero-header-left">
+          <Link href="/" className="hero-logo">
+            <img
+              src="/logojamiltraders.png"
+              alt="Jamil Traders Logo"
+              className="hero-logo-img"
             />
-            <path
-              d="M6 40H42"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-            />
-          </svg>
-          <div className="hero-logo-text">
-            <span className="hero-brand-name">JAMEEL</span>
-            <span className="hero-brand-sub">TRADERS</span>
-          </div>
-        </Link>
-
-        {/* Desktop Nav */}
-        <nav className="desktop-nav">
-          <ul className="hero-nav">
-            {navLinks.map((item) => {
-              const active = isActive(item.href);
-              return (
-                <li key={item.label}>
-                  <Link
-                    href={item.href}
-                    className={`hero-nav-item ${active ? 'active' : ''}`}
-                  >
-                    <span>{item.label}</span>
-                    {active && <div className="hero-nav-active-dot" />}
-                  </Link>
-                </li>
-              );
-            })}
-          </ul>
-        </nav>
-
-        {/* Header Right Actions */}
-        <div className="hero-header-actions">
-          {/* Project List Quick Badge Button — desktop only shows text */}
-          <button
-            type="button"
-            className="project-list-header-btn"
-            onClick={() => setIsDrawerOpen(true)}
-            title="View Saved Project Luminaires"
-          >
-            <ShoppingBag size={16} />
-            <span className="project-list-btn-text">PROJECT LIST</span>
-            {totalItemsCount > 0 && (
-              <span className="project-list-badge">{totalItemsCount}</span>
-            )}
-          </button>
-
-          <Link href="/contact" className="hero-talk-btn desktop-only-btn">
-            <span>START A PROJECT</span>
-            <div className="hero-talk-btn-arrow">
-              <ArrowRight size={13} />
-            </div>
           </Link>
 
           {/* Hamburger — mobile only */}
@@ -123,6 +70,75 @@ export default function Header() {
             {mobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
           </button>
         </div>
+
+        {/* Center 2-Tier Stack (Desktop Only) */}
+        <div className="hero-header-right desktop-only-flex">
+          {/* Line 1: HOME, PROJECTS, PRODUCTS, EXPERTISE, ABOUT */}
+          <div className="hero-header-line1">
+            <nav className="desktop-nav">
+              <ul className="hero-nav">
+                {line1Links.map((item) => {
+                  const active = isActive(item.href);
+                  return (
+                    <li key={item.label}>
+                      <Link
+                        href={item.href}
+                        className={`hero-nav-item ${active ? 'active' : ''}`}
+                      >
+                        <span>{item.label}</span>
+                        {active && <div className="hero-nav-active-dot" />}
+                      </Link>
+                    </li>
+                  );
+                })}
+              </ul>
+            </nav>
+          </div>
+
+          {/* Line 2: INDUSTRIES, CONTACT + PROJECT LIST + START A PROJECT */}
+          <div className="hero-header-line2">
+            <nav className="desktop-nav">
+              <ul className="hero-nav">
+                {line2Links.map((item) => {
+                  const active = isActive(item.href);
+                  return (
+                    <li key={item.label}>
+                      <Link
+                        href={item.href}
+                        className={`hero-nav-item ${active ? 'active' : ''}`}
+                      >
+                        <span>{item.label}</span>
+                        {active && <div className="hero-nav-active-dot" />}
+                      </Link>
+                    </li>
+                  );
+                })}
+              </ul>
+            </nav>
+
+            <div className="hero-header-actions">
+              <button
+                type="button"
+                className="project-list-header-btn"
+                onClick={() => setIsDrawerOpen(true)}
+                title="View Saved Project Luminaires"
+              >
+                <ShoppingBag size={16} />
+                <span className="project-list-btn-text">PROJECT LIST</span>
+                {totalItemsCount > 0 && (
+                  <span className="project-list-badge">{totalItemsCount}</span>
+                )}
+              </button>
+
+              <Link href="/contact" className="hero-talk-btn">
+                <span>START A PROJECT</span>
+                <div className="hero-talk-btn-arrow">
+                  <ArrowRight size={13} />
+                </div>
+              </Link>
+            </div>
+          </div>
+        </div>
       </header>
 
       {/* Mobile Slide-In Nav Drawer */}
@@ -131,14 +147,11 @@ export default function Header() {
           {/* Drawer Header */}
           <div className="mobile-nav-drawer-header">
             <Link href="/" className="hero-logo" onClick={() => setMobileMenuOpen(false)}>
-              <svg className="hero-logo-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M12 40V18L24 8L36 18V40H30V22L24 17L18 22V40H12Z" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" />
-                <path d="M6 40H42" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-              </svg>
-              <div className="hero-logo-text">
-                <span className="hero-brand-name">JAMEEL</span>
-                <span className="hero-brand-sub">TRADERS</span>
-              </div>
+              <img
+                src="/logojamiltraders.png"
+                alt="Jamil Traders Logo"
+                className="hero-logo-img"
+              />
             </Link>
             <button className="mobile-nav-close-btn" onClick={() => setMobileMenuOpen(false)} aria-label="Close menu">
               <X size={22} />

@@ -95,7 +95,7 @@ canvas {
   max-height: 100vh;
   max-height: 100dvh;
   padding: clamp(0.4rem, 1.2vh, 0.8rem) 1.6rem;
-  padding-top: clamp(4.2rem, 7.5vh, 5.5rem);
+  padding-top: clamp(7.5rem, 14vh, 9.8rem);
   box-sizing: border-box;
   overflow: hidden;
 }
@@ -108,31 +108,32 @@ canvas {
   transition: opacity 0.05s linear, filter 0.05s linear;
 }
 
-/* Header Navigation Bar — Floating Pill Layout Container */
+/* Header Navigation Bar — Floating Layout (Extra Large Logo Left, Centered 2-Tier Stack) */
 .hero-header {
   position: fixed;
-  top: clamp(0.75rem, 1.8vh, 1.25rem);
+  top: clamp(0.5rem, 1.2vh, 0.85rem);
   left: 50%;
   transform: translateX(-50%);
   z-index: 100;
   display: flex;
+  flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  padding: 0.55rem 1.6rem;
-  width: clamp(88%, 90vw, 1200px);
+  gap: 1.5rem;
+  width: clamp(88%, 94vw, 1340px);
   box-sizing: border-box;
   background: transparent;
-  border-radius: 999px;
   pointer-events: none;
   transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  padding: 0;
 }
 
-/* Background Spread Pseudo-Element (Floating Rounded Pill Container) */
+/* Background Spread Pseudo-Element (Floating Rounded Card Container on Scroll) */
 .hero-header::before {
   content: '';
   position: absolute;
-  inset: 0;
-  border-radius: 999px;
+  inset: -0.75rem -1.25rem;
+  border-radius: 28px;
   background: transparent;
   backdrop-filter: blur(0px);
   -webkit-backdrop-filter: blur(0px);
@@ -143,17 +144,51 @@ canvas {
   pointer-events: none;
 }
 
-/* Floating Glass Pill Active After Scroll (Clean White Luxury Glass with Crimson Border) */
+/* Floating Glass Pill Active After Scroll (Single continuous luxury glass background around logo & all options) */
 .hero-header.is-scrolled::before {
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.96) 0%, rgba(253, 246, 246, 0.94) 100%);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.97) 0%, rgba(253, 246, 246, 0.95) 100%);
   backdrop-filter: blur(28px) saturate(190%);
   -webkit-backdrop-filter: blur(28px) saturate(190%);
   border: 1px solid rgba(200, 16, 46, 0.25);
-  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.06), 0 0 20px rgba(200, 16, 46, 0.08);
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.08), 0 0 25px rgba(200, 16, 46, 0.08);
 }
 
-.hero-header>* {
+.hero-header > * {
   pointer-events: auto;
+}
+
+.hero-header-left {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.hero-header-right {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  flex: 1;
+}
+
+.hero-header-line1 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.hero-header-line2 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  width: 100%;
+}
+
+.desktop-only-flex {
+  display: flex;
 }
 
 .hero-logo {
@@ -165,10 +200,15 @@ canvas {
 }
 
 .hero-logo-img {
-  height: clamp(34px, 4.8vh, 44px);
+  height: clamp(85px, 11vh, 120px);
   width: auto;
   object-fit: contain;
-  filter: drop-shadow(0 2px 8px rgba(200, 16, 46, 0.25));
+  filter: drop-shadow(0 4px 16px rgba(200, 16, 46, 0.35));
+  transition: all 0.35s ease;
+}
+
+.hero-header.is-scrolled .hero-logo-img {
+  height: clamp(68px, 8.5vh, 95px);
 }
 
 .hero-logo-text {
@@ -206,30 +246,67 @@ canvas {
   align-items: center;
   gap: clamp(1rem, 1.8vw, 2.2rem);
   list-style: none;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.92) 0%, rgba(253, 246, 246, 0.88) 100%);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.94) 0%, rgba(253, 246, 246, 0.9) 100%);
   backdrop-filter: blur(20px) saturate(180%);
   -webkit-backdrop-filter: blur(20px) saturate(180%);
-  padding: 0.65rem 2.2rem;
+  padding: 0 2.2rem;
+  height: 44px;
   border-radius: 999px;
-  border: 1px solid rgba(200, 16, 46, 0.2);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05), inset 0 1.5px 2px rgba(255, 255, 255, 0.8);
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  border: 1px solid rgba(200, 16, 46, 0.22);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06), inset 0 1.5px 2px rgba(255, 255, 255, 0.85);
+  transition: all 0.35s ease;
+  box-sizing: border-box;
 }
 
-/* Seamless Inner Adjustments When Floating Capsule Spreads */
+.hero-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.project-list-header-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0 1.25rem;
+  height: 44px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.94) 0%, rgba(253, 246, 246, 0.9) 100%);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border-radius: 999px;
+  border: 1px solid rgba(200, 16, 46, 0.22);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06), inset 0 1.5px 2px rgba(255, 255, 255, 0.85);
+  color: #18181b;
+  font-family: var(--font-sans);
+  font-size: clamp(0.68rem, 1.1vh, 0.74rem);
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  transition: all 0.35s ease;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
+/* Seamless Inner Adjustments When Floating Header Spreads on Scroll */
 .hero-header.is-scrolled .hero-nav {
   background: transparent;
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
-  border: none;
-  box-shadow: none;
-  padding: 0;
-}
-
-.hero-header.is-scrolled .hero-talk-btn {
-  background: transparent;
   border-color: transparent;
   box-shadow: none;
+  padding: 0.3rem 0.5rem;
+}
+
+/* Start Project Button KEEPS RED on Scroll as requested! */
+.hero-header.is-scrolled .hero-talk-btn {
+  background: linear-gradient(135deg, #E31B23 0%, #C8102E 60%, #990000 100%) !important;
+  border-color: rgba(227, 27, 35, 0.5) !important;
+  color: #ffffff !important;
+  box-shadow: 0 8px 25px rgba(200, 16, 46, 0.45) !important;
+}
+
+.hero-header.is-scrolled .hero-talk-btn:hover {
+  background: linear-gradient(135deg, #ff3b3b 0%, #E31B23 60%, #C8102E 100%) !important;
+  box-shadow: 0 12px 30px rgba(200, 16, 46, 0.6) !important;
 }
 
 .hero-header.is-scrolled .hero-talk-btn:hover {
@@ -3427,22 +3504,29 @@ button.about-seal-badge:hover .about-seal-icon {
   position: relative;
   padding: 3rem;
   border-radius: 28px;
-  border: 1px solid rgba(200, 16, 46, 0.18);
+  border: 1px solid rgba(200, 16, 46, 0.3);
   overflow: hidden;
-  background: #ffffff;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+  background-size: cover !important;
+  background-position: center !important;
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.25);
   transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
-  color: #18181b;
+  color: #ffffff !important;
 }
 
 .expertise-detail-card:hover {
   transform: translateY(-4px);
-  border-color: rgba(200, 16, 46, 0.4);
-  box-shadow: 0 20px 50px rgba(200, 16, 46, 0.12);
+  border-color: rgba(227, 27, 35, 0.6);
+  box-shadow: 0 25px 60px rgba(200, 16, 46, 0.3);
 }
 
 .expertise-detail-card::before {
-  display: none;
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(8, 7, 5, 0.72) 0%, rgba(14, 11, 8, 0.88) 100%);
+  z-index: 0;
+  border-radius: 28px;
+  display: block !important;
 }
 
 .expertise-detail-card > * {
@@ -3461,7 +3545,8 @@ button.about-seal-badge:hover .about-seal-icon {
   font-family: var(--font-serif);
   font-size: 2.5rem;
   font-weight: 800;
-  color: #C8102E;
+  color: #ff4d4d !important;
+  text-shadow: 0 2px 12px rgba(200, 16, 46, 0.8);
 }
 
 .expertise-card-content-grid {
@@ -3472,39 +3557,43 @@ button.about-seal-badge:hover .about-seal-icon {
 
 .expertise-card-subtitle {
   font-family: var(--font-sans);
-  font-size: 0.75rem;
-  font-weight: 800;
-  letter-spacing: 0.2em;
-  color: #C8102E;
+  font-size: 0.78rem;
+  font-weight: 800 !important;
+  letter-spacing: 0.22em;
+  color: #ff6b6b !important;
   text-transform: uppercase;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9);
 }
 
 .expertise-card-title {
   font-family: var(--font-sans);
   font-size: 2.2rem;
-  font-weight: 800;
-  color: #09090b;
+  font-weight: 800 !important;
+  color: #ffffff !important;
   margin-top: 0.35rem;
   text-transform: uppercase;
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.98);
 }
 
 .expertise-card-desc {
   font-family: var(--font-sans);
   font-size: 1.05rem;
-  font-weight: 500;
-  color: #18181b;
+  font-weight: 700 !important;
+  color: #ffffff !important;
   line-height: 1.65;
   margin-top: 0.75rem;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.98);
 }
 
 .features-title {
   font-family: var(--font-sans);
-  font-size: 0.7rem;
-  font-weight: 800;
-  letter-spacing: 0.2em;
-  color: #C8102E;
+  font-size: 0.75rem;
+  font-weight: 800 !important;
+  letter-spacing: 0.22em;
+  color: #ff6b6b !important;
   margin-bottom: 0.85rem;
   text-transform: uppercase;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9);
 }
 
 .features-list {
@@ -3519,9 +3608,15 @@ button.about-seal-badge:hover .about-seal-icon {
   align-items: center;
   gap: 0.6rem;
   font-family: var(--font-sans);
-  font-size: 0.92rem;
-  font-weight: 500;
-  color: #18181b;
+  font-size: 0.95rem;
+  font-weight: 700 !important;
+  color: #ffffff !important;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.98);
+}
+
+.features-list li span {
+  font-weight: 700 !important;
+  color: #ffffff !important;
 }
 
 /* Timeline */
