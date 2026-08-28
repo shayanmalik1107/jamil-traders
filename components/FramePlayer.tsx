@@ -533,23 +533,6 @@ export default function FramePlayer() {
 
       {/* 2. ABOUT SECTION WITH CEO FEATURE & VIDEO FRAME CANVAS BACKDROP */}
       <section id="about" ref={aboutSectionRef} className="about-frame-section">
-        {/* Desktop: Canvas for Video Frame Ambient Background */}
-        {!isMobile && <canvas ref={aboutCanvasRef} className="about-canvas" />}
-
-        {/* Mobile: Static last frame image */}
-        {isMobile && (
-          <div className="about-mobile-bg">
-            <img
-              src={ABOUT_LAST_FRAME}
-              alt="About Background"
-              className="about-mobile-bg-img"
-            />
-          </div>
-        )}
-
-        {/* Ambient Dark Gradient Overlay */}
-        <div className="about-canvas-overlay" />
-
         {/* Unique Luxury Content Grid Container */}
         <div className="about-hero-container">
           <div className="about-content-left">

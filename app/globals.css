@@ -1047,27 +1047,21 @@ canvas {
   min-height: 100vh;
   padding: 6rem 0;
   margin: 0;
-  background: transparent;
+  background: linear-gradient(180deg, #ffffff 0%, #fff9f9 50%, #fdf5f5 100%) !important;
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-top: 1px solid rgba(200, 16, 46, 0.3);
+  border-top: 1px solid rgba(200, 16, 46, 0.15);
   box-sizing: border-box;
 }
 
 .about-canvas {
-  display: block;
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  z-index: 1;
+  display: none !important;
 }
 
 .about-canvas-overlay {
-  display: none;
+  display: none !important;
 }
 
 .about-hero-container {
@@ -1092,7 +1086,7 @@ canvas {
   font-size: clamp(2.2rem, 4.2vh + 1vw, 3.6rem);
   font-weight: 800;
   line-height: 1.05;
-  color: #ffffff;
+  color: #09090b !important;
   letter-spacing: -0.01em;
   text-transform: uppercase;
 }
@@ -1177,11 +1171,11 @@ canvas {
 }
 
 .about-card-quote-mark {
-  color: #fef08a;
+  color: #C8102E;
   opacity: 1;
   flex-shrink: 0;
   margin-top: 0.15rem;
-  filter: drop-shadow(0 0 12px rgba(212, 175, 55, 0.6));
+  filter: drop-shadow(0 0 8px rgba(200, 16, 46, 0.3));
 }
 
 .about-tab-quote-body {
@@ -1193,9 +1187,9 @@ canvas {
   font-family: var(--font-serif), 'Playfair Display', Georgia, serif;
   font-size: clamp(1.08rem, 1.85vh, 1.28rem);
   font-style: italic;
-  font-weight: 1000;
+  font-weight: 700;
   line-height: 1.6;
-  color: #ffffff !important;
+  color: #18181b !important;
   letter-spacing: 0.02em;
 }
 
@@ -1242,7 +1236,7 @@ canvas {
   font-family: var(--font-sans);
   font-size: 1.18rem;
   font-weight: 800;
-  color: #ffffff;
+  color: #09090b !important;
   letter-spacing: 0.02em;
   text-transform: uppercase;
 }
