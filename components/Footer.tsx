@@ -36,29 +36,11 @@ export default function Footer() {
             {/* Column 1: Brand & Philosophy */}
             <div className="footer-col footer-col-brand">
               <Link href="/" className="hero-logo footer-logo">
-                <svg
-                  className="hero-logo-icon"
-                  viewBox="0 0 48 48"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M12 40V18L24 8L36 18V40H30V22L24 17L18 22V40H12Z"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinejoin="round"
-                  />
-                  <path
-                    d="M6 40H42"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                  />
-                </svg>
-                <div className="hero-logo-text">
-                  <span className="hero-brand-name">JAMEEL</span>
-                  <span className="hero-brand-sub">TRADERS</span>
-                </div>
+                <img
+                  src="/logojamiltraders.png"
+                  alt="Jamil Traders Logo"
+                  className="hero-logo-img"
+                />
               </Link>
 
               <p className="footer-brand-desc">
@@ -66,7 +48,7 @@ export default function Footer() {
               </p>
 
               <div className="footer-badge">
-                <Sparkles size={14} style={{ color: 'var(--gold-accent)' }} />
+                <Sparkles size={14} style={{ color: '#C8102E' }} />
                 <span>OVER 2 DECADES OF ILLUMINATION EXCELLENCE</span>
               </div>
             </div>

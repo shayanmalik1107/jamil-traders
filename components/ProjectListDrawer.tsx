@@ -46,7 +46,7 @@ export default function ProjectListDrawer() {
         {/* Drawer Header */}
         <div className="drawer-header">
           <div className="drawer-header-title">
-            <ShoppingBag size={20} style={{ color: 'var(--gold-accent)' }} />
+            <ShoppingBag size={20} style={{ color: '#C8102E' }} />
             <h3>PROJECT LIGHTING LIST</h3>
             <span className="drawer-badge">{totalItemsCount} ITEMS</span>
           </div>
@@ -65,7 +65,7 @@ export default function ProjectListDrawer() {
           {step === 'SUCCESS' ? (
             <div className="drawer-success-view">
               <div className="drawer-success-icon">
-                <CheckCircle2 size={48} style={{ color: 'var(--gold-accent)' }} />
+                <CheckCircle2 size={48} style={{ color: '#C8102E' }} />
               </div>
               <h4 className="drawer-success-title">Project Quote Request Sent!</h4>
               <p className="drawer-success-desc">

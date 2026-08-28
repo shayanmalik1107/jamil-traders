@@ -49,7 +49,7 @@ export default function HomeSections() {
                     <div className="expertise-line-features">
                       {exp.keyFeatures.slice(0, 3).map((feat) => (
                         <span key={feat} className="expertise-feature-pill">
-                          <CheckCircle2 size={12} style={{ color: 'var(--gold-accent)' }} />
+                          <CheckCircle2 size={12} style={{ color: '#C8102E' }} />
                           {feat}
                         </span>
                       ))}
@@ -368,7 +368,7 @@ export default function HomeSections() {
                   <ul className="project-modal-luminaires-list">
                     {selectedProject.luminairesUsed.map((lum) => (
                       <li key={lum}>
-                        <CheckCircle2 size={14} style={{ color: 'var(--gold-accent)' }} />
+                        <CheckCircle2 size={14} style={{ color: '#C8102E' }} />
                         <span>{lum}</span>
                       </li>
                     ))}

@@ -640,12 +640,12 @@ export default function FramePlayer() {
                 title="Click to view official certificates"
               >
                 <svg className="about-seal-icon" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <circle cx="20" cy="20" r="18" stroke="var(--gold-accent)" strokeWidth="1.5" strokeDasharray="3 3" />
-                  <path d="M20 8L23.5 15H31L25 19.5L27 27L20 22.5L13 27L15 19.5L9 15H16.5L20 8Z" fill="var(--gold-accent)" />
+                  <circle cx="20" cy="20" r="18" stroke="#C8102E" strokeWidth="1.5" strokeDasharray="3 3" />
+                  <path d="M20 8L23.5 15H31L25 19.5L27 27L20 22.5L13 27L15 19.5L9 15H16.5L20 8Z" fill="#C8102E" />
                 </svg>
                 <div className="about-seal-text">
                   <span>VIEW CERTIFICATES</span>
-                  <strong>GOLD STANDARD ↗</strong>
+                  <strong>BRAND STANDARD ↗</strong>
                 </div>
               </button>
             </div>
@@ -674,7 +674,7 @@ export default function FramePlayer() {
             <div className="about-ceo-frame">
               <img
                 src="/ceo.png"
-                alt="Jameel Malik - Founder & CEO"
+                alt="Malik Abdul Jamil - Founder & CEO"
                 className="about-ceo-img"
               />
               <div className="about-ceo-img-glow" />
@@ -684,7 +684,7 @@ export default function FramePlayer() {
                 <div className="about-quote-dot" />
                 <div className="about-quote-text">
                   <span>EXCELLENCE IN LIGHTING & DESIGN</span>
-                  <strong>JAMEEL TRADERS LEADERSHIP</strong>
+                  <strong>JAMIL TRADERS LEADERSHIP</strong>
                 </div>
               </div>
             </div>
@@ -702,7 +702,7 @@ export default function FramePlayer() {
               <div className="cert-modal-header-left">
                 <div className="hero-eyebrow">
                   <span className="hero-eyebrow-pill">VERIFIED ACCREDITATIONS</span>
-                  <span>JAMEEL TRADERS</span>
+                  <span>JAMIL TRADERS</span>
                 </div>
                 <h3 className="cert-modal-title">Official Certificates & Standards</h3>
                 <p className="cert-modal-sub">
@@ -728,9 +728,9 @@ export default function FramePlayer() {
                   <span>VERIFIED ACTIVE</span>
                 </div>
                 <div className="cert-preview-frame">
-                  <Award size={36} className="cert-icon-gold" />
+                  <Award size={36} className="cert-icon-red" />
                   <span className="cert-watermark">ISO 9001:2015</span>
-                  <div className="cert-stamp">GOLD CERTIFIED</div>
+                  <div className="cert-stamp">VERIFIED CERTIFIED</div>
                 </div>
                 <div className="cert-card-info">
                   <h4 className="cert-title">ISO 9001:2015 Lighting Quality Management</h4>
@@ -746,7 +746,7 @@ export default function FramePlayer() {
                   <span>VERIFIED ACTIVE</span>
                 </div>
                 <div className="cert-preview-frame">
-                  <ShieldCheck size={36} className="cert-icon-gold" />
+                  <ShieldCheck size={36} className="cert-icon-red" />
                   <span className="cert-watermark">LUXURY LIGHTING</span>
                   <div className="cert-stamp">ACCREDITED</div>
                 </div>
@@ -764,7 +764,7 @@ export default function FramePlayer() {
                   <span>VERIFIED ACTIVE</span>
                 </div>
                 <div className="cert-preview-frame">
-                  <Building2 size={36} className="cert-icon-gold" />
+                  <Building2 size={36} className="cert-icon-red" />
                   <span className="cert-watermark">LUMINAIRE TRADING</span>
                   <div className="cert-stamp">COMPLIANT</div>
                 </div>
@@ -782,7 +782,7 @@ export default function FramePlayer() {
                   <span>VERIFIED ACTIVE</span>
                 </div>
                 <div className="cert-preview-frame">
-                  <Sparkles size={36} className="cert-icon-gold" />
+                  <Sparkles size={36} className="cert-icon-red" />
                   <span className="cert-watermark">LIGHTING EXCELLENCE</span>
                   <div className="cert-stamp">HONOR AWARD</div>
                 </div>
