@@ -499,14 +499,7 @@ canvas {
 }
 
 .hero-mobile-bg-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    180deg,
-    rgba(0,0,0,0.55) 0%,
-    rgba(0,0,0,0.35) 50%,
-    rgba(0,0,0,0.75) 100%
-  );
+  display: none !important;
 }
 
 .about-mobile-bg {
@@ -4651,18 +4644,17 @@ button.about-seal-badge:hover .about-seal-icon {
 
   .hero-capabilities-grid {
     display: flex;
-    flex-direction: row;
     align-items: center;
     gap: 0.4rem;
     overflow-x: auto;
     width: 100%;
-    padding: 0.55rem 0.75rem;
+    padding: 0.65rem 0.9rem;
     border-radius: 18px;
-    background: linear-gradient(135deg, rgba(28, 24, 20, 0.92) 0%, rgba(14, 12, 10, 0.88) 100%);
-    border: 1px solid rgba(212, 175, 55, 0.3);
+    background: #ffffff !important;
+    border: 1.5px solid rgba(200, 16, 46, 0.35) !important;
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
     scrollbar-width: none;
     -ms-overflow-style: none;
     box-sizing: border-box;
@@ -4675,7 +4667,7 @@ button.about-seal-badge:hover .about-seal-icon {
   .hero-capability-divider {
     width: 1px;
     height: 24px;
-    background: rgba(255, 255, 255, 0.15);
+    background: rgba(200, 16, 46, 0.3) !important;
     flex-shrink: 0;
     align-self: center;
     margin: 0 0.2rem;
@@ -4688,16 +4680,28 @@ button.about-seal-badge:hover .about-seal-icon {
   }
 
   .hero-capability-icon {
-    width: 28px;
-    height: 28px;
+    width: 30px !important;
+    height: 30px !important;
+    background: rgba(200, 16, 46, 0.12) !important;
+    border: 1px solid rgba(200, 16, 46, 0.3) !important;
+    color: #C8102E !important;
+  }
+
+  .hero-capability-icon svg {
+    color: #C8102E !important;
+    stroke: #C8102E !important;
   }
 
   .hero-capability-tag {
-    font-size: 0.55rem;
+    font-size: 0.58rem !important;
+    color: #C8102E !important;
+    font-weight: 800 !important;
   }
 
   .hero-capability-title {
-    font-size: 0.68rem;
+    font-size: 0.72rem !important;
+    color: #C8102E !important;
+    font-weight: 700 !important;
     white-space: nowrap;
   }
 

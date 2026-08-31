@@ -383,7 +383,7 @@ export default function FramePlayer() {
         {/* Desktop: animated canvas */}
         {!isMobile && <canvas ref={heroCanvasRef} />}
 
-        {/* Mobile: static last frame image as full background */}
+        {/* Mobile: static last frame image as full background with no overlay */}
         {isMobile && (
           <div className="hero-mobile-bg">
             <img
@@ -391,7 +391,6 @@ export default function FramePlayer() {
               alt="Jameel Traders Lighting"
               className="hero-mobile-bg-img"
             />
-            <div className="hero-mobile-bg-overlay" />
           </div>
         )}
 
