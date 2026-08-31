@@ -51,6 +51,12 @@ export default function FramePlayer() {
     const checkMobile = () => setIsMobile(window.innerWidth < 768);
     checkMobile();
     window.addEventListener('resize', checkMobile);
+
+    // If session loads/reloads on any non-home page, mark animation as played so returning to home won't trigger animation
+    if (typeof window !== 'undefined' && window.location.pathname !== '/') {
+      sessionStorage.setItem('jt_hero_anim_played', 'true');
+    }
+
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
@@ -290,11 +296,58 @@ export default function FramePlayer() {
     }
   }, [renderHeroFrame]);
 
+  // Check if hero animation should play based on reload vs route navigation
+  const shouldPlayHeroAnimation = useCallback(() => {
+    if (typeof window === 'undefined') return false;
+
+    try {
+      const isReload =
+        typeof performance !== 'undefined' &&
+        performance.getEntriesByType &&
+        performance.getEntriesByType('navigation').length > 0 &&
+        (performance.getEntriesByType('navigation')[0] as PerformanceNavigationTiming).type === 'reload';
+
+      const hasPlayed = sessionStorage.getItem('jt_hero_anim_played') === 'true';
+
+      // 1. If page is reloaded while on Home page ('/'):
+      if (isReload && window.location.pathname === '/') {
+        sessionStorage.setItem('jt_hero_anim_played', 'true');
+        return true;
+      }
+
+      // 2. If reloaded or opened while on a non-home page (e.g. '/about'):
+      if (window.location.pathname !== '/') {
+        sessionStorage.setItem('jt_hero_anim_played', 'true');
+        return false;
+      }
+
+      // 3. If user navigated from another page (or animation already played in session):
+      if (hasPlayed) {
+        return false;
+      }
+
+      // 4. Initial fresh load directly on Home page ('/'):
+      sessionStorage.setItem('jt_hero_anim_played', 'true');
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }, []);
+
   // Start Hero Animation once preloader completes (desktop only)
   useEffect(() => {
     if (isMobile || !isLoaded) return;
 
     resizeCanvas(heroCanvasRef.current);
+
+    const playAnim = shouldPlayHeroAnimation();
+
+    if (!playAnim) {
+      setAnimProgress(1);
+      renderHeroFrame(HERO_TOTAL_FRAMES - 1);
+      return;
+    }
+
     renderHeroFrame(0);
     heroStartTimeRef.current = performance.now();
     heroRequestRef.current = requestAnimationFrame(animateHero);
@@ -304,7 +357,7 @@ export default function FramePlayer() {
         cancelAnimationFrame(heroRequestRef.current);
       }
     };
-  }, [isMobile, isLoaded, resizeCanvas, renderHeroFrame, animateHero]);
+  }, [isMobile, isLoaded, resizeCanvas, renderHeroFrame, animateHero, shouldPlayHeroAnimation]);
 
   // About Animation Loop (Strictly 1 Second Duration: 1000ms)
   const animateAbout = useCallback((timestamp: number) => {
