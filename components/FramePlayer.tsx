@@ -502,8 +502,6 @@ export default function FramePlayer() {
                 <span>BESPOKE LIGHTING</span>
                 <span>•</span>
                 <span>ARCHITECTURAL LUMINAIRES</span>
-                <span>•</span>
-                <span>ILLUMINATION</span>
               </div>
 
               <h1 className="hero-title">
