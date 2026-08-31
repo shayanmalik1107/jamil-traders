@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { Search, ArrowRight, ArrowDown, Menu, X, Sparkles, Building2, ShieldCheck, Award, FileCheck, CheckCircle2, Quote } from 'lucide-react';
 import Lenis from 'lenis';
 
-const HERO_TOTAL_FRAMES = 73; // frame_0001.png to frame_0073.png
+const HERO_TOTAL_FRAMES = 61; // frame_0001.png to frame_0061.png
 const HERO_ANIMATION_DURATION_MS = 1500; // 1.5 seconds total
 
 const ABOUT_FRAME_FILES = [
@@ -14,7 +14,7 @@ const ABOUT_TOTAL_FRAMES = ABOUT_FRAME_FILES.length; // 57 frames
 const ABOUT_ANIMATION_DURATION_MS = 500; // 0.5 seconds total
 
 // Last frame paths for mobile static display
-const HERO_LAST_FRAME = '/lighting_frames_same_as_video/frame_0073.png';
+const HERO_LAST_FRAME = '/lighting_frames_same_as_video/frame_0061.png';
 const ABOUT_LAST_FRAME = '/video_frames/frame_091.webp';
 
 export default function FramePlayer() {
