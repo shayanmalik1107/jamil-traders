@@ -1,7 +1,8 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Send, Upload, Phone, Mail, MapPin, CheckCircle2, MessageSquare, Clock } from 'lucide-react';
+import { Send, Upload, Phone, Mail, MapPin, CheckCircle2, Clock } from 'lucide-react';
+import WhatsAppIcon from '@/components/WhatsAppIcon';
 
 export default function ContactPage() {
   const [submitted, setSubmitted] = useState<boolean>(false);
@@ -211,7 +212,7 @@ export default function ContactPage() {
                 className="whatsapp-action-card"
               >
                 <div className="whatsapp-card-icon">
-                  <MessageSquare size={24} />
+                  <WhatsAppIcon size={26} color="#ffffff" />
                 </div>
                 <div className="whatsapp-card-text">
                   <span className="whatsapp-badge">INSTANT CHAT</span>
@@ -234,8 +235,8 @@ export default function ContactPage() {
                   <li>
                     <Phone size={18} className="info-icon" />
                     <div>
-                      <strong>Telephone & Mobile</strong>
-                      <span>+92 (042) 3578-9000 / +92 300 8456-789</span>
+                      <strong>Telephone & WhatsApp</strong>
+                      <span>+92 (042) 3578-9000 / <a href="https://wa.me/923008456789" target="_blank" rel="noopener noreferrer" style={{ color: '#25D366', textDecoration: 'none', fontWeight: 600 }}>+92 300 8456-789 <WhatsAppIcon size={14} color="#25D366" style={{ display: 'inline-block', verticalAlign: 'middle', marginLeft: 3 }} /></a></span>
                     </div>
                   </li>
                   <li>

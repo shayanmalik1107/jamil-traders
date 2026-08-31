@@ -3,6 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { ArrowRight, Phone, Mail, MapPin, Sparkles, Instagram, Linkedin, Facebook } from 'lucide-react';
+import WhatsAppIcon from '@/components/WhatsAppIcon';
 
 export default function Footer() {
   return (
@@ -90,7 +91,7 @@ export default function Footer() {
                 </li>
                 <li>
                   <Phone size={16} className="footer-contact-icon" />
-                  <span>+92 (042) 3578-9000 / +92 300 8456-789</span>
+                  <span>+92 (042) 3578-9000 / <a href="https://wa.me/923008456789" target="_blank" rel="noopener noreferrer" style={{ color: '#25D366', textDecoration: 'none', fontWeight: 600 }}>+92 300 8456-789 <WhatsAppIcon size={14} color="#25D366" style={{ display: 'inline-block', verticalAlign: 'middle', marginLeft: 3 }} /></a></span>
                 </li>
                 <li>
                   <Mail size={16} className="footer-contact-icon" />
