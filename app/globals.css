@@ -67,6 +67,11 @@ html.lenis body {
   overflow: hidden;
 }
 
+.hero-section,
+.hero-section * {
+  text-shadow: none !important;
+}
+
 canvas {
   display: block;
   width: 100vw;
@@ -674,7 +679,7 @@ canvas {
   display: flex;
   align-items: center;
   gap: 0.6rem;
-  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9);
+  text-shadow: none;
 }
 
 /* EST. 2002 Brand Glass Pill */
@@ -699,7 +704,7 @@ canvas {
   color: #ffffff;
   letter-spacing: -0.01em;
   text-transform: uppercase;
-  text-shadow: 0 4px 16px rgba(0, 0, 0, 0.95);
+  text-shadow: none;
 }
 
 .hero-title-italic {
@@ -722,7 +727,7 @@ canvas {
   color: #ffffff;
   border-left: 3px solid #C8102E;
   padding-left: 1.1rem;
-  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.98);
+  text-shadow: none;
   max-width: 480px;
 }
 
@@ -838,7 +843,7 @@ canvas {
   line-height: 1.14;
   color: #ffffff;
   text-transform: uppercase;
-  text-shadow: 0 2px 14px rgba(0, 0, 0, 1);
+  text-shadow: none;
   max-width: 98%;
 }
 
@@ -849,7 +854,7 @@ canvas {
   color: #ffffff;
   font-weight: 500;
   max-width: 92%;
-  text-shadow: 0 2px 10px rgba(0, 0, 0, 1);
+  text-shadow: none;
 }
 
 .bulb-discover-btn {
