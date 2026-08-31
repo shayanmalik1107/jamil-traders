@@ -13,6 +13,10 @@ const ABOUT_FRAME_FILES = [
 const ABOUT_TOTAL_FRAMES = ABOUT_FRAME_FILES.length; // 57 frames
 const ABOUT_ANIMATION_DURATION_MS = 500; // 0.5 seconds total
 
+// Last frame paths for mobile static display
+const HERO_LAST_FRAME = '/lighting_frames_same_as_video/frame_0061.png';
+const ABOUT_LAST_FRAME = '/video_frames/frame_091.webp';
+
 // Top-level document tagging to capture hard reload vs SPA navigation accurately
 if (typeof window !== 'undefined' && !(window as any).__JT_DOC_TAGGED__) {
   (window as any).__JT_DOC_TAGGED__ = true;
