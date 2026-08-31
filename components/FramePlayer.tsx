@@ -13,9 +13,25 @@ const ABOUT_FRAME_FILES = [
 const ABOUT_TOTAL_FRAMES = ABOUT_FRAME_FILES.length; // 57 frames
 const ABOUT_ANIMATION_DURATION_MS = 500; // 0.5 seconds total
 
-// Last frame paths for mobile static display
-const HERO_LAST_FRAME = '/lighting_frames_same_as_video/frame_0061.png';
-const ABOUT_LAST_FRAME = '/video_frames/frame_091.webp';
+// Top-level document tagging to capture hard reload vs SPA navigation accurately
+if (typeof window !== 'undefined' && !(window as any).__JT_DOC_TAGGED__) {
+  (window as any).__JT_DOC_TAGGED__ = true;
+  const isDocReload =
+    typeof performance !== 'undefined' &&
+    performance.getEntriesByType &&
+    performance.getEntriesByType('navigation').length > 0 &&
+    (performance.getEntriesByType('navigation')[0] as PerformanceNavigationTiming).type === 'reload';
+
+  const currentPath = window.location.pathname;
+  (window as any).__JT_DOC_INITIAL_PATH__ = currentPath;
+  (window as any).__JT_DOC_WAS_RELOAD_ON_HOME__ = (isDocReload && currentPath === '/');
+
+  if (isDocReload && currentPath === '/') {
+    sessionStorage.removeItem('jt_hero_anim_played');
+  } else if (currentPath !== '/') {
+    sessionStorage.setItem('jt_hero_anim_played', 'true');
+  }
+}
 
 export default function FramePlayer() {
   // Hero canvas refs
@@ -301,34 +317,35 @@ export default function FramePlayer() {
     if (typeof window === 'undefined') return false;
 
     try {
-      const isReload =
-        typeof performance !== 'undefined' &&
-        performance.getEntriesByType &&
-        performance.getEntriesByType('navigation').length > 0 &&
-        (performance.getEntriesByType('navigation')[0] as PerformanceNavigationTiming).type === 'reload';
+      const win = window as any;
 
-      const hasPlayed = sessionStorage.getItem('jt_hero_anim_played') === 'true';
-
-      // 1. If page is reloaded while on Home page ('/'):
-      if (isReload && window.location.pathname === '/') {
+      // 1. If this document load was a hard reload specifically on the Home page ('/'):
+      if (win.__JT_DOC_WAS_RELOAD_ON_HOME__) {
+        win.__JT_DOC_WAS_RELOAD_ON_HOME__ = false;
         sessionStorage.setItem('jt_hero_anim_played', 'true');
         return true;
       }
 
-      // 2. If reloaded or opened while on a non-home page (e.g. '/about'):
-      if (window.location.pathname !== '/') {
+      // 2. If the initial document entry/reload happened on a non-home page (e.g. '/about'):
+      if (win.__JT_DOC_INITIAL_PATH__ && win.__JT_DOC_INITIAL_PATH__ !== '/') {
         sessionStorage.setItem('jt_hero_anim_played', 'true');
         return false;
       }
 
-      // 3. If user navigated from another page (or animation already played in session):
+      // 3. If animation has already played in this session (or user navigated from another route):
+      const hasPlayed = sessionStorage.getItem('jt_hero_anim_played') === 'true';
       if (hasPlayed) {
         return false;
       }
 
       // 4. Initial fresh load directly on Home page ('/'):
+      if (window.location.pathname === '/') {
+        sessionStorage.setItem('jt_hero_anim_played', 'true');
+        return true;
+      }
+
       sessionStorage.setItem('jt_hero_anim_played', 'true');
-      return true;
+      return false;
     } catch (e) {
       return false;
     }
