@@ -435,6 +435,36 @@ canvas {
 
 .mobile-menu-toggle {
   display: none;
+  background: #ffffff !important;
+  border: 1.5px solid rgba(200, 16, 46, 0.35) !important;
+  color: #C8102E !important;
+  width: 42px !important;
+  height: 42px !important;
+  border-radius: 50% !important;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(200, 16, 46, 0.2), 0 2px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.mobile-menu-toggle:hover,
+.mobile-menu-toggle:active {
+  background: #ffffff !important;
+  border-color: #C8102E !important;
+  color: #C8102E !important;
+  transform: scale(1.06);
+  box-shadow: 0 6px 20px rgba(200, 16, 46, 0.35);
+}
+
+.mobile-menu-toggle svg {
+  color: #C8102E !important;
+  stroke: #C8102E !important;
+  transition: transform 0.25s ease;
+}
+
+.mobile-menu-toggle:hover svg {
+  transform: rotate(8deg);
 }
 
 .desktop-only-btn {
@@ -1704,16 +1734,21 @@ canvas {
 }
 
 @media (max-width: 1150px) {
+  .desktop-only-flex {
+    display: none !important;
+  }
+
   .desktop-nav {
-    display: none;
+    display: none !important;
   }
 
   .mobile-menu-toggle {
-    display: flex;
+    display: flex !important;
+    margin-left: auto;
   }
 
   .desktop-only-btn {
-    display: none;
+    display: none !important;
   }
 }
 
@@ -4463,16 +4498,21 @@ button.about-seal-badge:hover .about-seal-icon {
     border-radius: 0;
   }
 
+  .desktop-only-flex {
+    display: none !important;
+  }
+
   .desktop-only-btn {
     display: none !important;
   }
 
   .desktop-nav {
-    display: none;
+    display: none !important;
   }
 
   .mobile-menu-toggle {
-    display: flex;
+    display: flex !important;
+    margin-left: auto;
   }
 
   .project-list-btn-text {

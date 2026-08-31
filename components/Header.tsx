@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { ArrowRight, Menu, X, ShoppingBag } from 'lucide-react';
+import { ArrowRight, Lightbulb, X, ShoppingBag } from 'lucide-react';
 import { useProjectList } from '@/context/ProjectListContext';
 
 export default function Header() {
@@ -60,15 +60,6 @@ export default function Header() {
               className="hero-logo-img"
             />
           </Link>
-
-          {/* Hamburger — mobile only */}
-          <button
-            className="hero-icon-btn mobile-menu-toggle"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            aria-label="Toggle menu"
-          >
-            {mobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
-          </button>
         </div>
 
         {/* Center 2-Tier Stack (Desktop Only) */}
@@ -139,6 +130,15 @@ export default function Header() {
             </div>
           </div>
         </div>
+
+        {/* 3-Dots / Bulb Drawer Toggle — Mobile Only (Placed on the far right) */}
+        <button
+          className="hero-icon-btn mobile-menu-toggle"
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          aria-label="Toggle menu"
+        >
+          {mobileMenuOpen ? <X size={22} color="#C8102E" /> : <Lightbulb size={22} color="#C8102E" />}
+        </button>
       </header>
 
       {/* Mobile Slide-In Nav Drawer */}
