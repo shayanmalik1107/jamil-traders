@@ -674,7 +674,7 @@ canvas {
   font-size: clamp(0.6rem, 1.1vh, 0.72rem);
   font-weight: 700;
   letter-spacing: 0.25em;
-  color: #C8102E;
+  color: #ff4d4d;
   text-transform: uppercase;
   display: flex;
   align-items: center;
@@ -682,17 +682,18 @@ canvas {
   text-shadow: none;
 }
 
-/* EST. 2002 Brand Glass Pill */
+/* EST. 2002 Brand Glass Pill — High-contrast bright red pill with bold white text */
 .hero-eyebrow-pill {
-  padding: 0.2rem 0.65rem;
-  background: rgba(200, 16, 46, 0.25);
-  border: 1px solid rgba(227, 27, 35, 0.5);
+  padding: 0.3rem 0.75rem;
+  background: linear-gradient(135deg, #E31B23 0%, #C8102E 100%);
+  border: 1px solid rgba(255, 255, 255, 0.4);
   border-radius: 999px;
   font-family: var(--font-sans);
-  font-size: 0.58rem;
-  font-weight: 700;
-  letter-spacing: 0.15em;
-  color: #E31B23;
+  font-size: clamp(0.62rem, 1vh, 0.7rem);
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  color: #ffffff !important;
+  box-shadow: 0 4px 15px rgba(200, 16, 46, 0.6);
   backdrop-filter: blur(10px);
 }
 
@@ -838,7 +839,7 @@ canvas {
 
 .bulb-card-title {
   font-family: var(--font-sans);
-  font-size: clamp(1.1rem, 2.8vh + 0.4vw, 1.85rem);
+  font-size: clamp(0.9rem, 2.2vh + 0.3vw, 1.4rem);
   font-weight: 800;
   line-height: 1.14;
   color: #ffffff;
@@ -849,7 +850,7 @@ canvas {
 
 .bulb-card-sub {
   font-family: var(--font-sans);
-  font-size: clamp(0.68rem, 1.6vh + 0.2vw, 1.05rem);
+  font-size: clamp(0.6rem, 1.25vh + 0.15vw, 0.8rem);
   line-height: 1.38;
   color: #ffffff;
   font-weight: 500;
@@ -858,12 +859,13 @@ canvas {
 }
 
 .bulb-discover-btn {
-  padding: clamp(0.38rem, 0.95vh, 0.75rem) clamp(0.6rem, 1.3vw, 1.25rem) !important;
+  padding: clamp(0.35rem, 0.85vh, 0.65rem) clamp(0.6rem, 1.2vw, 1.1rem) !important;
   font-family: var(--font-sans) !important;
-  font-size: clamp(0.58rem, 1.35vh, 0.95rem) !important;
+  font-size: clamp(0.55rem, 1.1vh, 0.75rem) !important;
   font-weight: 700 !important;
   letter-spacing: 0.14em !important;
   margin-top: 0.15rem;
+  transform: translateX(14px);
   border-radius: 999px !important;
   max-width: 95%;
   white-space: nowrap;
