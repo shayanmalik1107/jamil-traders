@@ -858,7 +858,8 @@ canvas {
   font-weight: 700 !important;
   letter-spacing: 0.14em !important;
   margin-top: 0.15rem;
-  transform: translateX(clamp(12px, 5%, 20px));
+  margin-left: 22px !important;
+  transform: none !important;
   border-radius: 999px !important;
   max-width: 95%;
   white-space: nowrap;
