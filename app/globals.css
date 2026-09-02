@@ -2391,15 +2391,19 @@ button.about-seal-badge:hover .about-seal-icon {
   overflow: hidden;
 }
 
-.project-card-img {
+.project-card-slider-track {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.65s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.project-card-slide-img {
+  min-width: 100%;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.6s ease;
-}
-
-.home-project-card:hover .project-card-img {
-  transform: scale(1.06);
+  flex-shrink: 0;
 }
 
 .project-card-badge {
@@ -3331,10 +3335,108 @@ button.about-seal-badge:hover .about-seal-icon {
 /* ------------------------------------------
    PRODUCT & CASE STUDY MODALS
    ------------------------------------------ */
+.project-card-carousel-wrap {
+  position: relative;
+}
+
+.project-card-carousel-dots {
+  position: absolute;
+  bottom: 0.75rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  z-index: 10;
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(8px);
+  padding: 0.35rem 0.65rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.carousel-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.carousel-dot.active {
+  background: #ffffff;
+  width: 18px;
+  border-radius: 999px;
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
+}
+
+.project-card-title-row {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  margin-bottom: 0.35rem;
+}
+
+.project-card-title-text-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.project-card-logo-round-wrap {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 2px solid #C8102E;
+  box-shadow: 0 4px 14px rgba(200, 16, 46, 0.22);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  overflow: hidden;
+  padding: 4px;
+}
+
+.project-card-logo-round {
+  width: 100%;
+  height: 100%;
+  object-fit: contain !important;
+  border-radius: 50%;
+  background: #ffffff;
+}
+
+.project-modal-logo-round-wrap {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 2px solid #C8102E;
+  box-shadow: 0 6px 18px rgba(200, 16, 46, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  overflow: hidden;
+  padding: 5px;
+}
+
+.project-modal-logo-round {
+  width: 100%;
+  height: 100%;
+  object-fit: contain !important;
+  border-radius: 50%;
+  background: #ffffff;
+}
+
+/* ------------------------------------------
+   PRODUCT & CASE STUDY MODALS
+   ------------------------------------------ */
 .project-modal-overlay, .product-modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.65);
   backdrop-filter: blur(12px);
   z-index: 250;
   display: flex;
@@ -3348,14 +3450,14 @@ button.about-seal-badge:hover .about-seal-icon {
   border: 1px solid rgba(200, 16, 46, 0.2);
   border-radius: 28px;
   width: 100%;
-  max-width: 900px;
-  max-height: 90vh;
+  max-width: 920px;
+  max-height: 88vh;
   overflow-y: auto;
   padding: 2.25rem;
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
-  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.25);
   color: #18181b;
 }
 
@@ -3365,6 +3467,24 @@ button.about-seal-badge:hover .about-seal-icon {
   justify-content: space-between;
   border-bottom: 1px solid rgba(200, 16, 46, 0.15);
   padding-bottom: 1rem;
+  gap: 1rem;
+}
+
+.project-modal-header-left {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.project-modal-logo {
+  height: 48px;
+  width: auto;
+  object-fit: contain;
+  border-radius: 8px;
+  background: #ffffff;
+  padding: 4px 8px;
+  border: 1px solid rgba(200, 16, 46, 0.2);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
 .project-modal-cat, .product-modal-cat {
@@ -3379,8 +3499,18 @@ button.about-seal-badge:hover .about-seal-icon {
 .project-modal-title, .product-modal-title {
   font-family: var(--font-sans);
   font-weight: 800;
-  font-size: 2rem;
+  font-size: 1.85rem;
   color: #09090b;
+  line-height: 1.25;
+}
+
+.project-modal-client {
+  display: block;
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #64748b;
+  margin-top: 0.2rem;
 }
 
 .project-modal-close, .product-modal-close {
@@ -3388,12 +3518,14 @@ button.about-seal-badge:hover .about-seal-icon {
   border: 1px solid rgba(200, 16, 46, 0.2);
   color: #C8102E;
   border-radius: 50%;
-  width: 32px;
-  height: 32px;
+  width: 36px;
+  height: 36px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  flex-shrink: 0;
+  transition: all 0.25s ease;
 }
 
 .project-modal-close:hover, .product-modal-close:hover {
@@ -3403,9 +3535,11 @@ button.about-seal-badge:hover .about-seal-icon {
 
 .project-modal-hero-img-wrap {
   width: 100%;
-  height: 320px;
+  height: 340px;
   border-radius: 18px;
   overflow: hidden;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+  margin-bottom: 2.25rem; /* Generous gap between hero image & text below */
 }
 
 .project-modal-hero-img {
@@ -3414,10 +3548,17 @@ button.about-seal-badge:hover .about-seal-icon {
   object-fit: cover;
 }
 
+.project-modal-bold-text {
+  font-weight: 700 !important;
+  color: #09090b !important;
+  font-size: 0.95rem !important;
+  line-height: 1.65 !important;
+}
+
 .project-modal-sections-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 1.5rem;
+  gap: 1.75rem;
 }
 
 .project-modal-sec h4, .product-modal-sec h4 {
@@ -3432,37 +3573,80 @@ button.about-seal-badge:hover .about-seal-icon {
 
 .project-modal-sec p, .product-modal-description {
   font-family: var(--font-sans);
-  font-size: 0.95rem;
+  font-size: 0.92rem;
   color: #3f3f46;
   line-height: 1.6;
+}
+
+.project-card-scope-block {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  margin-top: 0.35rem;
+  margin-bottom: 0.35rem;
+}
+
+.project-card-scope-label {
+  font-family: var(--font-sans);
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  color: #C8102E;
+  text-transform: uppercase;
+}
+
+.project-card-excerpt-bold {
+  font-family: var(--font-sans);
+  font-size: 0.82rem;
+  font-weight: 700 !important;
+  color: #09090b !important;
+  line-height: 1.5;
 }
 
 .project-modal-luminaires-list {
   display: flex;
   flex-direction: column;
-  gap: 0.4rem;
+  gap: 0.45rem;
 }
 
 .project-modal-luminaires-list li {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.55rem;
   font-family: var(--font-sans);
-  font-size: 0.9rem;
+  font-size: 0.88rem;
   color: #18181b;
+}
+
+.project-modal-gallery-sec h4 {
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  color: #C8102E;
+  margin-bottom: 0.75rem;
+  text-transform: uppercase;
 }
 
 .project-modal-gallery-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: 1rem;
 }
 
 .project-gallery-img {
   width: 100%;
-  height: 140px;
+  height: 160px;
   object-fit: cover;
   border-radius: 12px;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: 1px solid rgba(200, 16, 46, 0.15);
+}
+
+.project-gallery-img:hover {
+  transform: scale(1.03);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
 }
 
 .product-modal-grid {

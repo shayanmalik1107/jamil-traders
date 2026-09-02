@@ -5,6 +5,7 @@ export interface Project {
   category: string;
   categorySlug: 'residential' | 'commercial' | 'retail' | 'institutional' | 'government' | 'healthcare' | 'outdoor';
   image: string;
+  logo?: string;
   client?: string;
   year?: string;
   challenge: string;
@@ -202,6 +203,100 @@ export const PROJECTS: Project[] = [
     luminairesUsed: ['AquaLed Submersible IP68', 'Garden Path Bollard 12W', 'Tree Grazer Spike Light'],
     gallery: [
       'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=1000&q=80'
+    ]
+  },
+  {
+    id: 'proj-9',
+    title: 'Hameed Latif Teaching Hospital (HLTH)',
+    location: '2.5 km Haeir Road, Sua-e-Asal, 28 km Main Ferozepur Road, Lahore',
+    category: 'Healthcare',
+    categorySlug: 'healthcare',
+    image: '/hameed1.jpg',
+    logo: '/hameed4.png',
+    client: 'Hameed Latif Hospital Group',
+    year: '2024',
+    challenge: 'Execute a complete end-to-end turnkey illumination project for a multi-story medical & teaching hospital complex, requiring non-glare circadian ward lighting, IP65 surgical cleanroom luminaires, and prominent exterior facade lighting.',
+    approach: 'Designed a comprehensive lighting architecture using anti-glare recessed panels, continuous warm cove lighting for patient wards, high-output marine grade column grazers for the facade, and uninterrupted emergency battery backup power.',
+    solution: 'Turnkey supply and complete installation of healthcare-grade luminaires across all medical wards, ICUs, emergency departments, operation theaters, and building exterior facade.',
+    luminairesUsed: ['MediClean IP65 UGR<16 Panel', 'Circadian Ward Cove Light', 'FacadeGraze High Output IP67', 'PinSpot Mini Adjustable Downlight'],
+    gallery: [
+      '/hameed1.jpg',
+      '/hameed2.jpeg',
+      '/hameed3.jpeg'
+    ]
+  },
+  {
+    id: 'proj-10',
+    title: 'Shalamar Hospital',
+    location: '2 Shalimar Link Road, Shalimar Larechs Colony, Lahore, 54000',
+    category: 'Healthcare',
+    categorySlug: 'healthcare',
+    image: '/shalamar.jpeg',
+    logo: '/shalamar2.png',
+    client: 'Shalamar Hospital Trust',
+    year: '2024',
+    challenge: 'Execute a complete turnkey illumination project for Shalamar Hospital Auditorium, requiring specialized acoustic slot downlighting, stage accent illumination, and multi-scene DALI dimming controls.',
+    approach: 'Designed an architectural lighting scheme with high-CRI acoustic recessed downlights, glare-free stage spots, ambient perimeter cove lighting, and intuitive preset scene control keypads.',
+    solution: 'Turnkey supply and complete installation of specialized auditorium luminaires delivering flawless visual clarity and atmosphere for medical conferences, lectures, and assemblies.',
+    luminairesUsed: ['Aura Spot Architectural Zoom Downlight', 'Lumina Linear Wall Washer', 'Custom Stage Accent Spot', 'DALI Auditorium Scene Controller'],
+    gallery: [
+      '/shalamar.jpeg'
+    ]
+  },
+  {
+    id: 'proj-11',
+    title: 'INMOL Cancer Hospital',
+    location: 'Khayaban-e-Jamia Punjab, Block D, Muslim Town, Lahore, Punjab, Pakistan',
+    category: 'Healthcare',
+    categorySlug: 'healthcare',
+    image: '/INMOL1.jpeg',
+    logo: '/INMOL2.jpeg',
+    client: 'INMOL Cancer Hospital Directorate',
+    year: '2024',
+    challenge: 'Execute turnkey supply and precision installation of specialized counter section lights, architectural reception coves, and glare-free registration desk task lighting for INMOL Cancer Hospital.',
+    approach: 'Designed an anti-glare linear LED lighting system featuring high-CRI 97+ color rendering, low-flicker drivers, and seamless recessed counter channels for patient reception.',
+    solution: 'Turnkey installation of counter section and reception desk lighting, optimizing visual clarity and administrative efficiency for staff and visitors.',
+    luminairesUsed: ['Lumina Linear Wall Washer', 'Aura Spot Architectural Zoom Downlight', 'MediClean IP65 UGR<16 Panel', 'Seamless Slot Task Light'],
+    gallery: [
+      '/INMOL1.jpeg',
+      '/INMOL3.jpeg'
+    ]
+  },
+  {
+    id: 'proj-12',
+    title: 'Farooq Hospital DHA',
+    location: 'Inside Avenue Mall on Main Ghazi Road, DHA, Lahore, Pakistan',
+    category: 'Healthcare',
+    categorySlug: 'healthcare',
+    image: '/farooq3.jpeg',
+    logo: '/farooq2.jpeg',
+    client: 'Farooq Hospital Group',
+    year: '2024',
+    challenge: 'Execute turnkey supply and technical installation of specialized Emergency Ward lights, IP65 cleanroom ceiling panels, anti-glare circadian ward coves, and uninterrupted emergency battery backup systems for Farooq Hospital DHA.',
+    approach: 'Engineered an ultra-reliable emergency medical lighting layout using low-UGR micro-prismatic panels, fast-response 3-hour battery backup drivers, and soothing circadian 3000K-4000K LED engines.',
+    solution: 'Turnkey delivery of emergency ward lighting, ensuring 24/7 illumination resilience, visual comfort for trauma care teams, and full healthcare compliance.',
+    luminairesUsed: ['MediClean IP65 UGR<16 Panel', 'Circadian Ward Cove Light', 'Emergency Battery Backup Driver 3H', 'PinSpot Mini Adjustable Downlight'],
+    gallery: [
+      '/farooq3.jpeg',
+      '/farooq1.jpeg'
+    ]
+  },
+  {
+    id: 'proj-13',
+    title: 'Razia Saeed Hospital',
+    location: '17-E, Near Eid Gah Chowk, Officers Colony, Multan',
+    category: 'Healthcare',
+    categorySlug: 'healthcare',
+    image: '/Razia.jpeg',
+    logo: '/razia1.png',
+    client: 'Razia Saeed Hospital Trust',
+    year: '2024',
+    challenge: 'Execute turnkey supply and installation of healthcare-grade clinical illumination, anti-microbial IP65 surgical cleanroom panels, non-glare patient ward coves, and emergency lighting systems for Razia Saeed Hospital, Multan.',
+    approach: 'Designed a comprehensive medical lighting layout using high-CRI 95+ flicker-free cleanroom panels, circadian warm cove lighting for recovery wards, and low-UGR glare-free downlights.',
+    solution: 'Turnkey supply and complete installation of specialized healthcare luminaires across patient wards, OPD clinics, surgical suites, and reception areas.',
+    luminairesUsed: ['MediClean IP65 UGR<16 Panel', 'Circadian Ward Cove Light', 'PinSpot Mini Adjustable Downlight', 'Seamless Slot Task Light'],
+    gallery: [
+      '/Razia.jpeg'
     ]
   }
 ];
@@ -521,6 +616,11 @@ export const CLIENT_LOGOS: ClientLogo[] = [
   { name: 'Metro Shoes', category: 'Commercial Footwear', highlight: '25+ Nationwide Branches' },
   { name: 'Uni Worth', category: 'Menswear Flagships', highlight: 'Luxury Suiting Outlets' },
   { name: 'SKMCH Hospital', category: 'Healthcare Institution', highlight: 'Specialty Medical Wings' },
+  { name: 'Hameed Latif Teaching Hospital (HLTH)', category: 'Healthcare Institution', highlight: 'Complete Lighting Project', location: '2.5 km Haeir Road, Ferozepur Road, Lahore' },
+  { name: 'Shalamar Hospital', category: 'Healthcare Institution', highlight: 'Auditorium Lighting Project', location: 'Shalimar Link Road, Lahore' },
+  { name: 'INMOL Cancer Hospital', category: 'Healthcare Institution', highlight: 'Counter Section Lighting Project', location: 'Muslim Town, Lahore' },
+  { name: 'Farooq Hospital DHA', category: 'Healthcare Institution', highlight: 'Emergency Ward Lighting Project', location: 'Avenue Mall, Ghazi Road, DHA, Lahore' },
+  { name: 'Razia Saeed Hospital', category: 'Healthcare Institution', highlight: 'Specialty Ward Illumination Project', location: 'Officers Colony, Multan' },
   { name: 'Civic Infrastructure', category: 'Government Projects', highlight: 'Facade Illumination' },
   { name: 'Defense Housing Authority', category: 'Housing & Landscaping', highlight: 'Golf & Country Clubs' },
   { name: 'Private Architecture Firms', category: 'Residential Villas', highlight: '100+ Luxury Estates' }

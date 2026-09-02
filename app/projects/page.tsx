@@ -2,8 +2,9 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { ArrowRight, ArrowUpRight, X, CheckCircle2, Building2 } from 'lucide-react';
+import { ArrowRight, X, CheckCircle2 } from 'lucide-react';
 import { PROJECTS, Project } from '@/lib/data';
+import ProjectCard from '@/components/ProjectCard';
 
 export default function ProjectsPage() {
   const [activeFilter, setActiveFilter] = useState<string>('ALL');
@@ -23,10 +24,6 @@ export default function ProjectsPage() {
   const filteredProjects = activeFilter === 'ALL'
     ? PROJECTS
     : PROJECTS.filter((p) => p.categorySlug === activeFilter.toLowerCase());
-
-  const getRelatedProjects = (current: Project) => {
-    return PROJECTS.filter((p) => p.id !== current.id && p.categorySlug === current.categorySlug).slice(0, 2);
-  };
 
   return (
     <main className="page-main bg-projects">
@@ -70,25 +67,11 @@ export default function ProjectsPage() {
         <div className="home-container">
           <div className="home-projects-grid">
             {filteredProjects.map((project) => (
-              <div
+              <ProjectCard
                 key={project.id}
-                className="home-project-card"
-                onClick={() => setSelectedProject(project)}
-              >
-                <div className="project-card-img-wrap">
-                  <img src={project.image} alt={project.title} className="project-card-img" />
-                  <div className="project-card-badge">{project.category}</div>
-                </div>
-                <div className="project-card-content">
-                  <span className="project-card-location">{project.location}</span>
-                  <h3 className="project-card-title">{project.title}</h3>
-                  <p className="project-card-excerpt">{project.challenge.slice(0, 90)}...</p>
-                  <button type="button" className="project-card-link">
-                    <span>VIEW CASE STUDY</span>
-                    <ArrowUpRight size={14} />
-                  </button>
-                </div>
-              </div>
+                project={project}
+                onClick={setSelectedProject}
+              />
             ))}
           </div>
         </div>
@@ -99,12 +82,25 @@ export default function ProjectsPage() {
         <div className="project-modal-overlay" onClick={() => setSelectedProject(null)}>
           <div className="project-modal-content" onClick={(e) => e.stopPropagation()}>
             <header className="project-modal-header">
-              <div>
-                <span className="project-modal-cat">{selectedProject.category} • {selectedProject.location}</span>
-                <h2 className="project-modal-title">{selectedProject.title}</h2>
-                {selectedProject.client && (
-                  <span className="project-modal-client">Client: {selectedProject.client} ({selectedProject.year})</span>
+              <div className="project-modal-header-left">
+                {selectedProject.logo && (
+                  <div className="project-modal-logo-round-wrap">
+                    <img
+                      src={selectedProject.logo}
+                      alt={`${selectedProject.title} logo`}
+                      className="project-modal-logo-round"
+                    />
+                  </div>
                 )}
+                <div>
+                  <span className="project-modal-cat">{selectedProject.category} • {selectedProject.location}</span>
+                  <h2 className="project-modal-title">{selectedProject.title}</h2>
+                  {selectedProject.client && (
+                    <span className="project-modal-client">
+                      Client: {selectedProject.client} ({selectedProject.year || '2024'})
+                    </span>
+                  )}
+                </div>
               </div>
               <button
                 type="button"
@@ -122,8 +118,8 @@ export default function ProjectsPage() {
 
               <div className="project-modal-sections-grid">
                 <div className="project-modal-sec">
-                  <h4>THE CHALLENGE</h4>
-                  <p>{selectedProject.challenge}</p>
+                  <h4>SCOPE OF WORK</h4>
+                  <p className="project-modal-bold-text"><strong>{selectedProject.challenge}</strong></p>
                 </div>
 
                 <div className="project-modal-sec">
@@ -141,7 +137,7 @@ export default function ProjectsPage() {
                   <ul className="project-modal-luminaires-list">
                     {selectedProject.luminairesUsed.map((lum) => (
                       <li key={lum}>
-                        <CheckCircle2 size={14} style={{ color: 'var(--gold-accent)' }} />
+                        <CheckCircle2 size={14} style={{ color: '#C8102E' }} />
                         <span>{lum}</span>
                       </li>
                     ))}
@@ -161,29 +157,7 @@ export default function ProjectsPage() {
                 </div>
               )}
 
-              {/* Related Projects */}
-              {getRelatedProjects(selectedProject).length > 0 && (
-                <div className="project-modal-related-sec">
-                  <h4>RELATED PROJECTS</h4>
-                  <div className="project-modal-related-grid">
-                    {getRelatedProjects(selectedProject).map((rel) => (
-                      <div
-                        key={rel.id}
-                        className="related-project-card"
-                        onClick={() => setSelectedProject(rel)}
-                      >
-                        <img src={rel.image} alt={rel.title} className="related-project-img" />
-                        <div className="related-project-info">
-                          <h5>{rel.title}</h5>
-                          <span>{rel.location}</span>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              <div className="project-modal-actions">
+              <div className="project-modal-actions" style={{ marginTop: '1rem' }}>
                 <Link
                   href="/contact"
                   className="hero-cta-btn"
@@ -202,3 +176,4 @@ export default function ProjectsPage() {
     </main>
   );
 }
+

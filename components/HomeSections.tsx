@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { ArrowRight, Sparkles, X, CheckCircle2, ArrowUpRight } from 'lucide-react';
 import { PROJECTS, CLIENT_LOGOS, EXPERTISE_AREAS, Project } from '@/lib/data';
+import ProjectCard from '@/components/ProjectCard';
 
 export default function HomeSections() {
   const [activeProjectCategory, setActiveProjectCategory] = useState<string>('ALL');
@@ -109,24 +110,11 @@ export default function HomeSections() {
           {/* Project Grid */}
           <div className="home-projects-grid">
             {filteredProjects.map((project) => (
-              <div
+              <ProjectCard
                 key={project.id}
-                className="home-project-card"
-                onClick={() => setSelectedProject(project)}
-              >
-                <div className="project-card-img-wrap">
-                  <img src={project.image} alt={project.title} className="project-card-img" />
-                  <div className="project-card-badge">{project.category}</div>
-                </div>
-                <div className="project-card-content">
-                  <span className="project-card-location">{project.location}</span>
-                  <h3 className="project-card-title">{project.title}</h3>
-                  <button type="button" className="project-card-link">
-                    <span>VIEW PROJECT</span>
-                    <ArrowUpRight size={14} />
-                  </button>
-                </div>
-              </div>
+                project={project}
+                onClick={setSelectedProject}
+              />
             ))}
           </div>
 
@@ -329,9 +317,25 @@ export default function HomeSections() {
         <div className="project-modal-overlay" onClick={() => setSelectedProject(null)}>
           <div className="project-modal-content" onClick={(e) => e.stopPropagation()}>
             <header className="project-modal-header">
-              <div>
-                <span className="project-modal-cat">{selectedProject.category} • {selectedProject.location}</span>
-                <h3 className="project-modal-title">{selectedProject.title}</h3>
+              <div className="project-modal-header-left">
+                {selectedProject.logo && (
+                  <div className="project-modal-logo-round-wrap">
+                    <img
+                      src={selectedProject.logo}
+                      alt={`${selectedProject.title} logo`}
+                      className="project-modal-logo-round"
+                    />
+                  </div>
+                )}
+                <div>
+                  <span className="project-modal-cat">{selectedProject.category} • {selectedProject.location}</span>
+                  <h3 className="project-modal-title">{selectedProject.title}</h3>
+                  {selectedProject.client && (
+                    <span className="project-modal-client">
+                      Client: {selectedProject.client} ({selectedProject.year || '2024'})
+                    </span>
+                  )}
+                </div>
               </div>
               <button
                 type="button"
@@ -349,8 +353,8 @@ export default function HomeSections() {
 
               <div className="project-modal-sections-grid">
                 <div className="project-modal-sec">
-                  <h4>THE CHALLENGE</h4>
-                  <p>{selectedProject.challenge}</p>
+                  <h4>SCOPE OF WORK</h4>
+                  <p className="project-modal-bold-text"><strong>{selectedProject.challenge}</strong></p>
                 </div>
 
                 <div className="project-modal-sec">
@@ -376,7 +380,19 @@ export default function HomeSections() {
                 </div>
               </div>
 
-              <div className="project-modal-actions">
+              {/* Gallery */}
+              {selectedProject.gallery && selectedProject.gallery.length > 0 && (
+                <div className="project-modal-gallery-sec" style={{ marginTop: '1.25rem' }}>
+                  <h4>PROJECT GALLERY</h4>
+                  <div className="project-modal-gallery-grid">
+                    {selectedProject.gallery.map((imgUrl, i) => (
+                      <img key={i} src={imgUrl} alt={`${selectedProject.title} view ${i + 1}`} className="project-gallery-img" />
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              <div className="project-modal-actions" style={{ marginTop: '1rem' }}>
                 <Link
                   href="/contact"
                   className="hero-cta-btn"
