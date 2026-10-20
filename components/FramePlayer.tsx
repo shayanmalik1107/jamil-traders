@@ -36,6 +36,7 @@ export default function FramePlayer() {
   const heroImagesRef = useRef<HTMLImageElement[]>([]);
   const heroRequestRef = useRef<number | null>(null);
   const heroStartTimeRef = useRef<number | null>(null);
+  const heroContainerRef = useRef<HTMLDivElement | null>(null);
 
   const [mounted, setMounted] = useState<boolean>(false);
   const [isMobile, setIsMobile] = useState<boolean>(false);
@@ -120,16 +121,16 @@ export default function FramePlayer() {
     return `/lighting_frames_same_as_video/frame_${padIndex}.webp`;
   };
 
-  // Resize canvas helper
+  // Resize canvas helper (capped at dpr 2 for 60fps hardware acceleration)
   const resizeCanvas = useCallback((canvas: HTMLCanvasElement | null) => {
     if (!canvas) return;
 
-    const dpr = window.devicePixelRatio || 1;
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
     const width = canvas.parentElement ? canvas.parentElement.clientWidth : window.innerWidth;
     const height = canvas.parentElement ? canvas.parentElement.clientHeight : window.innerHeight;
 
-    canvas.width = width * dpr;
-    canvas.height = height * dpr;
+    canvas.width = Math.floor(width * dpr);
+    canvas.height = Math.floor(height * dpr);
     canvas.style.width = `${width}px`;
     canvas.style.height = `${height}px`;
   }, []);
@@ -200,130 +201,97 @@ export default function FramePlayer() {
     }
   }, []);
 
-  // Fast Buffered Preloading & Snappy Text Writing Animation
+  // Asset-Driven Continuous Smooth Preloading (Frames + Bulb + Logo)
   useEffect(() => {
     let isCancelled = false;
     const isMobileDevice = typeof window !== 'undefined' ? window.innerWidth < 768 : false;
 
-    if (isMobileDevice) {
-      // ON MOBILE: ONLY PRELOAD THE SINGLE HERO STATIC IMAGE AND HEADER LOGO
-      let mobileLoadedCount = 0;
-
-      const onMobileImageDone = () => {
-        if (!isCancelled) {
-          mobileLoadedCount += 1;
-          loadedCountRef.current = mobileLoadedCount;
-          setHeroLoadedCount(mobileLoadedCount);
-        }
-      };
-
-      const heroImg = new Image();
-      (heroImg as any).fetchPriority = 'high';
-      heroImg.src = HERO_LAST_FRAME;
-      heroImg.onload = onMobileImageDone;
-      heroImg.onerror = onMobileImageDone;
-
-      const logoImg = new Image();
-      (logoImg as any).fetchPriority = 'high';
-      logoImg.src = '/logojamiltraders.png';
-      logoImg.onload = onMobileImageDone;
-      logoImg.onerror = onMobileImageDone;
-
-      const MIN_WRITE_DURATION_MS = 800;
-      const startTime = performance.now();
-      let animFrameId: number;
-
-      const animateWriting = (now: number) => {
-        if (isCancelled) return;
-        const elapsed = now - startTime;
-        const timeRatio = Math.min(elapsed / MIN_WRITE_DURATION_MS, 1);
-        const isReady = mobileLoadedCount >= 1;
-
-        const progress = isReady
-          ? timeRatio
-          : Math.min(timeRatio, 0.45);
-
-        setLoaderProgress(progress);
-
-        if (progress < 1 || !isReady) {
-          animFrameId = requestAnimationFrame(animateWriting);
-        } else {
-          setLoaderProgress(1);
-          setIsWritingComplete(true);
-
-          setTimeout(() => {
-            if (!isCancelled) {
-              setIsSplitting(true);
-              setTimeout(() => {
-                if (!isCancelled) {
-                  setIsLoaded(true);
-                }
-              }, 600);
-            }
-          }, 150);
-        }
-      };
-
-      animFrameId = requestAnimationFrame(animateWriting);
-
-      return () => {
-        isCancelled = true;
-        if (animFrameId) cancelAnimationFrame(animFrameId);
-      };
-    }
-
-    // ON DESKTOP: SMART BUFFERED PRELOADING (DOES NOT FREEZE ON 61 FRAMES)
-    const loadedHeroImages: HTMLImageElement[] = new Array(HERO_TOTAL_FRAMES);
-    heroImagesRef.current = loadedHeroImages;
+    // Track all critical visual assets
+    // Mobile: Hero image + Logo + Bulb (3 assets)
+    // Desktop: 61 frames + Logo + Bulb (63 assets)
+    const TOTAL_TRACKED = isMobileDevice ? 3 : (HERO_TOTAL_FRAMES + 2);
     loadedCountRef.current = 0;
 
-    // Buffer threshold: First 8 frames + last frame is enough to begin smooth playback
-    const BUFFER_READY_FRAMES = 8;
-
-    for (let i = 0; i < HERO_TOTAL_FRAMES; i++) {
-      const img = new Image();
-      if (i < BUFFER_READY_FRAMES || i === HERO_TOTAL_FRAMES - 1) {
-        (img as any).fetchPriority = 'high';
+    const onAssetDone = () => {
+      if (!isCancelled) {
+        loadedCountRef.current += 1;
+        setHeroLoadedCount(loadedCountRef.current);
       }
-      img.src = getHeroFramePath(i);
-      const onDone = () => {
-        if (!isCancelled) {
-          loadedCountRef.current += 1;
-          setHeroLoadedCount(loadedCountRef.current);
+    };
+
+    // 1. Preload Light Bulb Image with high priority so it is ready before the curtain splits
+    const bulbImg = new Image();
+    (bulbImg as any).fetchPriority = 'high';
+    bulbImg.src = '/bulb.png';
+    bulbImg.onload = onAssetDone;
+    bulbImg.onerror = onAssetDone;
+
+    // 2. Preload Brand Logo Image with high priority
+    const logoImg = new Image();
+    (logoImg as any).fetchPriority = 'high';
+    logoImg.src = '/logojamiltraders.png';
+    logoImg.onload = onAssetDone;
+    logoImg.onerror = onAssetDone;
+
+    // 3. Preload Frames
+    if (isMobileDevice) {
+      const heroStaticImg = new Image();
+      (heroStaticImg as any).fetchPriority = 'high';
+      heroStaticImg.src = HERO_LAST_FRAME;
+      heroStaticImg.onload = onAssetDone;
+      heroStaticImg.onerror = onAssetDone;
+    } else {
+      const loadedHeroImages: HTMLImageElement[] = new Array(HERO_TOTAL_FRAMES);
+      heroImagesRef.current = loadedHeroImages;
+
+      for (let i = 0; i < HERO_TOTAL_FRAMES; i++) {
+        const img = new Image();
+        if (i < 10 || i === HERO_TOTAL_FRAMES - 1) {
+          (img as any).fetchPriority = 'high';
         }
-      };
-      img.onload = onDone;
-      img.onerror = onDone;
-      loadedHeroImages[i] = img;
+        img.src = getHeroFramePath(i);
+        img.onload = onAssetDone;
+        img.onerror = onAssetDone;
+        loadedHeroImages[i] = img;
+      }
     }
 
-    // Preload header logo with high priority
-    const desktopLogoImg = new Image();
-    (desktopLogoImg as any).fetchPriority = 'high';
-    desktopLogoImg.src = '/logojamiltraders.png';
-
-    // Snappy writing pace (850ms)
-    const MIN_WRITE_DURATION_MS = 850;
+    // 4. Smooth continuous progress animator - attached directly to real loading!
+    let currentVal = 0;
     const startTime = performance.now();
-    let animFrameId: number;
+    const MIN_READABLE_MS = 850; // Smooth readable pace
+    const MAX_FAILSAFE_MS = 2400; // Hard failsafe: NEVER stuck anywhere
+    let animId: number;
 
-    const animateWriting = (now: number) => {
+    const updateProgress = (now: number) => {
       if (isCancelled) return;
       const elapsed = now - startTime;
-      const timeRatio = Math.min(elapsed / MIN_WRITE_DURATION_MS, 1);
-      
-      // Buffer is ready as soon as the first few frames are loaded
-      const isBufferReady = loadedCountRef.current >= Math.min(BUFFER_READY_FRAMES, 5);
 
-      const progress = isBufferReady
-        ? timeRatio
-        : Math.min(timeRatio, 0.45);
+      // Real proportion of assets downloaded
+      const realLoadRatio = Math.min(loadedCountRef.current / TOTAL_TRACKED, 1);
 
-      setLoaderProgress(progress);
+      // Smooth progression over time so it moves continuously
+      const timeRatio = Math.min(elapsed / MIN_READABLE_MS, 1);
 
-      if (progress < 1 || !isBufferReady) {
-        animFrameId = requestAnimationFrame(animateWriting);
-      } else {
+      // Failsafe ratio ensuring it steadily advances even on network delays
+      const failsafeRatio = Math.min(elapsed / MAX_FAILSAFE_MS, 1);
+
+      // Target progress is governed by real loading, with failsafe progress as floor
+      const targetRatio = Math.min(
+        1,
+        Math.max(
+          failsafeRatio,
+          Math.min(realLoadRatio, timeRatio)
+        )
+      );
+
+      // Continuous smooth interpolation (glides smoothly with zero sticking)
+      currentVal += (targetRatio - currentVal) * 0.18;
+
+      // When real assets are done (or failsafe met) and animation is near end, finish cleanly
+      const isComplete = (loadedCountRef.current >= TOTAL_TRACKED || elapsed >= MAX_FAILSAFE_MS) && currentVal >= 0.95;
+
+      if (isComplete) {
         setLoaderProgress(1);
         setIsWritingComplete(true);
 
@@ -334,17 +302,20 @@ export default function FramePlayer() {
               if (!isCancelled) {
                 setIsLoaded(true);
               }
-            }, 600);
+            }, 550);
           }
-        }, 150);
+        }, 120);
+      } else {
+        setLoaderProgress(Math.min(currentVal, 0.99));
+        animId = requestAnimationFrame(updateProgress);
       }
     };
 
-    animFrameId = requestAnimationFrame(animateWriting);
+    animId = requestAnimationFrame(updateProgress);
 
     return () => {
       isCancelled = true;
-      if (animFrameId) cancelAnimationFrame(animFrameId);
+      if (animId) cancelAnimationFrame(animId);
     };
   }, []);
 
@@ -372,7 +343,7 @@ export default function FramePlayer() {
     return () => window.removeEventListener('resize', handleResize);
   }, [isMobile, resizeCanvas, renderHeroFrame]);
 
-  // Hero Animation loop
+  // Hero Animation loop - Butter-smooth 60fps canvas playback with 0 React render churn
   const animateHero = useCallback((timestamp: number) => {
     if (!heroStartTimeRef.current) {
       heroStartTimeRef.current = timestamp;
@@ -386,13 +357,18 @@ export default function FramePlayer() {
       HERO_TOTAL_FRAMES - 1
     );
 
-    setAnimProgress(currentProgress);
+    if (heroContainerRef.current) {
+      heroContainerRef.current.style.setProperty('--light-level', currentProgress.toString());
+    }
+
     renderHeroFrame(targetFrame);
 
     if (currentProgress < 1) {
       heroRequestRef.current = requestAnimationFrame(animateHero);
     } else {
-      setAnimProgress(1);
+      if (heroContainerRef.current) {
+        heroContainerRef.current.style.setProperty('--light-level', '1');
+      }
       renderHeroFrame(HERO_TOTAL_FRAMES - 1);
     }
   }, [renderHeroFrame]);
@@ -414,7 +390,7 @@ export default function FramePlayer() {
   }, [isMobile, isSplitting, resizeCanvas, renderHeroFrame, animateHero]);
 
   const SLICE_COUNT = 12; // 12 narrow vertical slices across loading screen
-  const currentLightLevel = isLoaded ? (isMobile ? 1 : animProgress) : (isSplitting ? animProgress : 0);
+  const currentLightLevel = isLoaded ? 1 : (isSplitting ? 0.7 : 0);
 
   return (
     <>
@@ -507,6 +483,7 @@ export default function FramePlayer() {
 
         {/* Hero Container */}
         <div
+          ref={heroContainerRef}
           className="hero-container"
           style={{
             '--light-level': currentLightLevel,
@@ -548,6 +525,8 @@ export default function FramePlayer() {
                 src="/bulb.png"
                 alt="Light Bulb"
                 className="bulb-bg-img"
+                loading="eager"
+                decoding="sync"
               />
 
               {/* Text Content & Button Floating Gracefully Inside Large Bulb Dome */}

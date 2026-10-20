@@ -25,6 +25,7 @@ export default function RootLayout({
           rel="stylesheet"
         />
         <link rel="preload" as="image" href="/logojamiltraders.png" />
+        <link rel="preload" as="image" href="/bulb.png" type="image/png" />
         <link rel="preload" as="image" href="/lighting_frames_same_as_video/frame_0001.webp" type="image/webp" />
         <link rel="preload" as="image" href="/lighting_frames_same_as_video/frame_0061.webp" type="image/webp" />
       </head>
