@@ -8,6 +8,11 @@ import ProjectListDrawer from '@/components/ProjectListDrawer';
 export const metadata: Metadata = {
   title: 'Jameel Traders — Spaces That Inspire | Architectural Lighting & Illumination',
   description: 'Pioneering architectural lighting, commercial luminaires, and turnkey electrical illumination across Pakistan since 2002.',
+  icons: {
+    icon: '/JMTS.svg',
+    shortcut: '/JMTS.svg',
+    apple: '/JMTS.svg',
+  },
 };
 
 export default function RootLayout({
@@ -24,6 +29,8 @@ export default function RootLayout({
           href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap"
           rel="stylesheet"
         />
+        <link rel="icon" type="image/svg+xml" href="/JMTS.svg" />
+        <link rel="shortcut icon" href="/JMTS.svg" />
         <link rel="preload" as="image" href="/logojamiltraders.png" />
         <link rel="preload" as="image" href="/banner1.webp" type="image/webp" />
       </head>
