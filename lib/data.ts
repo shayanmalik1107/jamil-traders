@@ -755,7 +755,43 @@ export const PRODUCTS: Product[] = [
       material: 'Die-cast Aircraft Aluminum Housing with Electrostatic Finish',
       lifetime: '≥ 50,000 Hours'
     }
-  }
+  },
+  {
+    id: 'prod-11',
+    name: 'Adjustable LED Jewelry Display Spotlight Stand',
+    category: 'Decorative Lighting',
+    categorySlug: 'decorative',
+    environment: 'Indoor',
+    image: '/led-jewelry-spotlight-1.png',
+    gallery: [
+      '/led-jewelry-spotlight-1.png',
+      '/led-jewelry-spotlight-2.png',
+    ],
+    description: 'Premium adjustable LED spotlight stand engineered for high-end jewelry display cabinets and showcases. Features precision beam focusing with ultra-high CRI optics to faithfully render gemstone brilliance, metal lustre, and fine textile textures. Flexible gooseneck arm with 360° rotation allows pinpoint accent targeting across any display surface.',
+    applications: [
+      'Jewelry Showrooms & Display Cabinets',
+      'Luxury Retail Boutiques',
+      'Museum Artifact Showcases',
+      'Watch & Accessory Countertops',
+      'Fine Art Gallery Accenting',
+      'High-End Department Store Displays',
+    ],
+    specs: {
+      type: 'Adjustable Spotlight Stand / Display Accent',
+      wattage: '5W / 8W / 10W Options',
+      chipBrand: 'High-Power COB LED',
+      cri: '97+ (Ultra-High Color Rendering — Gemstone Grade)',
+      colorTemp: '2700K / 3000K / 4000K Selectable',
+      beamAngle: '15° / 24° Narrow Spot',
+      voltage: 'AC100–240V 50–60Hz',
+      ipRating: 'IP20 Indoor',
+      dimensions: 'H 350mm (Adjustable Arm) | Base Ø 80mm',
+      material: 'Anodised Aluminium Alloy + Brushed Nickel Finish',
+      control: 'Touch Dimmer (10%–100%) / Plug-In',
+      lifetime: '≥ 30,000 Hours',
+      warranty: '2 Years Warranty',
+    },
+  },
 ];
 
 export const EXPERTISE_AREAS: ExpertiseArea[] = [
