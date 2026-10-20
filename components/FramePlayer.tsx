@@ -256,48 +256,55 @@ export default function FramePlayer() {
       }
     }
 
-    // 4. Smooth continuous progress animator - attached directly to real loading!
-    let currentVal = 0;
-    const startTime = performance.now();
-    const MIN_READABLE_MS = 850; // Smooth readable pace
-    const MAX_FAILSAFE_MS = 2400; // Hard failsafe: NEVER stuck anywhere
+    // 4. Progress animator — speed matches real download speed, NEVER exits before all assets loaded.
+    //
+    // Rules:
+    //   • displayVal smoothly chases realLoadRatio (easing keeps it visually smooth).
+    //   • displayVal can NEVER visually exceed realLoadRatio — bar is honest about progress.
+    //   • Completion is ONLY triggered when ALL assets are confirmed (loadedCount >= TOTAL_TRACKED).
+    //   • No time-based failsafe that can exit loading before frames are ready.
+    //   • When splitting starts, every frame is guaranteed in memory → smooth canvas playback.
+    let displayVal = 0;
+    let allAssetsConfirmed = false;
+    let completionTriggered = false;
     let animId: number;
 
-    const updateProgress = (now: number) => {
+    const updateProgress = (_now: number) => {
       if (isCancelled) return;
-      const elapsed = now - startTime;
 
-      // Real proportion of assets downloaded
+      // Real proportion of assets confirmed loaded (0 → 1)
       const realLoadRatio = Math.min(loadedCountRef.current / TOTAL_TRACKED, 1);
 
-      // Smooth progression over time so it moves continuously
-      const timeRatio = Math.min(elapsed / MIN_READABLE_MS, 1);
+      // Latch: once every asset fires onload/onerror we can allow completion
+      if (realLoadRatio >= 1) {
+        allAssetsConfirmed = true;
+      }
 
-      // Failsafe ratio ensuring it steadily advances even on network delays
-      const failsafeRatio = Math.min(elapsed / MAX_FAILSAFE_MS, 1);
+      // displayVal chases real progress with easing — smooth, never stalls, never ahead of reality.
+      // When all assets confirmed, chase all the way to 1; otherwise cap at realLoadRatio.
+      if (allAssetsConfirmed) {
+        displayVal += (1 - displayVal) * 0.14;
+      } else {
+        const softTarget = realLoadRatio;
+        displayVal += (softTarget - displayVal) * 0.14;
+        // Hard ceiling: cannot visually lead actual loading
+        if (displayVal > realLoadRatio) displayVal = realLoadRatio;
+      }
 
-      // Target progress is governed by real loading, with failsafe progress as floor
-      const targetRatio = Math.min(
-        1,
-        Math.max(
-          failsafeRatio,
-          Math.min(realLoadRatio, timeRatio)
-        )
-      );
+      // ONLY complete when every asset is truly loaded AND bar has visually reached the end
+      const readyToFinish = allAssetsConfirmed && displayVal >= 0.97;
 
-      // Continuous smooth interpolation (glides smoothly with zero sticking)
-      currentVal += (targetRatio - currentVal) * 0.18;
-
-      // When real assets are done (or failsafe met) and animation is near end, finish cleanly
-      const isComplete = (loadedCountRef.current >= TOTAL_TRACKED || elapsed >= MAX_FAILSAFE_MS) && currentVal >= 0.95;
-
-      if (isComplete) {
+      if (readyToFinish && !completionTriggered) {
+        completionTriggered = true;
         setLoaderProgress(1);
         setIsWritingComplete(true);
 
+        // Brief pause so user sees completed bar, then trigger curtain split
         setTimeout(() => {
           if (!isCancelled) {
+            // isSplitting = true → canvas frame animation starts (all frames guaranteed loaded)
             setIsSplitting(true);
+            // isLoaded fires after full curtain slide so frame render begins on a clean view
             setTimeout(() => {
               if (!isCancelled) {
                 setIsLoaded(true);
@@ -305,8 +312,8 @@ export default function FramePlayer() {
             }, 550);
           }
         }, 120);
-      } else {
-        setLoaderProgress(Math.min(currentVal, 0.99));
+      } else if (!completionTriggered) {
+        setLoaderProgress(Math.min(displayVal, 0.99));
         animId = requestAnimationFrame(updateProgress);
       }
     };
