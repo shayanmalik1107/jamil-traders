@@ -58,6 +58,7 @@ export interface Product {
     effect?: string;
     voltage?: string;
     controlType?: string;
+    control?: string;
     beamAngle?: string;
     chipBrand?: string;
     projectionDistance?: string;
@@ -779,6 +780,7 @@ export const PRODUCTS: Product[] = [
     specs: {
       type: 'Adjustable Spotlight Stand / Display Accent',
       wattage: '5W / 8W / 10W Options',
+      lumenOutput: '500–1100 lm (Efficacy: 110 lm/W)',
       chipBrand: 'High-Power COB LED',
       cri: '97+ (Ultra-High Color Rendering — Gemstone Grade)',
       colorTemp: '2700K / 3000K / 4000K Selectable',
