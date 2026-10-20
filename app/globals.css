@@ -63,7 +63,7 @@ html.lenis body {
   width: 100vw;
   height: 100vh;
   height: 100dvh;
-  background: #000;
+  background: #ffffff;
   overflow: hidden;
 }
 
@@ -667,7 +667,7 @@ canvas {
   font-size: clamp(0.58rem, 1vh, 0.68rem);
   font-weight: 700;
   letter-spacing: 0.12em;
-  color: #ff4d4d;
+  color: #C8102E;
   text-transform: uppercase;
   display: flex;
   flex-wrap: wrap;
@@ -698,7 +698,7 @@ canvas {
   font-size: clamp(2.2rem, 5.5vh + 1.2vw, 4.4rem);
   font-weight: 800;
   line-height: 0.98;
-  color: #ffffff;
+  color: #09090b;
   letter-spacing: -0.01em;
   text-transform: uppercase;
   text-shadow: none;
@@ -721,7 +721,7 @@ canvas {
   font-size: clamp(0.82rem, 1.35vh, 0.98rem);
   font-weight: 500;
   line-height: 1.6;
-  color: #ffffff;
+  color: #27272a;
   border-left: 3px solid #C8102E;
   padding-left: 1.1rem;
   text-shadow: none;
@@ -838,7 +838,7 @@ canvas {
   font-size: clamp(0.9rem, 2.2vh + 0.3vw, 1.4rem);
   font-weight: 800;
   line-height: 1.14;
-  color: #ffffff;
+  color: #09090b;
   text-transform: uppercase;
   text-shadow: none;
   max-width: 98%;
@@ -848,7 +848,7 @@ canvas {
   font-family: var(--font-sans);
   font-size: clamp(0.6rem, 1.25vh + 0.15vw, 0.8rem);
   line-height: 1.38;
-  color: #ffffff;
+  color: #3f3f46;
   font-weight: 500;
   max-width: 92%;
   text-shadow: none;
@@ -922,7 +922,7 @@ canvas {
   font-family: var(--font-serif);
   font-size: 1.15rem;
   font-weight: 700;
-  color: #ffffff;
+  color: #09090b;
   line-height: 1.1;
 }
 
@@ -936,9 +936,9 @@ canvas {
   font-family: var(--font-sans);
   font-size: 0.78rem;
   line-height: 1.5;
-  color: #ffffff;
+  color: #27272a;
   font-weight: 500;
-  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
   padding-top: 0.85rem;
   text-align: center;
 }
@@ -1117,10 +1117,10 @@ canvas {
   position: absolute;
   top: 0;
   bottom: 0;
-  background: #000000;
+  background: #ffffff;
   transform: translateX(0%);
-  transition: transform 0.85s cubic-bezier(0.77, 0, 0.175, 1);
-  box-shadow: 4px 0 30px rgba(0, 0, 0, 0.95);
+  transition: transform 0.6s cubic-bezier(0.77, 0, 0.175, 1);
+  box-shadow: 4px 0 25px rgba(0, 0, 0, 0.08);
   will-change: transform;
 }
 
@@ -1167,7 +1167,7 @@ canvas {
   max-width: 85vw;
   display: block;
   object-fit: contain;
-  filter: drop-shadow(0 4px 22px rgba(200, 16, 46, 0.5));
+  filter: drop-shadow(0 4px 18px rgba(200, 16, 46, 0.25));
   user-select: none;
   pointer-events: none;
 }
@@ -1198,25 +1198,21 @@ canvas {
   white-space: nowrap;
 }
 
-/* Base Ghost Wireframe Outline */
+/* Base Ghost Wireframe Outline - Subtle Crisp Light Gray on White */
 .loader-writing-ghost {
-  color: rgba(255, 195, 60, 0.16);
-  text-shadow: 0 0 1px rgba(255, 180, 50, 0.25);
+  color: rgba(0, 0, 0, 0.12);
+  text-shadow: none;
   display: block;
   user-select: none;
 }
 
-/* Active Glowing Illumination Layer (written progressively) */
+/* Active Illumination Layer (written progressively in Bold Jet Black) */
 .loader-writing-active {
   position: absolute;
   inset: 0;
   padding: 0.2rem 0.6rem;
-  color: #FFFFFF;
-  text-shadow: 
-    0 0 8px #FFD700, 
-    0 0 18px #FFA500, 
-    0 0 35px #FF8C00,
-    0 0 60px rgba(255, 140, 0, 0.7);
+  color: #09090b;
+  text-shadow: 0 0 1px rgba(0, 0, 0, 0.25);
   display: block;
   pointer-events: none;
   user-select: none;
@@ -1225,47 +1221,42 @@ canvas {
 }
 
 .loader-writing-box.complete .loader-writing-active {
-  text-shadow: 
-    0 0 12px #FFFFFF,
-    0 0 25px #FFD700, 
-    0 0 50px #FFA500, 
-    0 0 80px #FF8C00;
+  color: #000000;
+  text-shadow: 0 0 2px rgba(0, 0, 0, 0.4);
   animation: textCompleteFlash 0.5s ease-out;
 }
 
 @keyframes textCompleteFlash {
-  0% { filter: brightness(1.6); }
+  0% { filter: brightness(1.2); }
   100% { filter: brightness(1); }
 }
 
-/* Incandescent Writing Stylus / Spark Nib */
+/* Crimson Writing Stylus / Spark Nib */
 .loader-writing-spark {
   position: absolute;
   top: 50%;
   transform: translate(-50%, -50%);
-  width: 14px;
-  height: 14px;
-  background: #FFFFFF;
+  width: 12px;
+  height: 12px;
+  background: #C8102E;
   border-radius: 50%;
   box-shadow: 
-    0 0 10px #FFFFFF,
-    0 0 22px #FFD700,
-    0 0 38px #FF8C00,
-    0 0 55px #FFA500;
+    0 0 10px #E31B23,
+    0 0 20px rgba(200, 16, 46, 0.8),
+    0 0 35px rgba(200, 16, 46, 0.4);
   pointer-events: none;
   z-index: 5;
   will-change: left;
 }
 
 .loader-sub-title {
-  font-family: var(--font-serif);
-  font-size: clamp(0.72rem, 1.1vw, 0.86rem);
-  font-style: italic;
-  font-weight: 600;
-  letter-spacing: 0.26em;
-  color: #FFC837;
+  font-family: var(--font-sans);
+  font-size: clamp(0.68rem, 1.1vw, 0.82rem);
+  font-weight: 700;
+  letter-spacing: 0.32em;
+  color: #18181b;
   text-transform: uppercase;
-  text-shadow: 0 0 10px rgba(255, 200, 50, 0.4);
+  text-shadow: none;
   text-align: center;
 }
 

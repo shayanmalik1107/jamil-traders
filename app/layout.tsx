@@ -24,6 +24,9 @@ export default function RootLayout({
           href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap"
           rel="stylesheet"
         />
+        <link rel="preload" as="image" href="/logojamiltraders.png" />
+        <link rel="preload" as="image" href="/lighting_frames_same_as_video/frame_0001.webp" type="image/webp" />
+        <link rel="preload" as="image" href="/lighting_frames_same_as_video/frame_0061.webp" type="image/webp" />
       </head>
       <body suppressHydrationWarning>
         <ProjectListProvider>

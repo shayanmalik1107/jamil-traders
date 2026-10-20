@@ -134,14 +134,34 @@ export default function FramePlayer() {
     canvas.style.height = `${height}px`;
   }, []);
 
-  // Render hero frame
+  // Render hero frame with nearest-frame fallback so animation never drops or stalls
   const renderHeroFrame = useCallback((frameIdx: number) => {
     const canvas = heroCanvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    const img = heroImagesRef.current[frameIdx];
+    let img = heroImagesRef.current[frameIdx];
+    if (!img || !img.complete || img.naturalWidth === 0 || img.naturalHeight === 0) {
+      // Find closest earlier loaded frame
+      for (let i = frameIdx - 1; i >= 0; i--) {
+        const prev = heroImagesRef.current[i];
+        if (prev && prev.complete && prev.naturalWidth > 0) {
+          img = prev;
+          break;
+        }
+      }
+      // If none earlier, check next loaded frame
+      if (!img || !img.complete || img.naturalWidth === 0) {
+        for (let i = frameIdx + 1; i < heroImagesRef.current.length; i++) {
+          const next = heroImagesRef.current[i];
+          if (next && next.complete && next.naturalWidth > 0) {
+            img = next;
+            break;
+          }
+        }
+      }
+    }
     if (!img || !img.complete || img.naturalWidth === 0 || img.naturalHeight === 0) return;
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -180,13 +200,13 @@ export default function FramePlayer() {
     }
   }, []);
 
-  // Preload Hero Frames (desktop only) or single image (mobile) & Drive Text Writing Loading Progress
+  // Fast Buffered Preloading & Snappy Text Writing Animation
   useEffect(() => {
     let isCancelled = false;
     const isMobileDevice = typeof window !== 'undefined' ? window.innerWidth < 768 : false;
 
     if (isMobileDevice) {
-      // ON MOBILE: ONLY PRELOAD THE SINGLE HERO STATIC IMAGE AND HEADER LOGO (NO FRAMES DOWNLOADED)
+      // ON MOBILE: ONLY PRELOAD THE SINGLE HERO STATIC IMAGE AND HEADER LOGO
       let mobileLoadedCount = 0;
 
       const onMobileImageDone = () => {
@@ -198,16 +218,18 @@ export default function FramePlayer() {
       };
 
       const heroImg = new Image();
+      (heroImg as any).fetchPriority = 'high';
       heroImg.src = HERO_LAST_FRAME;
       heroImg.onload = onMobileImageDone;
       heroImg.onerror = onMobileImageDone;
 
       const logoImg = new Image();
+      (logoImg as any).fetchPriority = 'high';
       logoImg.src = '/logojamiltraders.png';
       logoImg.onload = onMobileImageDone;
       logoImg.onerror = onMobileImageDone;
 
-      const MIN_WRITE_DURATION_MS = 1400;
+      const MIN_WRITE_DURATION_MS = 800;
       const startTime = performance.now();
       let animFrameId: number;
 
@@ -236,9 +258,9 @@ export default function FramePlayer() {
                 if (!isCancelled) {
                   setIsLoaded(true);
                 }
-              }, 850);
+              }, 600);
             }
-          }, 200);
+          }, 150);
         }
       };
 
@@ -250,35 +272,38 @@ export default function FramePlayer() {
       };
     }
 
-    // ON DESKTOP: PRELOAD ALL 61 FRAMES FOR SMOOTH CANVAS ANIMATION
+    // ON DESKTOP: SMART BUFFERED PRELOADING (DOES NOT FREEZE ON 61 FRAMES)
     const loadedHeroImages: HTMLImageElement[] = new Array(HERO_TOTAL_FRAMES);
     heroImagesRef.current = loadedHeroImages;
     loadedCountRef.current = 0;
 
+    // Buffer threshold: First 8 frames + last frame is enough to begin smooth playback
+    const BUFFER_READY_FRAMES = 8;
+
     for (let i = 0; i < HERO_TOTAL_FRAMES; i++) {
       const img = new Image();
+      if (i < BUFFER_READY_FRAMES || i === HERO_TOTAL_FRAMES - 1) {
+        (img as any).fetchPriority = 'high';
+      }
       img.src = getHeroFramePath(i);
-      img.onload = () => {
+      const onDone = () => {
         if (!isCancelled) {
           loadedCountRef.current += 1;
           setHeroLoadedCount(loadedCountRef.current);
         }
       };
-      img.onerror = () => {
-        if (!isCancelled) {
-          loadedCountRef.current += 1;
-          setHeroLoadedCount(loadedCountRef.current);
-        }
-      };
+      img.onload = onDone;
+      img.onerror = onDone;
       loadedHeroImages[i] = img;
     }
 
-    // Also preload header logo on desktop
+    // Preload header logo with high priority
     const desktopLogoImg = new Image();
+    (desktopLogoImg as any).fetchPriority = 'high';
     desktopLogoImg.src = '/logojamiltraders.png';
 
-    // Natural writing pace for "JAMIL TRADERS" text (1.8s)
-    const MIN_WRITE_DURATION_MS = 1800;
+    // Snappy writing pace (850ms)
+    const MIN_WRITE_DURATION_MS = 850;
     const startTime = performance.now();
     let animFrameId: number;
 
@@ -286,15 +311,17 @@ export default function FramePlayer() {
       if (isCancelled) return;
       const elapsed = now - startTime;
       const timeRatio = Math.min(elapsed / MIN_WRITE_DURATION_MS, 1);
-      const frameRatio = loadedCountRef.current / HERO_TOTAL_FRAMES;
+      
+      // Buffer is ready as soon as the first few frames are loaded
+      const isBufferReady = loadedCountRef.current >= Math.min(BUFFER_READY_FRAMES, 5);
 
-      const progress = frameRatio >= 1
+      const progress = isBufferReady
         ? timeRatio
-        : Math.min(timeRatio, Math.max(frameRatio * 0.95, 0.05));
+        : Math.min(timeRatio, 0.45);
 
       setLoaderProgress(progress);
 
-      if (progress < 1 || loadedCountRef.current < HERO_TOTAL_FRAMES) {
+      if (progress < 1 || !isBufferReady) {
         animFrameId = requestAnimationFrame(animateWriting);
       } else {
         setLoaderProgress(1);
@@ -307,9 +334,9 @@ export default function FramePlayer() {
               if (!isCancelled) {
                 setIsLoaded(true);
               }
-            }, 850);
+            }, 600);
           }
-        }, 250);
+        }, 150);
       }
     };
 
