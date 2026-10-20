@@ -205,9 +205,9 @@ export const PROJECTS: Project[] = [
     logo: '/united-mall-logo.png',
     client: 'The United Mall Management',
     year: '2024',
-    challenge: 'Execute turnkey supply and complete installation of full ceiling linear lighting systems, architectural recessed downlights, high-atrium illumination, and circulation corridor lights across all multistory shopping concourses of The United Mall.',
-    approach: 'Engineered an integrated commercial lighting architecture utilizing continuous flush-mount recessed linear LED channels, glare-free circular downlights for public walkways, and optimized lux distribution to enhance retail visibility and architectural depth.',
-    solution: 'Turnkey delivery and precision installation of commercial-grade full ceiling luminaires, ensuring uniform lux levels, energy efficiency, and an inviting, modern retail mall ambiance.',
+    challenge: 'We completed the first branch of United Mall, located in Multan, in 2016. Based on the quality of our work, United Mall later awarded us the lighting project for its second mall, located in Gulgasht.',
+    approach: 'For this project, we installed linear LED lights using high-quality LED strips operated at 24V to ensure a longer lifespan.',
+    solution: 'We used power supplies with a power factor (PF) of 0.95 to ensure reliable performance and minimize the risk of future complaints.',
     luminairesUsed: [
       'Commercial Linear Continuous Ceiling Light',
       'Architectural Wide-Beam Downlight',
