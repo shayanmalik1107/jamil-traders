@@ -100,7 +100,7 @@ export default function Footer() {
               </ul>
 
               <div className="footer-socials">
-                <a href="#" aria-label="Instagram" className="footer-social-icon"><Instagram size={16} /></a>
+                <a href="https://www.instagram.com/jamiltraderssince2002?stkn=MXV1cHBreXI3NnUzag%3D%3D&utm_source=ig_contact_invite" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="footer-social-icon"><Instagram size={16} /></a>
                 <a href="#" aria-label="LinkedIn" className="footer-social-icon"><Linkedin size={16} /></a>
                 <a href="#" aria-label="Facebook" className="footer-social-icon"><Facebook size={16} /></a>
               </div>

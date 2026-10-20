@@ -28,3 +28,8 @@ next-env.d.ts
 # OS / IDE
 .DS_Store
 *.pem
+*.code-workspace
+
+# Large media files
+*.mov
+*.MOV

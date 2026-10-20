@@ -13,15 +13,37 @@ export interface Project {
   solution: string;
   luminairesUsed: string[];
   gallery: string[];
+  youtubeUrl?: string;
+}
+
+export function getYoutubeEmbedUrl(url?: string): string {
+  if (!url) return '';
+  const shortsMatch = url.match(/shorts\/([a-zA-Z0-9_-]+)/);
+  if (shortsMatch && shortsMatch[1]) {
+    return `https://www.youtube.com/embed/${shortsMatch[1]}`;
+  }
+  const watchMatch = url.match(/[?&]v=([a-zA-Z0-9_-]+)/);
+  if (watchMatch && watchMatch[1]) {
+    return `https://www.youtube.com/embed/${watchMatch[1]}`;
+  }
+  const beMatch = url.match(/youtu\.be\/([a-zA-Z0-9_-]+)/);
+  if (beMatch && beMatch[1]) {
+    return `https://www.youtube.com/embed/${beMatch[1]}`;
+  }
+  if (url.includes('/embed/')) {
+    return url;
+  }
+  return url;
 }
 
 export interface Product {
   id: string;
   name: string;
   category: string;
-  categorySlug: 'architectural' | 'interior' | 'decorative' | 'commercial' | 'retail' | 'exterior' | 'facade' | 'landscape' | 'led-solutions';
+  categorySlug: 'architectural' | 'interior' | 'decorative' | 'commercial' | 'retail' | 'exterior' | 'facade' | 'landscape' | 'led-solutions' | 'outdoor';
   environment: 'Indoor' | 'Outdoor' | 'Indoor / Outdoor';
   image: string;
+  gallery?: string[];
   description: string;
   applications: string[];
   specs: {
@@ -32,6 +54,18 @@ export interface Product {
     ipRating: string;
     optics?: string;
     material?: string;
+    type?: string;
+    effect?: string;
+    voltage?: string;
+    controlType?: string;
+    beamAngle?: string;
+    chipBrand?: string;
+    projectionDistance?: string;
+    operatingTemp?: string;
+    lifetime?: string;
+    cri?: string;
+    powerFactor?: string;
+    warranty?: string;
   };
 }
 
@@ -298,6 +332,191 @@ export const PROJECTS: Project[] = [
     gallery: [
       '/Razia.jpeg'
     ]
+  },
+  {
+    id: 'proj-14',
+    title: 'The United Mall',
+    location: 'Brand Road, near Tehsil Chowk and Bosan Road in Gulgasht Colony, Multan',
+    category: 'Commercial',
+    categorySlug: 'commercial',
+    image: '/united-mall-1.jpeg',
+    logo: '/united-mall-logo.png',
+    client: 'The United Mall Management',
+    year: '2024',
+    challenge: 'Execute turnkey supply and complete installation of full ceiling linear lighting systems, architectural recessed downlights, high-atrium illumination, and circulation corridor lights across all multistory shopping concourses of The United Mall.',
+    approach: 'Engineered an integrated commercial lighting architecture utilizing continuous flush-mount recessed linear LED channels, glare-free circular downlights for public walkways, and optimized lux distribution to enhance retail visibility and architectural depth.',
+    solution: 'Turnkey delivery and precision installation of commercial-grade full ceiling luminaires, ensuring uniform lux levels, energy efficiency, and an inviting, modern retail mall ambiance.',
+    luminairesUsed: [
+      'Commercial Linear Continuous Ceiling Light',
+      'Architectural Wide-Beam Downlight',
+      'Atrium High-Output Recessed Spotlight',
+      'Seamless Slot Linear Profile'
+    ],
+    gallery: [
+      '/united-mall-1.jpeg',
+      '/united-mall-2.jpeg',
+      '/united-mall-3.jpeg'
+    ]
+  },
+  {
+    id: 'proj-15',
+    title: 'Generation Multan',
+    location: 'Shop 4, Gulgasht Colony, Bosan Road, Multan',
+    category: 'Retail',
+    categorySlug: 'retail',
+    image: '/generation-1.jpeg',
+    logo: '/generation-logo.jpeg',
+    client: 'Generation Pakistan',
+    year: '2024',
+    challenge: 'Execute turnkey architectural retail lighting for Generation Multan at Shop 4, Gulgasht Colony, Bosan Road, highlighting handcrafted apparel, intricate textile patterns, and vibrant ethnic palettes with optimal visual clarity and thermal comfort.',
+    approach: 'Deployed high-CRI (97+) narrow and medium beam adjustable anti-glare tracking spotlights paired with warm-dim linear cove accents and recessed perimeter downlights tailored for boutique merchandising displays.',
+    solution: 'Turnkey supply and precision installation of specialized retail luminaires creating an inviting, sophisticated boutique ambiance that enhances fabric textures while maximizing energy efficiency.',
+    luminairesUsed: [
+      'Aura Track Spot 24W CRI98',
+      'Precision Architectural Retail Downlight',
+      'Seamless Linear Accent Profile',
+      'Warm-Dim Boutique Cove Light'
+    ],
+    gallery: [
+      '/generation-1.jpeg',
+      '/generation-2.jpeg',
+      '/generation-3.jpeg',
+      '/generation-4.jpeg'
+    ]
+  },
+  {
+    id: 'proj-16',
+    title: 'Mega Mart',
+    location: 'Mian Mohammad Road, New Mirpur City',
+    category: 'Commercial',
+    categorySlug: 'commercial',
+    image: '/mega-mart-1.jpeg',
+    logo: '/megamart-logo.jpeg',
+    client: 'Mega Mart Management',
+    year: '2024',
+    challenge: 'Execute turnkey commercial illumination for Mega Mart on Mian Mohammad Road, New Mirpur City, requiring continuous high-uniformity ceiling linear systems, wide-angle aisle downlighting, and dedicated cashier counter lighting.',
+    approach: 'Engineered an energy-efficient commercial retail lighting design using continuous recessed linear LED slot channels, low-glare wide-beam downlights for merchandise aisles, and high-CRI accent illumination.',
+    solution: 'Turnkey delivery and precision installation of commercial-grade supermarket luminaires, delivering vibrant illumination, optimized lux levels for shopping visibility, and substantial energy savings.',
+    luminairesUsed: [
+      'Commercial Continuous Linear LED Profile',
+      'Architectural Wide-Beam Recessed Downlight',
+      'High-CRI Supermarket Aisle Reflector',
+      'Cashier & Reception Task Slot Light'
+    ],
+    gallery: [
+      '/mega-mart-1.jpeg',
+      '/mega-mart-2.jpeg',
+      '/mega-mart-3.jpeg',
+      '/mega-mart-4.jpeg',
+      '/mega-mart-5.jpeg'
+    ]
+  },
+  {
+    id: 'proj-17',
+    title: 'AJ Towers',
+    location: 'Block A, Gulberg Expressway, Gulberg Greens, Islamabad',
+    category: 'Commercial',
+    categorySlug: 'commercial',
+    image: '/aj-1.jpeg',
+    logo: '/aj-logo.png',
+    client: 'AJ Towers Management',
+    year: '2024',
+    challenge: 'Execute turnkey commercial illumination for AJ Towers, located in Block A on the Gulberg Expressway in Gulberg Greens, Islamabad, requiring continuous flush-mounted architectural ceiling linear lighting, corridor downlights, and atrium circulation fixtures across multiple commercial floors.',
+    approach: 'Designed an advanced commercial lighting blueprint combining continuous architectural linear LED slots with wide-angle anti-glare recessed downlights and accent lighting along escalator walkways and glass retail shopfronts.',
+    solution: 'Turnkey supply and precision electrical installation of commercial-grade ceiling luminaires, ensuring seamless lux distribution, modern corporate aesthetics, and long-term energy efficiency.',
+    luminairesUsed: [
+      'Architectural Continuous Ceiling Linear Profile',
+      'Commercial Recessed Wide-Beam Downlight',
+      'Corridor & Escalator Accent Linear LED',
+      'Low-Glare Commercial Downlight'
+    ],
+    gallery: [
+      '/aj-1.jpeg',
+      '/aj-2.jpeg',
+      '/aj-3.jpeg',
+      '/aj-4.jpeg'
+    ]
+  },
+  {
+    id: 'proj-18',
+    title: '45B Model Town Residence',
+    location: '45B, Model Town, Lahore',
+    category: 'Landscape & Outdoor',
+    categorySlug: 'outdoor',
+    image: '/1.jpeg',
+    youtubeUrl: 'https://youtube.com/shorts/kvwXw8-syEM',
+    client: 'Private Residence',
+    year: '2024',
+    challenge: 'Execute complete outdoor lighting for a luxury residence at 45B, Model Town, Lahore, incorporating perimeter walkway grazing, tropical palm tree uplighting, architectural pergola warm coves, and lawn feature spotlights.',
+    approach: 'Engineered an IP67 weather-resistant landscape illumination architecture utilizing continuous warm ground pathway linear profiles, marine-grade adjustable tree spike projectors, and glare-free exterior architectural grazing lights.',
+    solution: 'Turnkey supply and precision electrical installation of outdoor luminaires, transforming the exterior landscape into an enchanting evening sanctuary with seamless optical control and durability.',
+    luminairesUsed: [
+      'Terra Bollard Outdoor Path Luminaire',
+      'AquaLed Submersible & Garden Spike Projector IP68',
+      'FacadeGraze IP67 Exterior Projector',
+      'Warm Pathway Linear Grazing Strip IP67',
+      'Architectural Pergola Warm Cove Light'
+    ],
+    gallery: [
+      '/1.jpeg',
+      '/2.jpeg',
+      '/3.jpeg',
+      '/4.jpeg',
+      '/5.jpeg',
+      '/6.jpeg',
+      '/7.jpeg'
+    ]
+  },
+  {
+    id: 'proj-19',
+    title: 'Box Club',
+    location: 'Pine Avenue, Lahore',
+    category: 'Landscape & Outdoor',
+    categorySlug: 'outdoor',
+    image: '/avn1.jpeg',
+    client: 'Box Club Hospitality',
+    year: '2024',
+    challenge: 'Execute turnkey architectural outdoor illumination for Box Club on Pine Avenue, Lahore, requiring seamless pergola linear ceiling fixtures, vertical architectural column illumination, and anti-glare patio lounge landscape lighting.',
+    approach: 'Designed an IP65/IP67 weather-resilient exterior lighting scheme featuring integrated matte black pergola linear profiles, vertical warm light pillars, and targeted low-glare planter uplights that elevate nighttime hospitality ambiance.',
+    solution: 'Turnkey delivery and precision technical installation of high-efficiency architectural outdoor luminaires, creating a refined modern social lounge atmosphere with high visual comfort and durability.',
+    luminairesUsed: [
+      'Architectural Pergola Linear Profile IP65',
+      'Vertical Accent Light Column 3000K',
+      'Garden Planter Spike Projector IP68',
+      'Low-Glare Patio Downlight IP65'
+    ],
+    gallery: [
+      '/avn1.jpeg',
+      '/avn2.jpeg',
+      '/avn3.jpeg',
+      '/avn4.jpeg',
+      '/avn5.jpeg'
+    ]
+  },
+  {
+    id: 'proj-20',
+    title: 'A.rehman Jewels',
+    location: 'Near Dolmen Mall, Phase 6, DHA, Lahore',
+    category: 'Retail',
+    categorySlug: 'retail',
+    image: '/a-rehman-3.jpeg',
+    client: 'A.rehman Jewels',
+    year: '2024',
+    challenge: 'Execute complete turnkey architectural indoor and outdoor lighting for A.rehman Jewels flagship boutique near Dolmen Mall in Phase 6, DHA Lahore, requiring specialized high-CRI showcase illumination for fine gold and gemstone jewelry paired with grand, prestigious exterior architectural facade illumination.',
+    approach: 'Engineered a dual-spectrum lighting concept combining 98+ CRI anti-glare micro pin-spots and display downlights indoors to accentuate gemstone brilliance, alongside custom warm vertical onyx facade light columns, up-down exterior wall grazers, and backlit 3D signage on the building entrance.',
+    solution: 'Turnkey engineering and precision electrical execution of high-lumen, high-CRI boutique jewelry showroom fixtures and IP65 architectural exterior facade illumination, creating a commanding luxury presence in DHA Phase 6.',
+    luminairesUsed: [
+      'Aura Spot Architectural Zoom Downlight CRI98',
+      'Precision Recessed Micro Pin-Spot 3000K',
+      'Exterior Vertical Facade Light Column IP65',
+      'Architectural Up-Down Wall Grazer IP65'
+    ],
+    gallery: [
+      '/a-rehman-3.jpeg',
+      '/a-rehman-4.jpeg',
+      '/a-rehman-1.jpeg',
+      '/a-rehman-2.jpeg'
+    ]
   }
 ];
 
@@ -452,6 +671,89 @@ export const PRODUCTS: Product[] = [
       ipRating: 'IP68 Underwater 3 Meters',
       optics: 'Tempered Safety Glass 10mm Lens',
       material: '316L Marine Stainless Steel'
+    }
+  },
+  {
+    id: 'prod-9',
+    name: 'Water Ripple Projection Wall Washer',
+    category: 'Outdoor Lighting',
+    categorySlug: 'outdoor',
+    environment: 'Outdoor',
+    image: '/water2.jpeg',
+    gallery: [
+      '/water2.jpeg',
+      '/water1.jpeg',
+      '/water3.jpeg',
+      '/water4.jpeg',
+      '/water5.jpeg',
+      '/water6.jpeg'
+    ],
+    description: 'Specialized architectural outdoor linear water wave projector wall washer engineered with an optical high-transparency ripple glass roller and stepper motor. Creates natural, fluid rippling water reflection waves on vertical and horizontal surfaces.',
+    applications: [
+      'Building Facades',
+      'Pool Side & Water Features',
+      'Hotels & Luxury Resorts',
+      'Bridges & Overpasses',
+      'Outdoor Courtyards',
+      'Architectural Water Reflection Walls'
+    ],
+    specs: {
+      type: 'Outdoor Linear Water Wave',
+      effect: 'Creates fluid, rippling water reflection waves on surface',
+      wattage: '60W / 80W / 120W Options',
+      voltage: 'AC100–240V 50–60Hz',
+      lumenOutput: 'Dynamic Optical Water Wave Projection',
+      colorTemp: 'Lake Blue / Flame Light / RGBW',
+      dimensions: 'L 1000mm x W 75mm x H 80mm (Weight: 3.35 KG)',
+      ipRating: 'IP66 Weatherproof (48h Salt Spray Tested)',
+      optics: '120° Beam Angle with Dynamic Water Ripple Optical Glass Roller',
+      material: 'All-Aluminium Alloy Housing with Dark Grey Anti-Corrosion Spray + 4mm Tempered Glass',
+      controlType: 'ON/OFF / DMX512 (4-Channel Controllable)',
+      chipBrand: 'OSRAM High-Performance LED (Ra > 80)',
+      projectionDistance: '3–6M / 5–10M',
+      operatingTemp: '-40°C to +60°C (RTD Real-Time Temperature Protection)',
+      lifetime: '≥ 50,000 Hours (light attenuation < 10%)'
+    }
+  },
+  {
+    id: 'prod-10',
+    name: 'Adjustable COB Linear Downlight Multi-Head',
+    category: 'Interior Lighting',
+    categorySlug: 'interior',
+    environment: 'Indoor',
+    image: '/cob1.png',
+    gallery: [
+      '/cob1.png',
+      '/cob2.png',
+      '/cob3.png',
+      '/cob4.png',
+      '/cob5.png'
+    ],
+    description: 'Ceiling recessed multi-head adjustable COB linear downlight engineered with independent directional tilt spotlights and deep anti-glare reflectors. Powered by high-efficiency Bridgelux LED chips with superior CRI 95 color fidelity, offering multi-wattage options and precision beam angles for contemporary interior architectural spaces.',
+    applications: [
+      'Ceiling Recessed Grid & Architectural Slots',
+      'Art Galleries & Showcase Illumination',
+      'Luxury Residences & Private Villas',
+      'High-End Retail Boutiques & Showrooms',
+      'Executive Offices & Conference Rooms',
+      'Hospitality Lounges & Dining Areas'
+    ],
+    specs: {
+      type: 'Ceiling Article / Recessed Linear Multi-Head',
+      wattage: '3W / 6W / 9W / 12W Options',
+      chipBrand: 'Bridgelux COB LED',
+      cri: '95 (Ultra-High Color Rendering Index)',
+      colorTemp: '2700K / 3000K / 3500K / 4000K',
+      beamAngle: '15° / 24° / 36° / 50°',
+      powerFactor: '0.5 / 0.95',
+      ipRating: 'IP44 (Moisture & Dust Resistant)',
+      voltage: '58–265V AC',
+      warranty: '3 Years Warranty',
+      lumenOutput: '100–110 lm/W High Efficiency Output',
+      dimensions: 'Multi-Head Modular Extrusion (Independent Adjustable Heads)',
+      optics: 'Precision Optical Reflector with Low-Glare Baffle (Rose Gold / White Reflector)',
+      material: 'Die-cast Aircraft Aluminum Housing with Electrostatic Finish',
+      lifetime: '≥ 50,000 Hours'
     }
   }
 ];
@@ -612,9 +914,14 @@ export const INDUSTRIES: Industry[] = [
 
 export const CLIENT_LOGOS: ClientLogo[] = [
   { name: 'Nishat Group', category: 'Retail & Commercial', highlight: 'Emporium Mall Flagship' },
-  { name: 'Generation', category: 'Fashion Retail', highlight: 'Nationwide Boutiques' },
+  { name: 'Generation', category: 'Fashion Retail', highlight: 'Multan Flagship & Boutiques', location: 'Shop 4, Gulgasht Colony, Bosan Road, Multan' },
   { name: 'Metro Shoes', category: 'Commercial Footwear', highlight: '25+ Nationwide Branches' },
   { name: 'Uni Worth', category: 'Menswear Flagships', highlight: 'Luxury Suiting Outlets' },
+  { name: 'The United Mall', category: 'Commercial Shopping Mall', highlight: 'Full Ceiling Linear Lighting Project', location: 'Brand Road, near Tehsil Chowk and Bosan Road in Gulgasht Colony, Multan' },
+  { name: 'Mega Mart', category: 'Commercial Supermarket', highlight: 'Full Supermarket Lighting Project', location: 'Mian Mohammad Road, New Mirpur City' },
+  { name: 'AJ Towers', category: 'Commercial Complex', highlight: 'Commercial Complex Lighting Project', location: 'Block A, Gulberg Expressway, Gulberg Greens, Islamabad' },
+  { name: 'Box Club', category: 'Outdoor Hospitality', highlight: 'Turnkey Pergola & Landscape Lighting', location: 'Pine Avenue, Lahore' },
+  { name: 'A.rehman Jewels', category: 'Luxury Jewelry Retail', highlight: 'Complete Indoor & Outdoor Lighting', location: 'Near Dolmen Mall, Phase 6, DHA, Lahore' },
   { name: 'SKMCH Hospital', category: 'Healthcare Institution', highlight: 'Specialty Medical Wings' },
   { name: 'Hameed Latif Teaching Hospital (HLTH)', category: 'Healthcare Institution', highlight: 'Complete Lighting Project', location: '2.5 km Haeir Road, Ferozepur Road, Lahore' },
   { name: 'Shalamar Hospital', category: 'Healthcare Institution', highlight: 'Auditorium Lighting Project', location: 'Shalimar Link Road, Lahore' },

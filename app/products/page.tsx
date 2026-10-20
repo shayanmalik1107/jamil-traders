@@ -14,6 +14,7 @@ function ProductCatalogueContent() {
   const [selectedCategory, setSelectedCategory] = useState<string>(initialCategory);
   const [selectedEnv, setSelectedEnv] = useState<string>('ALL');
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const [activeModalImg, setActiveModalImg] = useState<string | null>(null);
 
   const { addItem, items, setIsDrawerOpen } = useProjectList();
 
@@ -26,6 +27,7 @@ function ProductCatalogueContent() {
 
   const categories = [
     { label: 'ALL CATEGORIES', value: 'ALL' },
+    { label: 'OUTDOOR LIGHTS', value: 'outdoor' },
     { label: 'ARCHITECTURAL', value: 'architectural' },
     { label: 'INTERIOR', value: 'interior' },
     { label: 'DECORATIVE', value: 'decorative' },
@@ -102,16 +104,20 @@ function ProductCatalogueContent() {
           <div className="products-grid">
             {filteredProducts.map((product) => {
               const inList = isProductInList(product.id);
+              const handleOpen = () => {
+                setSelectedProduct(product);
+                setActiveModalImg(null);
+              };
               return (
                 <div key={product.id} className="product-card">
-                  <div className="product-card-img-wrap" onClick={() => setSelectedProduct(product)}>
+                  <div className="product-card-img-wrap" onClick={handleOpen}>
                     <img src={product.image} alt={product.name} className="product-card-img" />
                     <div className="product-card-env-badge">{product.environment}</div>
                   </div>
 
                   <div className="product-card-body">
                     <span className="product-card-category">{product.category}</span>
-                    <h3 className="product-card-name" onClick={() => setSelectedProduct(product)}>
+                    <h3 className="product-card-name" onClick={handleOpen}>
                       {product.name}
                     </h3>
                     <div className="product-card-specs-preview">
@@ -124,7 +130,7 @@ function ProductCatalogueContent() {
                       <button
                         type="button"
                         className="product-card-details-btn"
-                        onClick={() => setSelectedProduct(product)}
+                        onClick={handleOpen}
                       >
                         VIEW SPECS
                       </button>
@@ -166,10 +172,48 @@ function ProductCatalogueContent() {
 
             <div className="product-modal-body">
               <div className="product-modal-grid">
-                {/* Left Column: Image */}
+                {/* Left Column: Image & Gallery */}
                 <div className="product-modal-img-col">
-                  <img src={selectedProduct.image} alt={selectedProduct.name} className="product-modal-main-img" />
-                  <div className="product-modal-badge">{selectedProduct.environment} Luminaire</div>
+                  <div style={{ position: 'relative' }}>
+                    <img
+                      src={activeModalImg || selectedProduct.image}
+                      alt={selectedProduct.name}
+                      className="product-modal-main-img"
+                    />
+                    <div className="product-modal-badge">{selectedProduct.environment} Luminaire</div>
+                  </div>
+
+                  {selectedProduct.gallery && selectedProduct.gallery.length > 0 && (
+                    <div style={{ marginTop: '0.9rem' }}>
+                      <div style={{ fontSize: '0.72rem', fontWeight: 800, color: '#C8102E', letterSpacing: '0.12em', marginBottom: '0.45rem', textTransform: 'uppercase' }}>
+                        Product Views & Technical Datasheets ({selectedProduct.gallery.length})
+                      </div>
+                      <div style={{ display: 'grid', gridTemplateColumns: `repeat(${Math.min(selectedProduct.gallery.length, 6)}, 1fr)`, gap: '0.45rem' }}>
+                        {selectedProduct.gallery.map((gImg, idx) => {
+                          const isSelected = (activeModalImg || selectedProduct.image) === gImg;
+                          return (
+                            <img
+                              key={idx}
+                              src={gImg}
+                              alt={`${selectedProduct.name} preview ${idx + 1}`}
+                              onClick={() => setActiveModalImg(gImg)}
+                              style={{
+                                width: '100%',
+                                height: '56px',
+                                objectFit: 'cover',
+                                borderRadius: '8px',
+                                cursor: 'pointer',
+                                border: isSelected ? '2px solid #C8102E' : '1px solid rgba(200, 16, 46, 0.15)',
+                                opacity: isSelected ? 1 : 0.65,
+                                transition: 'all 0.2s ease',
+                                transform: isSelected ? 'scale(1.04)' : 'scale(1)'
+                              }}
+                            />
+                          );
+                        })}
+                      </div>
+                    </div>
+                  )}
                 </div>
 
                 {/* Right Column: Info & Specs */}
@@ -190,10 +234,28 @@ function ProductCatalogueContent() {
                   <div className="product-modal-sec">
                     <h4>TECHNICAL SPECIFICATIONS</h4>
                     <div className="product-specs-table">
+                      {selectedProduct.specs.type && (
+                        <div className="spec-row">
+                          <span>TYPE:</span>
+                          <strong>{selectedProduct.specs.type}</strong>
+                        </div>
+                      )}
+                      {selectedProduct.specs.effect && (
+                        <div className="spec-row">
+                          <span>LIGHTING EFFECT:</span>
+                          <strong style={{ color: '#C8102E' }}>{selectedProduct.specs.effect}</strong>
+                        </div>
+                      )}
                       <div className="spec-row">
                         <span>WATTAGE:</span>
                         <strong>{selectedProduct.specs.wattage}</strong>
                       </div>
+                      {selectedProduct.specs.voltage && (
+                        <div className="spec-row">
+                          <span>INPUT VOLTAGE:</span>
+                          <strong>{selectedProduct.specs.voltage}</strong>
+                        </div>
+                      )}
                       <div className="spec-row">
                         <span>LUMEN OUTPUT:</span>
                         <strong>{selectedProduct.specs.lumenOutput}</strong>
@@ -212,14 +274,68 @@ function ProductCatalogueContent() {
                       </div>
                       {selectedProduct.specs.optics && (
                         <div className="spec-row">
-                          <span>OPTICS:</span>
+                          <span>OPTICS / BEAM:</span>
                           <strong>{selectedProduct.specs.optics}</strong>
                         </div>
                       )}
                       {selectedProduct.specs.material && (
                         <div className="spec-row">
-                          <span>MATERIAL:</span>
+                          <span>MATERIAL & HOUSING:</span>
                           <strong>{selectedProduct.specs.material}</strong>
+                        </div>
+                      )}
+                      {selectedProduct.specs.controlType && (
+                        <div className="spec-row">
+                          <span>CONTROL TYPE:</span>
+                          <strong>{selectedProduct.specs.controlType}</strong>
+                        </div>
+                      )}
+                      {selectedProduct.specs.chipBrand && (
+                        <div className="spec-row">
+                          <span>LED ENGINE:</span>
+                          <strong>{selectedProduct.specs.chipBrand}</strong>
+                        </div>
+                      )}
+                      {selectedProduct.specs.cri && (
+                        <div className="spec-row">
+                          <span>COLOR RENDERING (CRI):</span>
+                          <strong style={{ color: '#C8102E' }}>{selectedProduct.specs.cri}</strong>
+                        </div>
+                      )}
+                      {selectedProduct.specs.beamAngle && (
+                        <div className="spec-row">
+                          <span>BEAM ANGLE:</span>
+                          <strong>{selectedProduct.specs.beamAngle}</strong>
+                        </div>
+                      )}
+                      {selectedProduct.specs.powerFactor && (
+                        <div className="spec-row">
+                          <span>POWER FACTOR (PF):</span>
+                          <strong>{selectedProduct.specs.powerFactor}</strong>
+                        </div>
+                      )}
+                      {selectedProduct.specs.projectionDistance && (
+                        <div className="spec-row">
+                          <span>PROJECTION DISTANCE:</span>
+                          <strong>{selectedProduct.specs.projectionDistance}</strong>
+                        </div>
+                      )}
+                      {selectedProduct.specs.operatingTemp && (
+                        <div className="spec-row">
+                          <span>OPERATING TEMP:</span>
+                          <strong>{selectedProduct.specs.operatingTemp}</strong>
+                        </div>
+                      )}
+                      {selectedProduct.specs.lifetime && (
+                        <div className="spec-row">
+                          <span>RATED LIFETIME:</span>
+                          <strong>{selectedProduct.specs.lifetime}</strong>
+                        </div>
+                      )}
+                      {selectedProduct.specs.warranty && (
+                        <div className="spec-row">
+                          <span>WARRANTY:</span>
+                          <strong style={{ color: '#2e7d32' }}>{selectedProduct.specs.warranty}</strong>
                         </div>
                       )}
                     </div>

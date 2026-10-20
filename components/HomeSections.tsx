@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { ArrowRight, Sparkles, X, CheckCircle2, ArrowUpRight } from 'lucide-react';
-import { PROJECTS, CLIENT_LOGOS, EXPERTISE_AREAS, Project } from '@/lib/data';
+import { ArrowRight, Sparkles, X, CheckCircle2, ArrowUpRight, Play } from 'lucide-react';
+import { PROJECTS, CLIENT_LOGOS, EXPERTISE_AREAS, Project, getYoutubeEmbedUrl } from '@/lib/data';
 import ProjectCard from '@/components/ProjectCard';
 
 export default function HomeSections() {
   const [activeProjectCategory, setActiveProjectCategory] = useState<string>('ALL');
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const [activeVideoUrl, setActiveVideoUrl] = useState<string | null>(null);
+  const [isPlayingHeroVideo, setIsPlayingHeroVideo] = useState<boolean>(false);
 
   const filteredProjects = activeProjectCategory === 'ALL'
     ? PROJECTS
@@ -314,7 +316,13 @@ export default function HomeSections() {
 
       {/* PROJECT CASE STUDY DETAIL MODAL */}
       {selectedProject && (
-        <div className="project-modal-overlay" onClick={() => setSelectedProject(null)}>
+        <div
+          className="project-modal-overlay"
+          onClick={() => {
+            setSelectedProject(null);
+            setIsPlayingHeroVideo(false);
+          }}
+        >
           <div className="project-modal-content" onClick={(e) => e.stopPropagation()}>
             <header className="project-modal-header">
               <div className="project-modal-header-left">
@@ -340,7 +348,10 @@ export default function HomeSections() {
               <button
                 type="button"
                 className="project-modal-close"
-                onClick={() => setSelectedProject(null)}
+                onClick={() => {
+                  setSelectedProject(null);
+                  setIsPlayingHeroVideo(false);
+                }}
               >
                 <X size={20} />
               </button>
@@ -348,7 +359,42 @@ export default function HomeSections() {
 
             <div className="project-modal-body">
               <div className="project-modal-hero-img-wrap">
-                <img src={selectedProject.image} alt={selectedProject.title} className="project-modal-hero-img" />
+                {selectedProject.youtubeUrl && isPlayingHeroVideo ? (
+                  <iframe
+                    src={`${getYoutubeEmbedUrl(selectedProject.youtubeUrl)}?autoplay=1&rel=0&modestbranding=1`}
+                    title={`${selectedProject.title} Video Showcase`}
+                    className="project-modal-hero-iframe"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  />
+                ) : (
+                  <div
+                    className="project-modal-hero-container-relative"
+                    onClick={() => {
+                      if (selectedProject.youtubeUrl) {
+                        setIsPlayingHeroVideo(true);
+                      }
+                    }}
+                    style={{ cursor: selectedProject.youtubeUrl ? 'pointer' : 'default', width: '100%', height: '100%', position: 'relative' }}
+                  >
+                    <img src={selectedProject.image} alt={selectedProject.title} className="project-modal-hero-img" />
+                    {selectedProject.youtubeUrl && (
+                      <button
+                        type="button"
+                        className="project-card-center-play-btn"
+                        aria-label="Play Project Video"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setIsPlayingHeroVideo(true);
+                        }}
+                      >
+                        <div className="center-play-circle pulse-animation">
+                          <Play size={28} fill="white" color="white" style={{ marginLeft: '3px' }} />
+                        </div>
+                      </button>
+                    )}
+                  </div>
+                )}
               </div>
 
               <div className="project-modal-sections-grid">
@@ -385,18 +431,37 @@ export default function HomeSections() {
                 <div className="project-modal-gallery-sec" style={{ marginTop: '1.25rem' }}>
                   <h4>PROJECT GALLERY</h4>
                   <div className="project-modal-gallery-grid">
-                    {selectedProject.gallery.map((imgUrl, i) => (
-                      <img key={i} src={imgUrl} alt={`${selectedProject.title} view ${i + 1}`} className="project-gallery-img" />
-                    ))}
+                    {selectedProject.gallery.map((mediaUrl, i) =>
+                      /\.(mov|mp4|webm)(\?.*)?$/i.test(mediaUrl) ? (
+                        <video
+                          key={i}
+                          src={mediaUrl}
+                          controls
+                          playsInline
+                          className="project-gallery-img"
+                          style={{ objectFit: 'cover', width: '100%', height: '100%' }}
+                        />
+                      ) : (
+                        <img
+                          key={i}
+                          src={mediaUrl}
+                          alt={`${selectedProject.title} view ${i + 1}`}
+                          className="project-gallery-img"
+                        />
+                      )
+                    )}
                   </div>
                 </div>
               )}
 
-              <div className="project-modal-actions" style={{ marginTop: '1rem' }}>
+              <div className="project-modal-actions" style={{ marginTop: '1.5rem' }}>
                 <Link
                   href="/contact"
                   className="hero-cta-btn"
-                  onClick={() => setSelectedProject(null)}
+                  onClick={() => {
+                    setSelectedProject(null);
+                    setIsPlayingHeroVideo(false);
+                  }}
                 >
                   <span>START A SIMILAR PROJECT</span>
                   <div className="hero-cta-arrow">
@@ -404,6 +469,42 @@ export default function HomeSections() {
                   </div>
                 </Link>
               </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* YOUTUBE VIDEO PLAYER MODAL */}
+      {activeVideoUrl && (
+        <div
+          className="project-video-modal-overlay"
+          onClick={() => setActiveVideoUrl(null)}
+        >
+          <div
+            className="project-video-modal-container"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="project-video-modal-header">
+              <div className="project-video-modal-title-group">
+                <span className="project-video-modal-tag">PROJECT VIDEO</span>
+                <h3 className="project-video-modal-title">{selectedProject?.title || 'Project Showcase'}</h3>
+              </div>
+              <button
+                type="button"
+                className="project-video-modal-close"
+                onClick={() => setActiveVideoUrl(null)}
+                aria-label="Close Video"
+              >
+                <X size={18} />
+              </button>
+            </div>
+            <div className="project-video-iframe-wrap">
+              <iframe
+                src={`${getYoutubeEmbedUrl(activeVideoUrl)}?autoplay=1&rel=0&modestbranding=1`}
+                title="Project Video Showcase"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
+              />
             </div>
           </div>
         </div>

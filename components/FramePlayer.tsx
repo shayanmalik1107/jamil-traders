@@ -44,20 +44,14 @@ export default function FramePlayer() {
   const heroRequestRef = useRef<number | null>(null);
   const heroStartTimeRef = useRef<number | null>(null);
 
-  // About canvas refs
-  const aboutSectionRef = useRef<HTMLElement | null>(null);
-  const aboutCanvasRef = useRef<HTMLCanvasElement | null>(null);
-  const aboutImagesRef = useRef<HTMLImageElement[]>([]);
-  const aboutRequestRef = useRef<number | null>(null);
-  const aboutStartTimeRef = useRef<number | null>(null);
-  const [aboutHasPlayed, setAboutHasPlayed] = useState<boolean>(false);
-
   const [mounted, setMounted] = useState<boolean>(false);
   const [isMobile, setIsMobile] = useState<boolean>(false);
   const [heroLoadedCount, setHeroLoadedCount] = useState<number>(0);
-  const [aboutLoadedCount, setAboutLoadedCount] = useState<number>(0);
+  const [loaderProgress, setLoaderProgress] = useState<number>(0); // 0 to 1 progressive writing progress
+  const [isWritingComplete, setIsWritingComplete] = useState<boolean>(false);
+  const loadedCountRef = useRef<number>(0);
+  const [isSplitting, setIsSplitting] = useState<boolean>(false);
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
-  const [activeNav, setActiveNav] = useState<string>('HOME');
   const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
   const [animProgress, setAnimProgress] = useState<number>(0);
   const [isScrolled, setIsScrolled] = useState<boolean>(false);
@@ -67,12 +61,10 @@ export default function FramePlayer() {
 
   useEffect(() => {
     setMounted(true);
-    // Detect mobile on mount and resize
     const checkMobile = () => setIsMobile(window.innerWidth < 768);
     checkMobile();
     window.addEventListener('resize', checkMobile);
 
-    // If session loads/reloads on any non-home page, mark animation as played so returning to home won't trigger animation
     if (typeof window !== 'undefined' && window.location.pathname !== '/') {
       sessionStorage.setItem('jt_hero_anim_played', 'true');
     }
@@ -135,10 +127,6 @@ export default function FramePlayer() {
     return `/lighting_frames_same_as_video/frame_${padIndex}.webp`;
   };
 
-  const getAboutFramePath = (index: number) => {
-    return `/video_frames/${ABOUT_FRAME_FILES[index]}`;
-  };
-
   // Resize canvas helper
   const resizeCanvas = useCallback((canvas: HTMLCanvasElement | null) => {
     if (!canvas) return;
@@ -169,100 +157,111 @@ export default function FramePlayer() {
     ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
   }, []);
 
-  // Render about frame with instant fallback to prevent any black flash
-  const renderAboutFrame = useCallback((frameIdx: number) => {
-    const canvas = aboutCanvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
+  // Check if hero animation should play
+  const shouldPlayHeroAnimation = useCallback(() => {
+    if (typeof window === 'undefined') return false;
 
-    let img = aboutImagesRef.current[frameIdx];
-    if (!img || !img.complete || img.naturalWidth === 0) {
-      img = aboutImagesRef.current[0];
+    try {
+      const win = window as any;
+      if (win.__JT_DOC_WAS_RELOAD_ON_HOME__) {
+        win.__JT_DOC_WAS_RELOAD_ON_HOME__ = false;
+        sessionStorage.setItem('jt_hero_anim_played', 'true');
+        return true;
+      }
+      if (win.__JT_DOC_INITIAL_PATH__ && win.__JT_DOC_INITIAL_PATH__ !== '/') {
+        sessionStorage.setItem('jt_hero_anim_played', 'true');
+        return false;
+      }
+      const hasPlayed = sessionStorage.getItem('jt_hero_anim_played') === 'true';
+      if (hasPlayed) {
+        return false;
+      }
+      if (window.location.pathname === '/') {
+        sessionStorage.setItem('jt_hero_anim_played', 'true');
+        return true;
+      }
+      sessionStorage.setItem('jt_hero_anim_played', 'true');
+      return false;
+    } catch (e) {
+      return false;
     }
-    if (!img || !img.complete || img.naturalWidth === 0) {
-      img = aboutImagesRef.current.find((i) => i && i.complete && i.naturalWidth > 0) as HTMLImageElement;
-    }
-    if (!img || !img.complete || img.naturalWidth === 0) return;
-
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.imageSmoothingEnabled = true;
-    ctx.imageSmoothingQuality = 'high';
-    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
   }, []);
 
-  // Preload frames — skip on mobile (use static img instead)
+  // Preload Hero Frames & Drive "JAMIL TRADERS" Text Writing Loading Progress
   useEffect(() => {
-    if (isMobile) {
-      // On mobile we use static images, no need to preload frame sequences
-      setIsLoaded(true);
-      return;
-    }
-
     let isCancelled = false;
     const loadedHeroImages: HTMLImageElement[] = new Array(HERO_TOTAL_FRAMES);
-    const loadedAboutImages: HTMLImageElement[] = new Array(ABOUT_TOTAL_FRAMES);
-
     heroImagesRef.current = loadedHeroImages;
-    aboutImagesRef.current = loadedAboutImages;
+    loadedCountRef.current = 0;
 
-    let heroCount = 0;
-    let aboutCount = 0;
-
-    // Safety Fallback: Force reveal page after 400ms so screen NEVER stays stuck black
-    const safetyTimer = setTimeout(() => {
-      if (!isCancelled) {
-        setIsLoaded(true);
-      }
-    }, 400);
-
-    // Preload Hero Frames First for Superfast First Paint (<0.3s)
+    // Preload ALL 61 hero frames and track completion
     for (let i = 0; i < HERO_TOTAL_FRAMES; i++) {
       const img = new Image();
       img.src = getHeroFramePath(i);
-      const handleLoad = () => {
-        if (isCancelled) return;
-        heroCount++;
-        setHeroLoadedCount(heroCount);
-        if (heroCount >= HERO_TOTAL_FRAMES) {
-          setIsLoaded(true);
-          clearTimeout(safetyTimer);
-        }
-      };
-      img.onload = handleLoad;
-      img.onerror = handleLoad;
-      if (img.complete) {
-        handleLoad();
-      }
-      loadedHeroImages[i] = img;
-    }
-
-    // Preload About Section Frames in background
-    for (let i = 0; i < ABOUT_TOTAL_FRAMES; i++) {
-      const img = new Image();
-      img.src = getAboutFramePath(i);
       img.onload = () => {
-        if (isCancelled) return;
-        aboutCount++;
-        setAboutLoadedCount(aboutCount);
-        if (i === 0 || aboutCount === 1) {
-          resizeCanvas(aboutCanvasRef.current);
-          renderAboutFrame(0);
+        if (!isCancelled) {
+          loadedCountRef.current += 1;
+          setHeroLoadedCount(loadedCountRef.current);
         }
       };
       img.onerror = () => {
-        if (isCancelled) return;
-        aboutCount++;
-        setAboutLoadedCount(aboutCount);
+        if (!isCancelled) {
+          loadedCountRef.current += 1;
+          setHeroLoadedCount(loadedCountRef.current);
+        }
       };
-      loadedAboutImages[i] = img;
+      loadedHeroImages[i] = img;
     }
+
+    // Natural writing pace for "JAMIL TRADERS" text (1.8s)
+    const MIN_WRITE_DURATION_MS = 1800;
+    const startTime = performance.now();
+    let animFrameId: number;
+
+    const animateWriting = (now: number) => {
+      if (isCancelled) return;
+      const elapsed = now - startTime;
+      const timeRatio = Math.min(elapsed / MIN_WRITE_DURATION_MS, 1);
+      const frameRatio = loadedCountRef.current / HERO_TOTAL_FRAMES;
+
+      // Writing progress is locked to frame loading:
+      // If frames are loaded, it smoothly finishes along timeRatio;
+      // if frames are still loading, it caps at actual loaded frame ratio until 100% ready.
+      const progress = frameRatio >= 1
+        ? timeRatio
+        : Math.min(timeRatio, Math.max(frameRatio * 0.95, 0.05));
+
+      setLoaderProgress(progress);
+
+      if (progress < 1 || loadedCountRef.current < HERO_TOTAL_FRAMES) {
+        animFrameId = requestAnimationFrame(animateWriting);
+      } else {
+        // Both text writing is 100% complete AND hero section frames are fully loaded!
+        setLoaderProgress(1);
+        setIsWritingComplete(true);
+
+        // Hold completed golden illuminated text briefly (250ms), then start splitting the loading screen
+        setTimeout(() => {
+          if (!isCancelled) {
+            setIsSplitting(true);
+            // Hide preloader overlay completely after curtain split finishes (850ms)
+            setTimeout(() => {
+              if (!isCancelled) {
+                setIsLoaded(true);
+              }
+            }, 850);
+          }
+        }, 250);
+      }
+    };
+
+    animFrameId = requestAnimationFrame(animateWriting);
 
     return () => {
       isCancelled = true;
-      clearTimeout(safetyTimer);
+      if (animFrameId) cancelAnimationFrame(animFrameId);
     };
-  }, [isMobile, renderAboutFrame, resizeCanvas]);
+  }, []);
 
   // Scroll listener for Header styling
   useEffect(() => {
@@ -274,22 +273,19 @@ export default function FramePlayer() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Resize listener for both canvases (desktop only)
+  // Resize listener for hero canvas (desktop only)
   useEffect(() => {
     if (isMobile) return;
 
     const handleResize = () => {
       resizeCanvas(heroCanvasRef.current);
       renderHeroFrame(HERO_TOTAL_FRAMES - 1);
-
-      resizeCanvas(aboutCanvasRef.current);
-      renderAboutFrame(ABOUT_TOTAL_FRAMES - 1);
     };
 
     handleResize();
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
-  }, [isMobile, resizeCanvas, renderHeroFrame, renderAboutFrame]);
+  }, [isMobile, resizeCanvas, renderHeroFrame]);
 
   // Hero Animation loop
   const animateHero = useCallback((timestamp: number) => {
@@ -316,59 +312,11 @@ export default function FramePlayer() {
     }
   }, [renderHeroFrame]);
 
-  // Check if hero animation should play based on reload vs route navigation
-  const shouldPlayHeroAnimation = useCallback(() => {
-    if (typeof window === 'undefined') return false;
-
-    try {
-      const win = window as any;
-
-      // 1. If this document load was a hard reload specifically on the Home page ('/'):
-      if (win.__JT_DOC_WAS_RELOAD_ON_HOME__) {
-        win.__JT_DOC_WAS_RELOAD_ON_HOME__ = false;
-        sessionStorage.setItem('jt_hero_anim_played', 'true');
-        return true;
-      }
-
-      // 2. If the initial document entry/reload happened on a non-home page (e.g. '/about'):
-      if (win.__JT_DOC_INITIAL_PATH__ && win.__JT_DOC_INITIAL_PATH__ !== '/') {
-        sessionStorage.setItem('jt_hero_anim_played', 'true');
-        return false;
-      }
-
-      // 3. If animation has already played in this session (or user navigated from another route):
-      const hasPlayed = sessionStorage.getItem('jt_hero_anim_played') === 'true';
-      if (hasPlayed) {
-        return false;
-      }
-
-      // 4. Initial fresh load directly on Home page ('/'):
-      if (window.location.pathname === '/') {
-        sessionStorage.setItem('jt_hero_anim_played', 'true');
-        return true;
-      }
-
-      sessionStorage.setItem('jt_hero_anim_played', 'true');
-      return false;
-    } catch (e) {
-      return false;
-    }
-  }, []);
-
-  // Start Hero Animation once preloader completes (desktop only)
+  // Start Hero Canvas Frame Animation immediately when loading screen split begins
   useEffect(() => {
-    if (isMobile || !isLoaded) return;
+    if (isMobile || !isSplitting) return;
 
     resizeCanvas(heroCanvasRef.current);
-
-    const playAnim = shouldPlayHeroAnimation();
-
-    if (!playAnim) {
-      setAnimProgress(1);
-      renderHeroFrame(HERO_TOTAL_FRAMES - 1);
-      return;
-    }
-
     renderHeroFrame(0);
     heroStartTimeRef.current = performance.now();
     heroRequestRef.current = requestAnimationFrame(animateHero);
@@ -378,77 +326,10 @@ export default function FramePlayer() {
         cancelAnimationFrame(heroRequestRef.current);
       }
     };
-  }, [isMobile, isLoaded, resizeCanvas, renderHeroFrame, animateHero, shouldPlayHeroAnimation]);
+  }, [isMobile, isSplitting, resizeCanvas, renderHeroFrame, animateHero]);
 
-  // About Animation Loop (Strictly 1 Second Duration: 1000ms)
-  const animateAbout = useCallback((timestamp: number) => {
-    if (!aboutStartTimeRef.current) {
-      aboutStartTimeRef.current = timestamp;
-    }
-
-    const elapsed = timestamp - aboutStartTimeRef.current;
-    const progress = Math.min(elapsed / ABOUT_ANIMATION_DURATION_MS, 1);
-
-    const targetFrame = Math.min(
-      Math.floor(progress * ABOUT_TOTAL_FRAMES),
-      ABOUT_TOTAL_FRAMES - 1
-    );
-
-    renderAboutFrame(targetFrame);
-
-    if (progress < 1) {
-      aboutRequestRef.current = requestAnimationFrame(animateAbout);
-    } else {
-      renderAboutFrame(ABOUT_TOTAL_FRAMES - 1);
-    }
-  }, [renderAboutFrame]);
-
-  // Trigger About section animation when section scrolls into view (desktop only)
-  useEffect(() => {
-    if (isMobile || !isLoaded || !aboutSectionRef.current) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            resizeCanvas(aboutCanvasRef.current);
-            renderAboutFrame(0);
-            aboutStartTimeRef.current = performance.now();
-            if (aboutRequestRef.current) {
-              cancelAnimationFrame(aboutRequestRef.current);
-            }
-            aboutRequestRef.current = requestAnimationFrame(animateAbout);
-            setAboutHasPlayed(true);
-          }
-        });
-      },
-      { threshold: 0.15 }
-    );
-
-    observer.observe(aboutSectionRef.current);
-
-    return () => {
-      observer.disconnect();
-      if (aboutRequestRef.current) {
-        cancelAnimationFrame(aboutRequestRef.current);
-      }
-    };
-  }, [isMobile, isLoaded, resizeCanvas, renderAboutFrame, animateAbout]);
-
-  const totalAllFrames = HERO_TOTAL_FRAMES + ABOUT_TOTAL_FRAMES;
-  const currentLoadedAll = heroLoadedCount + aboutLoadedCount;
-  const loadingPercentage = Math.round((currentLoadedAll / totalAllFrames) * 100);
-
-  const navLinks = [
-    { label: 'HOME', href: '#' },
-    { label: 'ABOUT', href: '#about' },
-    { label: 'SERVICES', href: '#services' },
-    { label: 'PROJECTS', href: '#projects' },
-    { label: 'JOURNAL', href: '#journal' },
-    { label: 'CONTACT', href: '#contact' },
-  ];
-
-  const currentLightLevel = isLoaded ? (isMobile ? 1 : animProgress) : 0;
+  const SLICE_COUNT = 12; // 12 narrow vertical slices across loading screen
+  const currentLightLevel = isLoaded ? (isMobile ? 1 : animProgress) : (isSplitting ? animProgress : 0);
 
   return (
     <>
@@ -468,20 +349,72 @@ export default function FramePlayer() {
           </div>
         )}
 
-        {/* Preloader Overlay (desktop only) */}
-        {!isMobile && !isLoaded && (
-          <div className="loader-overlay">
-            <div className="loader-content">
-              <div className="loader-spinner" />
-              <div className="loader-title">Loading Luxury Experience</div>
-              <div className="loader-bar-bg">
-                <div
-                  className="loader-bar-fill"
-                  style={{ width: `${loadingPercentage}%` }}
+        {/* Loading Screen Overlay with Marquee Image & Progressive Jamil Traders Text Writing */}
+        {!isLoaded && (
+          <div className={`rope-loader-overlay ${isSplitting ? 'splitting' : ''}`}>
+            {/* 12 Vertical Slice Panels Split in 2 Halves (Left half -> Left, Right half -> Right) */}
+            <div className="loader-slices-container">
+              {Array.from({ length: SLICE_COUNT }).map((_, idx) => {
+                const isLeftHalf = idx < SLICE_COUNT / 2;
+                const dirClass = isLeftHalf ? 'slide-left' : 'slide-right';
+                // Stagger delay from center outward wave to left and right edges
+                const distFromCenter = isLeftHalf ? (SLICE_COUNT / 2 - 1 - idx) : (idx - SLICE_COUNT / 2);
+                const delayMs = distFromCenter * 45; 
+                return (
+                  <div
+                    key={idx}
+                    className={`loader-slice ${dirClass}`}
+                    style={{
+                      left: `${(idx / SLICE_COUNT) * 100}%`,
+                      width: `${100 / SLICE_COUNT + 0.15}%`,
+                      transitionDelay: `${delayMs}ms`,
+                    }}
+                  />
+                );
+              })}
+            </div>
+
+            {/* Center Loading Content */}
+            <div className={`rope-loader-center ${isSplitting ? 'fade-out-logo' : ''}`}>
+              {/* Marquee Screenshot Image */}
+              <div className="loader-image-wrapper">
+                <img
+                  src="/loader-logo.png"
+                  alt="Jamil Traders Illumination"
+                  className="loader-marquee-img"
                 />
               </div>
-              <div className="loader-text">
-                {currentLoadedAll} / {totalAllFrames} Assets Loaded ({loadingPercentage}%)
+
+              {/* Jamil Traders Progressive Text Writing Loading Animation */}
+              <div className="loader-writing-wrap">
+                <div className={`loader-writing-box ${isWritingComplete ? 'complete' : ''}`}>
+                  {/* Faint base guide text */}
+                  <span className="loader-writing-ghost" aria-hidden="true">
+                    JAMIL TRADERS
+                  </span>
+
+                  {/* Active glowing illuminated text written as progress increases */}
+                  <span
+                    className="loader-writing-active"
+                    style={{
+                      clipPath: `inset(0 ${Math.max(0, (1 - loaderProgress) * 100).toFixed(2)}% 0 0)`,
+                    }}
+                  >
+                    JAMIL TRADERS
+                  </span>
+
+                  {/* Luminous writing stylus / spark point at the leading edge */}
+                  {loaderProgress > 0 && loaderProgress < 1 && (
+                    <span
+                      className="loader-writing-spark"
+                      style={{
+                        left: `${(loaderProgress * 100).toFixed(2)}%`,
+                      }}
+                    />
+                  )}
+                </div>
+
+                <div className="loader-sub-title">BRIGHTEN YOUR LIFE</div>
               </div>
             </div>
           </div>
@@ -602,8 +535,8 @@ export default function FramePlayer() {
         </div>
       </section>
 
-      {/* 2. ABOUT SECTION WITH CEO FEATURE & VIDEO FRAME CANVAS BACKDROP */}
-      <section id="about" ref={aboutSectionRef} className="about-frame-section">
+      {/* 2. ABOUT SECTION WITH CEO FEATURE */}
+      <section id="about" className="about-frame-section">
         {/* Unique Luxury Content Grid Container */}
         <div className="about-hero-container">
           <div className="about-content-left">
