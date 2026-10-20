@@ -26,7 +26,58 @@ export default function HomeSections() {
 
   return (
     <>
-      {/* SECTION 3 — LIGHTING EXPERTISE / SERVICES */}
+      {/* SECTION 3 — SELECTED WORK / PORTFOLIO */}
+      <section id="projects" className="home-section home-section-projects">
+        <div className="home-container">
+          <div className="home-section-header-flex">
+            <div>
+              <div className="hero-eyebrow">
+                <span className="hero-eyebrow-pill">PORTFOLIO SPOTLIGHT</span>
+                <span>PROOF OF CAPABILITY</span>
+              </div>
+              <h2 className="home-section-title">
+                Light, In <span className="hero-title-italic">Practice.</span>
+              </h2>
+            </div>
+
+            {/* Filter Tabs */}
+            <div className="portfolio-filter-tabs">
+              {categories.map((cat) => (
+                <button
+                  key={cat.value}
+                  type="button"
+                  className={`filter-tab-btn ${activeProjectCategory === cat.value ? 'active' : ''}`}
+                  onClick={() => setActiveProjectCategory(cat.value)}
+                >
+                  {cat.label}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Project Grid */}
+          <div className="home-projects-grid">
+            {filteredProjects.map((project) => (
+              <ProjectCard
+                key={project.id}
+                project={project}
+                onClick={setSelectedProject}
+              />
+            ))}
+          </div>
+
+          <div className="home-section-cta-wrap" style={{ marginTop: '3rem' }}>
+            <Link href="/projects" className="hero-cta-btn">
+              <span>VIEW FULL PORTFOLIO</span>
+              <div className="hero-cta-arrow">
+                <ArrowRight size={14} />
+              </div>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* SECTION 4 — LIGHTING EXPERTISE / SERVICES */}
       <section id="expertise" className="home-section home-section-expertise">
         <div className="home-container">
           <div className="home-section-header">
@@ -72,57 +123,6 @@ export default function HomeSections() {
           <div className="home-section-cta-wrap">
             <Link href="/expertise" className="hero-cta-btn">
               <span>EXPLORE ALL EXPERTISE AREAS</span>
-              <div className="hero-cta-arrow">
-                <ArrowRight size={14} />
-              </div>
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* SECTION 4 — SELECTED WORK / PORTFOLIO */}
-      <section id="projects" className="home-section home-section-projects">
-        <div className="home-container">
-          <div className="home-section-header-flex">
-            <div>
-              <div className="hero-eyebrow">
-                <span className="hero-eyebrow-pill">PORTFOLIO SPOTLIGHT</span>
-                <span>PROOF OF CAPABILITY</span>
-              </div>
-              <h2 className="home-section-title">
-                Light, In <span className="hero-title-italic">Practice.</span>
-              </h2>
-            </div>
-
-            {/* Filter Tabs */}
-            <div className="portfolio-filter-tabs">
-              {categories.map((cat) => (
-                <button
-                  key={cat.value}
-                  type="button"
-                  className={`filter-tab-btn ${activeProjectCategory === cat.value ? 'active' : ''}`}
-                  onClick={() => setActiveProjectCategory(cat.value)}
-                >
-                  {cat.label}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* Project Grid */}
-          <div className="home-projects-grid">
-            {filteredProjects.map((project) => (
-              <ProjectCard
-                key={project.id}
-                project={project}
-                onClick={setSelectedProject}
-              />
-            ))}
-          </div>
-
-          <div className="home-section-cta-wrap" style={{ marginTop: '3rem' }}>
-            <Link href="/projects" className="hero-cta-btn">
-              <span>VIEW FULL PORTFOLIO</span>
               <div className="hero-cta-arrow">
                 <ArrowRight size={14} />
               </div>
