@@ -1152,21 +1152,22 @@ canvas {
   transform: scale(0.96);
 }
 
-/* Screenshot Marquee Logo Image */
+/* Official Brand Logo on Loading Screen */
 .loader-image-wrapper {
   position: relative;
-  width: clamp(260px, 32vw, 440px);
+  width: auto;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .loader-marquee-img {
-  width: 100%;
-  height: auto;
+  height: clamp(85px, 12vh, 130px);
+  width: auto;
+  max-width: 85vw;
   display: block;
   object-fit: contain;
-  mix-blend-mode: screen;
+  filter: drop-shadow(0 4px 22px rgba(200, 16, 46, 0.5));
   user-select: none;
   pointer-events: none;
 }

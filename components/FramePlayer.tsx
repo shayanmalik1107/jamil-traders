@@ -7,15 +7,8 @@ import Lenis from 'lenis';
 const HERO_TOTAL_FRAMES = 61; // frame_0001.webp to frame_0061.webp
 const HERO_ANIMATION_DURATION_MS = 1500; // 1.5 seconds total
 
-const ABOUT_FRAME_FILES = [
-  "frame_001.webp", "frame_002.webp", "frame_003.webp", "frame_038.webp", "frame_039.webp", "frame_040.webp", "frame_041.webp", "frame_042.webp", "frame_043.webp", "frame_044.webp", "frame_045.webp", "frame_046.webp", "frame_047.webp", "frame_048.webp", "frame_049.webp", "frame_050.webp", "frame_051.webp", "frame_052.webp", "frame_053.webp", "frame_054.webp", "frame_055.webp", "frame_056.webp", "frame_057.webp", "frame_058.webp", "frame_059.webp", "frame_060.webp", "frame_061.webp", "frame_062.webp", "frame_063.webp", "frame_064.webp", "frame_065.webp", "frame_066.webp", "frame_067.webp", "frame_068.webp", "frame_069.webp", "frame_070.webp", "frame_071.webp", "frame_072.webp", "frame_073.webp", "frame_074.webp", "frame_075.webp", "frame_076.webp", "frame_077.webp", "frame_078.webp", "frame_079.webp", "frame_080.webp", "frame_081.webp", "frame_082.webp", "frame_083.webp", "frame_084.webp", "frame_085.webp", "frame_086.webp", "frame_087.webp", "frame_088.webp", "frame_089.webp", "frame_090.webp", "frame_091.webp"
-];
-const ABOUT_TOTAL_FRAMES = ABOUT_FRAME_FILES.length; // 57 frames
-const ABOUT_ANIMATION_DURATION_MS = 500; // 0.5 seconds total
-
-// Last frame paths for mobile static display
+// Hero static image for mobile display
 const HERO_LAST_FRAME = '/lighting_frames_same_as_video/frame_0061.webp';
-const ABOUT_LAST_FRAME = '/video_frames/frame_091.webp';
 
 // Top-level document tagging to capture hard reload vs SPA navigation accurately
 if (typeof window !== 'undefined' && !(window as any).__JT_DOC_TAGGED__) {
@@ -187,14 +180,81 @@ export default function FramePlayer() {
     }
   }, []);
 
-  // Preload Hero Frames & Drive "JAMIL TRADERS" Text Writing Loading Progress
+  // Preload Hero Frames (desktop only) or single image (mobile) & Drive Text Writing Loading Progress
   useEffect(() => {
     let isCancelled = false;
+    const isMobileDevice = typeof window !== 'undefined' ? window.innerWidth < 768 : false;
+
+    if (isMobileDevice) {
+      // ON MOBILE: ONLY PRELOAD THE SINGLE HERO STATIC IMAGE AND HEADER LOGO (NO FRAMES DOWNLOADED)
+      let mobileLoadedCount = 0;
+
+      const onMobileImageDone = () => {
+        if (!isCancelled) {
+          mobileLoadedCount += 1;
+          loadedCountRef.current = mobileLoadedCount;
+          setHeroLoadedCount(mobileLoadedCount);
+        }
+      };
+
+      const heroImg = new Image();
+      heroImg.src = HERO_LAST_FRAME;
+      heroImg.onload = onMobileImageDone;
+      heroImg.onerror = onMobileImageDone;
+
+      const logoImg = new Image();
+      logoImg.src = '/logojamiltraders.png';
+      logoImg.onload = onMobileImageDone;
+      logoImg.onerror = onMobileImageDone;
+
+      const MIN_WRITE_DURATION_MS = 1400;
+      const startTime = performance.now();
+      let animFrameId: number;
+
+      const animateWriting = (now: number) => {
+        if (isCancelled) return;
+        const elapsed = now - startTime;
+        const timeRatio = Math.min(elapsed / MIN_WRITE_DURATION_MS, 1);
+        const isReady = mobileLoadedCount >= 1;
+
+        const progress = isReady
+          ? timeRatio
+          : Math.min(timeRatio, 0.45);
+
+        setLoaderProgress(progress);
+
+        if (progress < 1 || !isReady) {
+          animFrameId = requestAnimationFrame(animateWriting);
+        } else {
+          setLoaderProgress(1);
+          setIsWritingComplete(true);
+
+          setTimeout(() => {
+            if (!isCancelled) {
+              setIsSplitting(true);
+              setTimeout(() => {
+                if (!isCancelled) {
+                  setIsLoaded(true);
+                }
+              }, 850);
+            }
+          }, 200);
+        }
+      };
+
+      animFrameId = requestAnimationFrame(animateWriting);
+
+      return () => {
+        isCancelled = true;
+        if (animFrameId) cancelAnimationFrame(animFrameId);
+      };
+    }
+
+    // ON DESKTOP: PRELOAD ALL 61 FRAMES FOR SMOOTH CANVAS ANIMATION
     const loadedHeroImages: HTMLImageElement[] = new Array(HERO_TOTAL_FRAMES);
     heroImagesRef.current = loadedHeroImages;
     loadedCountRef.current = 0;
 
-    // Preload ALL 61 hero frames and track completion
     for (let i = 0; i < HERO_TOTAL_FRAMES; i++) {
       const img = new Image();
       img.src = getHeroFramePath(i);
@@ -213,6 +273,10 @@ export default function FramePlayer() {
       loadedHeroImages[i] = img;
     }
 
+    // Also preload header logo on desktop
+    const desktopLogoImg = new Image();
+    desktopLogoImg.src = '/logojamiltraders.png';
+
     // Natural writing pace for "JAMIL TRADERS" text (1.8s)
     const MIN_WRITE_DURATION_MS = 1800;
     const startTime = performance.now();
@@ -224,9 +288,6 @@ export default function FramePlayer() {
       const timeRatio = Math.min(elapsed / MIN_WRITE_DURATION_MS, 1);
       const frameRatio = loadedCountRef.current / HERO_TOTAL_FRAMES;
 
-      // Writing progress is locked to frame loading:
-      // If frames are loaded, it smoothly finishes along timeRatio;
-      // if frames are still loading, it caps at actual loaded frame ratio until 100% ready.
       const progress = frameRatio >= 1
         ? timeRatio
         : Math.min(timeRatio, Math.max(frameRatio * 0.95, 0.05));
@@ -236,15 +297,12 @@ export default function FramePlayer() {
       if (progress < 1 || loadedCountRef.current < HERO_TOTAL_FRAMES) {
         animFrameId = requestAnimationFrame(animateWriting);
       } else {
-        // Both text writing is 100% complete AND hero section frames are fully loaded!
         setLoaderProgress(1);
         setIsWritingComplete(true);
 
-        // Hold completed golden illuminated text briefly (250ms), then start splitting the loading screen
         setTimeout(() => {
           if (!isCancelled) {
             setIsSplitting(true);
-            // Hide preloader overlay completely after curtain split finishes (850ms)
             setTimeout(() => {
               if (!isCancelled) {
                 setIsLoaded(true);
@@ -376,11 +434,11 @@ export default function FramePlayer() {
 
             {/* Center Loading Content */}
             <div className={`rope-loader-center ${isSplitting ? 'fade-out-logo' : ''}`}>
-              {/* Marquee Screenshot Image */}
+              {/* Official Brand Logo from Header */}
               <div className="loader-image-wrapper">
                 <img
-                  src="/loader-logo.png"
-                  alt="Jamil Traders Illumination"
+                  src="/logojamiltraders.png"
+                  alt="Jamil Traders Logo"
                   className="loader-marquee-img"
                 />
               </div>
