@@ -125,10 +125,10 @@ export default function FramePlayer() {
     let banner1Loaded = false;
     let logoLoaded = false;
 
-    // 1. High-priority preload for Banner 1 (initial hero background)
+    // 1. High-priority preload for Banner 1 — loader ends when THIS is ready
     const banner1Img = new Image();
     (banner1Img as any).fetchPriority = 'high';
-    banner1Img.src = '/banner1.webp';
+    banner1Img.src = '/bannerbg1.png';
     banner1Img.onload = () => {
       banner1Loaded = true;
     };
@@ -147,8 +147,8 @@ export default function FramePlayer() {
       logoLoaded = true;
     };
 
-    // 3. Preload remaining banners smoothly in background
-    ['/banner2.webp', '/banner3.webp', '/banner4.webp'].forEach((src) => {
+    // 3. Preload remaining banners quietly in background
+    ['/bannerbg2.png', '/bannerbg3.png', '/bannerbg4.png'].forEach((src) => {
       const img = new Image();
       img.src = src;
     });
