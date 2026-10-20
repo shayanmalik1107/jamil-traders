@@ -25,7 +25,7 @@ export default function ProjectCard({ project, onClick }: ProjectCardProps) {
 
     const timer = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % images.length);
-    }, 2800);
+    }, 3500);
 
     return () => clearInterval(timer);
   }, [images.length, isHovered, isVideoModalOpen]);

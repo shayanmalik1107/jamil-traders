@@ -63,7 +63,7 @@ html.lenis body {
   width: 100vw;
   height: 100vh;
   height: 100dvh;
-  background: #ffffff;
+  background: #09090b;
   overflow: hidden;
 }
 
@@ -72,13 +72,55 @@ html.lenis body {
   text-shadow: none !important;
 }
 
-canvas {
-  display: block;
-  width: 100vw;
-  height: 100vh;
-  height: 100dvh;
-  object-fit: fill;
+/* Full Hero Background Image Carousel */
+.hero-banners-ambient {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  overflow: hidden;
+  pointer-events: none;
 }
+
+.hero-ambient-slide {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  filter: none;
+  transform: scale(1.04);
+  transition: opacity 1.2s cubic-bezier(0.25, 1, 0.5, 1), transform 8s cubic-bezier(0.25, 1, 0.5, 1);
+  pointer-events: none;
+}
+
+.hero-ambient-slide.active {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.hero-ambient-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+/* Atmospheric Scrim Overlay for Crystal-Clear Readability */
+.hero-backdrop-scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background: 
+    linear-gradient(90deg, rgba(255, 255, 255, 0.94) 0%, rgba(255, 255, 255, 0.82) 36%, rgba(255, 255, 255, 0.3) 68%, rgba(255, 255, 255, 0.05) 100%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.78) 0%, transparent 20%),
+    linear-gradient(0deg, rgba(255, 255, 255, 0.8) 0%, transparent 22%);
+}
+
+
 
 /* Hero Section Outer Container — Perfectly Aligned with Header Grid */
 .hero-container {
@@ -105,12 +147,11 @@ canvas {
   overflow: hidden;
 }
 
-/* Hero elements clearly visible right from start, illuminating to 100% */
+/* Hero elements clearly visible and illuminated */
 .hero-body,
 .hero-footer {
-  opacity: calc(0.65 + var(--light-level, 0) * 0.35);
-  filter: brightness(calc(0.7 + var(--light-level, 0) * 0.3));
-  transition: opacity 0.05s linear, filter 0.05s linear;
+  opacity: 1;
+  filter: none;
 }
 
 /* Header Navigation Bar — Floating Layout (Extra Large Logo Left, Centered 2-Tier Stack) */
@@ -782,93 +823,245 @@ canvas {
   color: #C8102E;
 }
 
-/* Hero Right Light Bulb Container Wrapper */
-.bulb-card-wrapper {
+/* Hero Right Banner Navigation Controller */
+.hero-banner-controls {
   position: relative;
-  width: clamp(420px, 36vw, 500px);
-  height: clamp(440px, 72vh, 670px);
+  width: clamp(340px, 32vw, 440px);
   display: flex;
-  align-items: center;
+  flex-direction: column;
   justify-content: center;
   flex-shrink: 0;
-  background: transparent;
-}
-
-.bulb-bg-img {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  transform: rotate(180deg);
-  filter: drop-shadow(0 -10px 30px rgba(200, 16, 46, 0.2)) drop-shadow(0 -15px 35px rgba(0, 0, 0, 0.08));
-  pointer-events: none;
   z-index: 10;
 }
 
-.hero-floating-card {
-  position: absolute;
-  top: 64%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 85%;
-  max-width: clamp(220px, 20vw, 340px);
+.banner-control-glass {
   display: flex;
   flex-direction: column;
+  gap: clamp(0.7rem, 1.4vh, 1rem);
+  padding: clamp(1rem, 1.8vh, 1.4rem);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.94) 0%, rgba(253, 246, 246, 0.88) 100%);
+  backdrop-filter: blur(28px) saturate(190%);
+  -webkit-backdrop-filter: blur(28px) saturate(190%);
+  border: 1px solid rgba(200, 16, 46, 0.22);
+  border-radius: 24px;
+  box-shadow: 0 16px 45px rgba(0, 0, 0, 0.08), 0 0 30px rgba(200, 16, 46, 0.08);
+  transition: all 0.3s ease;
+}
+
+.banner-control-header {
+  display: flex;
   align-items: center;
-  text-align: center;
-  justify-content: center;
-  gap: clamp(0.55rem, 1.5vh, 1.25rem);
-  padding: 0.1rem;
-  background: transparent;
-  z-index: 20;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid rgba(200, 16, 46, 0.12);
+}
+
+/* Crisp 1:1 Banner Preview Frame (Actual Image Display) */
+.banner-preview-frame {
+  position: relative;
+  width: 100%;
+  height: clamp(210px, 26vh, 290px);
+  border-radius: 18px;
+  overflow: hidden;
+  background: #0d0d12;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.15), inset 0 0 0 1px rgba(255, 255, 255, 0.12);
+}
+
+.banner-preview-slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.7s cubic-bezier(0.25, 1, 0.5, 1);
+  pointer-events: none;
+  background: #0d0d12;
+}
+
+.banner-preview-slide.active {
+  opacity: 1;
   pointer-events: auto;
 }
 
-.bulb-card-headline-group {
+.banner-preview-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+  transform: scale(1);
+}
+
+/* Scene Badge Overlay on Top of the Frame */
+.banner-preview-overlay-badge {
+  position: absolute;
+  top: 0.75rem;
+  left: 0.75rem;
+  right: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.35rem 0.75rem;
+  background: rgba(13, 13, 17, 0.78);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 999px;
+  z-index: 5;
+}
+
+.banner-preview-overlay-badge .banner-control-badge {
+  color: #ffffff;
+}
+
+.banner-preview-overlay-badge .banner-control-tag {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.banner-control-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-family: var(--font-sans);
+  font-size: clamp(0.6rem, 1vh, 0.68rem);
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  color: #C8102E;
+  text-transform: uppercase;
+}
+
+.banner-badge-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #C8102E;
+  box-shadow: 0 0 10px rgba(200, 16, 46, 0.8);
+  animation: pulse-dot 2s infinite ease-in-out;
+}
+
+@keyframes pulse-dot {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.3);
+    opacity: 0.7;
+  }
+}
+
+.banner-control-tag {
+  font-family: var(--font-sans);
+  font-size: clamp(0.55rem, 0.95vh, 0.62rem);
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: #71717a;
+  text-transform: uppercase;
+}
+
+.banner-control-info {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: clamp(0.2rem, 0.8vh, 0.5rem);
-  margin: 0.15rem 0;
+  gap: 0.25rem;
 }
 
-.bulb-card-title {
+.banner-control-title {
   font-family: var(--font-sans);
-  font-size: clamp(0.9rem, 2.2vh + 0.3vw, 1.4rem);
+  font-size: clamp(1.05rem, 2.2vh, 1.35rem);
   font-weight: 800;
-  line-height: 1.14;
+  line-height: 1.2;
   color: #09090b;
+  letter-spacing: -0.01em;
   text-transform: uppercase;
-  text-shadow: none;
-  max-width: 98%;
 }
 
-.bulb-card-sub {
+.banner-control-sub {
   font-family: var(--font-sans);
-  font-size: clamp(0.6rem, 1.25vh + 0.15vw, 0.8rem);
-  line-height: 1.38;
-  color: #3f3f46;
+  font-size: clamp(0.72rem, 1.25vh, 0.82rem);
+  line-height: 1.45;
+  color: #52525b;
   font-weight: 500;
-  max-width: 92%;
-  text-shadow: none;
 }
 
-.bulb-discover-btn {
-  padding: clamp(0.35rem, 0.85vh, 0.65rem) clamp(0.6rem, 1.2vw, 1.1rem) !important;
-  font-family: var(--font-sans) !important;
-  font-size: clamp(0.55rem, 1.1vh, 0.75rem) !important;
-  font-weight: 700 !important;
-  letter-spacing: 0.14em !important;
-  margin-top: 0.15rem;
-  margin-left: 22px !important;
-  transform: none !important;
-  border-radius: 999px !important;
-  max-width: 95%;
-  white-space: nowrap;
-  background: linear-gradient(135deg, #E31B23 0%, #C8102E 60%, #990000 100%) !important;
-  color: #ffffff !important;
-  box-shadow: 0 4px 20px rgba(200, 16, 46, 0.5) !important;
+/* 4 Progress Pills */
+.banner-pills-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.5rem;
+  margin-top: 0.25rem;
+}
+
+.banner-pill-btn {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  text-align: left;
+}
+
+.banner-pill-bar {
+  display: block;
+  width: 100%;
+  height: 3px;
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 999px;
+  overflow: hidden;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.banner-pill-btn.active .banner-pill-bar {
+  background: #C8102E;
+  box-shadow: 0 0 10px rgba(200, 16, 46, 0.6);
+}
+
+.banner-pill-label {
+  font-family: var(--font-sans);
+  font-size: clamp(0.58rem, 0.95vh, 0.65rem);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: #71717a;
+  transition: color 0.3s ease;
+}
+
+.banner-pill-btn:hover .banner-pill-label,
+.banner-pill-btn.active .banner-pill-label {
+  color: #C8102E;
+}
+
+/* Arrows */
+.banner-nav-arrows {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  margin-top: 0.25rem;
+}
+
+.banner-nav-arrow-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(200, 16, 46, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #C8102E;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.banner-nav-arrow-btn:hover {
+  background: #C8102E;
+  color: #ffffff;
+  border-color: #C8102E;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(200, 16, 46, 0.35);
 }
 
 .hero-card-badge {
@@ -1838,10 +2031,7 @@ canvas {
 
 /* Responsive Media Queries */
 @media (max-width: 960px) {
-  .hero-floating-card {
-    display: none;
-  }
-  .bulb-card-wrapper {
+  .hero-banner-controls {
     display: none;
   }
 }
@@ -4842,6 +5032,57 @@ button.about-seal-badge:hover .about-seal-icon {
     display: none;
   }
 
+  /* Remove white scrim on mobile — let full background images show */
+  .hero-backdrop-scrim {
+    background: 
+      linear-gradient(180deg, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0.15) 35%, rgba(0, 0, 0, 0.1) 55%, rgba(0, 0, 0, 0.5) 85%, rgba(0, 0, 0, 0.7) 100%) !important;
+  }
+
+  /* White text overrides for mobile */
+  .hero-title {
+    color: #ffffff !important;
+    text-shadow: 0 2px 20px rgba(0, 0, 0, 0.5) !important;
+  }
+
+  .hero-title-italic {
+    background: linear-gradient(135deg, #ff5555 0%, #ff2222 50%, #E31B23 100%) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    filter: drop-shadow(0 0 12px rgba(227, 27, 35, 0.6)) drop-shadow(0 2px 8px rgba(0, 0, 0, 0.4));
+  }
+
+  .hero-eyebrow {
+    color: rgba(255, 255, 255, 0.9) !important;
+    text-shadow: 0 1px 8px rgba(0, 0, 0, 0.4) !important;
+  }
+
+  .hero-eyebrow-pill {
+    background: linear-gradient(135deg, #ff2222 0%, #E31B23 100%) !important;
+    box-shadow: 0 4px 18px rgba(227, 27, 35, 0.7), 0 0 12px rgba(227, 27, 35, 0.3) !important;
+    border: 1px solid rgba(255, 100, 100, 0.5) !important;
+  }
+
+  .hero-description {
+    color: #ffffff !important;
+    border-left-color: #ff4444 !important;
+    text-shadow: 0 1px 10px rgba(0, 0, 0, 0.7) !important;
+    font-weight: 600 !important;
+    background: rgba(0, 0, 0, 0.4);
+    padding: 0.75rem 1rem 0.75rem 0.85rem;
+    border-radius: 0 12px 12px 0;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+
+  .hero-cta-btn {
+    box-shadow: 0 8px 30px rgba(227, 27, 35, 0.5), 0 0 15px rgba(227, 27, 35, 0.25) !important;
+  }
+
+  /* Make logo visible on dark background */
+  .hero-logo-img {
+    filter: brightness(1.4) drop-shadow(0 2px 10px rgba(255, 255, 255, 0.6)) drop-shadow(0 0 25px rgba(255, 255, 255, 0.35)) !important;
+  }
+
   .hero-container {
     width: 100%;
     max-width: 100%;
@@ -4921,11 +5162,7 @@ button.about-seal-badge:hover .about-seal-icon {
     gap: 0.75rem;
   }
 
-  .bulb-card-wrapper {
-    display: none !important;
-  }
-
-  .hero-floating-card {
+  .hero-banner-controls {
     display: none !important;
   }
 
@@ -4947,11 +5184,11 @@ button.about-seal-badge:hover .about-seal-icon {
     width: 100%;
     padding: 0.65rem 0.9rem;
     border-radius: 18px;
-    background: #ffffff !important;
-    border: 1.5px solid rgba(200, 16, 46, 0.35) !important;
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+    background: rgba(0, 0, 0, 0.6) !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
     scrollbar-width: none;
     -ms-overflow-style: none;
     box-sizing: border-box;
@@ -4964,7 +5201,7 @@ button.about-seal-badge:hover .about-seal-icon {
   .hero-capability-divider {
     width: 1px;
     height: 24px;
-    background: rgba(200, 16, 46, 0.3) !important;
+    background: rgba(255, 255, 255, 0.2) !important;
     flex-shrink: 0;
     align-self: center;
     margin: 0 0.2rem;
@@ -4979,25 +5216,25 @@ button.about-seal-badge:hover .about-seal-icon {
   .hero-capability-icon {
     width: 30px !important;
     height: 30px !important;
-    background: rgba(200, 16, 46, 0.12) !important;
-    border: 1px solid rgba(200, 16, 46, 0.3) !important;
-    color: #C8102E !important;
+    background: rgba(227, 27, 35, 0.2) !important;
+    border: 1px solid rgba(227, 27, 35, 0.4) !important;
+    color: #ff4444 !important;
   }
 
   .hero-capability-icon svg {
-    color: #C8102E !important;
-    stroke: #C8102E !important;
+    color: #ff4444 !important;
+    stroke: #ff4444 !important;
   }
 
   .hero-capability-tag {
     font-size: 0.58rem !important;
-    color: #C8102E !important;
+    color: #ff5555 !important;
     font-weight: 800 !important;
   }
 
   .hero-capability-title {
     font-size: 0.72rem !important;
-    color: #C8102E !important;
+    color: #ffffff !important;
     font-weight: 700 !important;
     white-space: nowrap;
   }

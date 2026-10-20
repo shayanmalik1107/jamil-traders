@@ -1,54 +1,62 @@
 'use client';
 
 import React, { useEffect, useRef, useState, useCallback } from 'react';
-import { Search, ArrowRight, ArrowDown, Menu, X, Sparkles, Building2, ShieldCheck, Award, FileCheck, CheckCircle2, Quote } from 'lucide-react';
+import { ArrowRight, ArrowDown, ChevronLeft, ChevronRight, X, Sparkles, Building2, ShieldCheck, Award, CheckCircle2, Quote } from 'lucide-react';
 import Lenis from 'lenis';
 
-const HERO_TOTAL_FRAMES = 61; // frame_0001.webp to frame_0061.webp
-const HERO_ANIMATION_DURATION_MS = 1500; // 1.5 seconds total
-
-// Hero static image for mobile display
-const HERO_LAST_FRAME = '/lighting_frames_same_as_video/frame_0061.webp';
-
-// Top-level document tagging to capture hard reload vs SPA navigation accurately
-if (typeof window !== 'undefined' && !(window as any).__JT_DOC_TAGGED__) {
-  (window as any).__JT_DOC_TAGGED__ = true;
-  const isDocReload =
-    typeof performance !== 'undefined' &&
-    performance.getEntriesByType &&
-    performance.getEntriesByType('navigation').length > 0 &&
-    (performance.getEntriesByType('navigation')[0] as PerformanceNavigationTiming).type === 'reload';
-
-  const currentPath = window.location.pathname;
-  (window as any).__JT_DOC_INITIAL_PATH__ = currentPath;
-  (window as any).__JT_DOC_WAS_RELOAD_ON_HOME__ = (isDocReload && currentPath === '/');
-
-  if (isDocReload && currentPath === '/') {
-    sessionStorage.removeItem('jt_hero_anim_played');
-  } else if (currentPath !== '/') {
-    sessionStorage.setItem('jt_hero_anim_played', 'true');
-  }
+interface BannerItem {
+  id: number;
+  src: string;
+  desktopSrc?: string;
+  title: string;
+  subtitle: string;
+  tag: string;
+  alt: string;
 }
 
-export default function FramePlayer() {
-  // Hero canvas refs
-  const heroCanvasRef = useRef<HTMLCanvasElement | null>(null);
-  const heroImagesRef = useRef<HTMLImageElement[]>([]);
-  const heroRequestRef = useRef<number | null>(null);
-  const heroStartTimeRef = useRef<number | null>(null);
-  const heroContainerRef = useRef<HTMLDivElement | null>(null);
+const BANNERS: BannerItem[] = [
+  {
+    id: 1,
+    src: '/bannerbg1.png',
+    title: 'Linear Lighting Architecture',
+    subtitle: 'Geometric Suspended Luminaire Profiles',
+    tag: 'AUDITORIUM & HALLS',
+    alt: 'Jamil Traders Linear Lighting Architecture',
+  },
+  {
+    id: 2,
+    src: '/bannerbg2.png',
+    title: 'Warm Ambient Illumination',
+    subtitle: 'Dual-Emission Architectural Wall Sconces',
+    tag: 'TRAVERTINE GALLERY',
+    alt: 'Jamil Traders Ambient Wall Sconces',
+  },
+  {
+    id: 3,
+    src: '/bannerbg3.png',
+    title: 'Architectural Colonnade',
+    subtitle: 'Rhythmic Recessed Beams & Accent Optics',
+    tag: 'OUTDOOR & PERGOLA',
+    alt: 'Jamil Traders Architectural Colonnade Lighting',
+  },
+  {
+    id: 4,
+    src: '/bannerbg4.png',
+    title: 'Luxury Living Atmosphere',
+    subtitle: 'Seamless Concealed Cove & Spotlights',
+    tag: 'RESIDENTIAL SUITE',
+    alt: 'Jamil Traders Luxury Living Illumination',
+  },
+];
 
+export default function FramePlayer() {
   const [mounted, setMounted] = useState<boolean>(false);
   const [isMobile, setIsMobile] = useState<boolean>(false);
-  const [heroLoadedCount, setHeroLoadedCount] = useState<number>(0);
-  const [loaderProgress, setLoaderProgress] = useState<number>(0); // 0 to 1 progressive writing progress
+  const [loaderProgress, setLoaderProgress] = useState<number>(0);
   const [isWritingComplete, setIsWritingComplete] = useState<boolean>(false);
-  const loadedCountRef = useRef<number>(0);
   const [isSplitting, setIsSplitting] = useState<boolean>(false);
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
-  const [animProgress, setAnimProgress] = useState<number>(0);
-  const [isScrolled, setIsScrolled] = useState<boolean>(false);
+  const [currentBannerIndex, setCurrentBannerIndex] = useState<number>(0);
   const [aboutTab, setAboutTab] = useState<'PHILOSOPHY' | 'CRAFT' | 'LEGACY'>('PHILOSOPHY');
   const [certModalOpen, setCertModalOpen] = useState<boolean>(false);
   const lenisRef = useRef<Lenis | null>(null);
@@ -58,11 +66,6 @@ export default function FramePlayer() {
     const checkMobile = () => setIsMobile(window.innerWidth < 768);
     checkMobile();
     window.addEventListener('resize', checkMobile);
-
-    if (typeof window !== 'undefined' && window.location.pathname !== '/') {
-      sessionStorage.setItem('jt_hero_anim_played', 'true');
-    }
-
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
@@ -116,202 +119,77 @@ export default function FramePlayer() {
     };
   }, [certModalOpen]);
 
-  const getHeroFramePath = (index: number) => {
-    const padIndex = String(index + 1).padStart(4, '0');
-    return `/lighting_frames_same_as_video/frame_${padIndex}.webp`;
-  };
-
-  // Resize canvas helper (capped at dpr 2 for 60fps hardware acceleration)
-  const resizeCanvas = useCallback((canvas: HTMLCanvasElement | null) => {
-    if (!canvas) return;
-
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
-    const width = canvas.parentElement ? canvas.parentElement.clientWidth : window.innerWidth;
-    const height = canvas.parentElement ? canvas.parentElement.clientHeight : window.innerHeight;
-
-    canvas.width = Math.floor(width * dpr);
-    canvas.height = Math.floor(height * dpr);
-    canvas.style.width = `${width}px`;
-    canvas.style.height = `${height}px`;
-  }, []);
-
-  // Render hero frame with nearest-frame fallback so animation never drops or stalls
-  const renderHeroFrame = useCallback((frameIdx: number) => {
-    const canvas = heroCanvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-
-    let img = heroImagesRef.current[frameIdx];
-    if (!img || !img.complete || img.naturalWidth === 0 || img.naturalHeight === 0) {
-      // Find closest earlier loaded frame
-      for (let i = frameIdx - 1; i >= 0; i--) {
-        const prev = heroImagesRef.current[i];
-        if (prev && prev.complete && prev.naturalWidth > 0) {
-          img = prev;
-          break;
-        }
-      }
-      // If none earlier, check next loaded frame
-      if (!img || !img.complete || img.naturalWidth === 0) {
-        for (let i = frameIdx + 1; i < heroImagesRef.current.length; i++) {
-          const next = heroImagesRef.current[i];
-          if (next && next.complete && next.naturalWidth > 0) {
-            img = next;
-            break;
-          }
-        }
-      }
-    }
-    if (!img || !img.complete || img.naturalWidth === 0 || img.naturalHeight === 0) return;
-
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.imageSmoothingEnabled = true;
-    ctx.imageSmoothingQuality = 'high';
-    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-  }, []);
-
-  // Check if hero animation should play
-  const shouldPlayHeroAnimation = useCallback(() => {
-    if (typeof window === 'undefined') return false;
-
-    try {
-      const win = window as any;
-      if (win.__JT_DOC_WAS_RELOAD_ON_HOME__) {
-        win.__JT_DOC_WAS_RELOAD_ON_HOME__ = false;
-        sessionStorage.setItem('jt_hero_anim_played', 'true');
-        return true;
-      }
-      if (win.__JT_DOC_INITIAL_PATH__ && win.__JT_DOC_INITIAL_PATH__ !== '/') {
-        sessionStorage.setItem('jt_hero_anim_played', 'true');
-        return false;
-      }
-      const hasPlayed = sessionStorage.getItem('jt_hero_anim_played') === 'true';
-      if (hasPlayed) {
-        return false;
-      }
-      if (window.location.pathname === '/') {
-        sessionStorage.setItem('jt_hero_anim_played', 'true');
-        return true;
-      }
-      sessionStorage.setItem('jt_hero_anim_played', 'true');
-      return false;
-    } catch (e) {
-      return false;
-    }
-  }, []);
-
-  // Asset-Driven Continuous Smooth Preloading (Frames + Bulb + Logo)
+  // Preload First Banner Image & Brand Logo to power the loading screen
   useEffect(() => {
     let isCancelled = false;
-    const isMobileDevice = typeof window !== 'undefined' ? window.innerWidth < 768 : false;
+    let banner1Loaded = false;
+    let logoLoaded = false;
 
-    // Track all critical visual assets
-    // Mobile: Hero image + Logo + Bulb (3 assets)
-    // Desktop: 61 frames + Logo + Bulb (63 assets)
-    const TOTAL_TRACKED = isMobileDevice ? 3 : (HERO_TOTAL_FRAMES + 2);
-    loadedCountRef.current = 0;
-
-    const onAssetDone = () => {
-      if (!isCancelled) {
-        loadedCountRef.current += 1;
-        setHeroLoadedCount(loadedCountRef.current);
-      }
+    // 1. High-priority preload for Banner 1 (initial hero background)
+    const banner1Img = new Image();
+    (banner1Img as any).fetchPriority = 'high';
+    banner1Img.src = '/banner1.webp';
+    banner1Img.onload = () => {
+      banner1Loaded = true;
+    };
+    banner1Img.onerror = () => {
+      banner1Loaded = true;
     };
 
-    // 1. Preload Light Bulb Image with high priority so it is ready before the curtain splits
-    const bulbImg = new Image();
-    (bulbImg as any).fetchPriority = 'high';
-    bulbImg.src = '/bulb.png';
-    bulbImg.onload = onAssetDone;
-    bulbImg.onerror = onAssetDone;
-
-    // 2. Preload Brand Logo Image with high priority
+    // 2. High-priority preload for Brand Logo
     const logoImg = new Image();
     (logoImg as any).fetchPriority = 'high';
     logoImg.src = '/logojamiltraders.png';
-    logoImg.onload = onAssetDone;
-    logoImg.onerror = onAssetDone;
+    logoImg.onload = () => {
+      logoLoaded = true;
+    };
+    logoImg.onerror = () => {
+      logoLoaded = true;
+    };
 
-    // 3. Preload Frames
-    if (isMobileDevice) {
-      const heroStaticImg = new Image();
-      (heroStaticImg as any).fetchPriority = 'high';
-      heroStaticImg.src = HERO_LAST_FRAME;
-      heroStaticImg.onload = onAssetDone;
-      heroStaticImg.onerror = onAssetDone;
-    } else {
-      const loadedHeroImages: HTMLImageElement[] = new Array(HERO_TOTAL_FRAMES);
-      heroImagesRef.current = loadedHeroImages;
+    // 3. Preload remaining banners smoothly in background
+    ['/banner2.webp', '/banner3.webp', '/banner4.webp'].forEach((src) => {
+      const img = new Image();
+      img.src = src;
+    });
 
-      for (let i = 0; i < HERO_TOTAL_FRAMES; i++) {
-        const img = new Image();
-        if (i < 10 || i === HERO_TOTAL_FRAMES - 1) {
-          (img as any).fetchPriority = 'high';
-        }
-        img.src = getHeroFramePath(i);
-        img.onload = onAssetDone;
-        img.onerror = onAssetDone;
-        loadedHeroImages[i] = img;
-      }
-    }
-
-    // 4. Progress animator — speed matches real download speed, NEVER exits before all assets loaded.
-    //
-    // Rules:
-    //   • displayVal smoothly chases realLoadRatio (easing keeps it visually smooth).
-    //   • displayVal can NEVER visually exceed realLoadRatio — bar is honest about progress.
-    //   • Completion is ONLY triggered when ALL assets are confirmed (loadedCount >= TOTAL_TRACKED).
-    //   • No time-based failsafe that can exit loading before frames are ready.
-    //   • When splitting starts, every frame is guaranteed in memory → smooth canvas playback.
+    // 4. Smooth continuous writing progress indicator tied to Banner 1
     let displayVal = 0;
-    let allAssetsConfirmed = false;
     let completionTriggered = false;
     let animId: number;
+    const startTime = performance.now();
+    const MIN_WRITING_TIME_MS = 650; // Fluid sweep so text reveal is gracefully readable
 
-    const updateProgress = (_now: number) => {
+    const updateProgress = (now: number) => {
       if (isCancelled) return;
 
-      // Real proportion of assets confirmed loaded (0 → 1)
-      const realLoadRatio = Math.min(loadedCountRef.current / TOTAL_TRACKED, 1);
+      const elapsed = now - startTime;
+      const isAssetReady = banner1Loaded && logoLoaded;
 
-      // Latch: once every asset fires onload/onerror we can allow completion
-      if (realLoadRatio >= 1) {
-        allAssetsConfirmed = true;
-      }
+      // Real proportion capped at 0.75 until banner1 is verified loaded
+      const timeRatio = Math.min(elapsed / MIN_WRITING_TIME_MS, 1);
+      const target = isAssetReady ? timeRatio : Math.min(timeRatio * 0.75, 0.75);
 
-      // displayVal chases real progress with easing — smooth, never stalls, never ahead of reality.
-      // When all assets confirmed, chase all the way to 1; otherwise cap at realLoadRatio.
-      if (allAssetsConfirmed) {
-        displayVal += (1 - displayVal) * 0.14;
-      } else {
-        const softTarget = realLoadRatio;
-        displayVal += (softTarget - displayVal) * 0.14;
-        // Hard ceiling: cannot visually lead actual loading
-        if (displayVal > realLoadRatio) displayVal = realLoadRatio;
-      }
+      displayVal += (target - displayVal) * 0.16;
 
-      // ONLY complete when every asset is truly loaded AND bar has visually reached the end
-      const readyToFinish = allAssetsConfirmed && displayVal >= 0.97;
+      if (isAssetReady && elapsed >= MIN_WRITING_TIME_MS && displayVal >= 0.96) {
+        if (!completionTriggered) {
+          completionTriggered = true;
+          setLoaderProgress(1);
+          setIsWritingComplete(true);
 
-      if (readyToFinish && !completionTriggered) {
-        completionTriggered = true;
-        setLoaderProgress(1);
-        setIsWritingComplete(true);
-
-        // Brief pause so user sees completed bar, then trigger curtain split
-        setTimeout(() => {
-          if (!isCancelled) {
-            // isSplitting = true → canvas frame animation starts (all frames guaranteed loaded)
-            setIsSplitting(true);
-            // isLoaded fires after full curtain slide so frame render begins on a clean view
-            setTimeout(() => {
-              if (!isCancelled) {
-                setIsLoaded(true);
-              }
-            }, 550);
-          }
-        }, 120);
+          // Brief moment on completed text, then split slices
+          setTimeout(() => {
+            if (!isCancelled) {
+              setIsSplitting(true);
+              setTimeout(() => {
+                if (!isCancelled) {
+                  setIsLoaded(true);
+                }
+              }, 550);
+            }
+          }, 120);
+        }
       } else if (!completionTriggered) {
         setLoaderProgress(Math.min(displayVal, 0.99));
         animId = requestAnimationFrame(updateProgress);
@@ -326,98 +204,53 @@ export default function FramePlayer() {
     };
   }, []);
 
-  // Scroll listener for Header styling
+  // Auto-advance banner carousel every 5.5s once hero is loaded
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 40);
-    };
+    if (!isLoaded) return;
+    const timer = setInterval(() => {
+      setCurrentBannerIndex((prev) => (prev + 1) % BANNERS.length);
+    }, 5500);
 
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
+    return () => clearInterval(timer);
+  }, [isLoaded, currentBannerIndex]);
+
+  const handleNextBanner = useCallback(() => {
+    setCurrentBannerIndex((prev) => (prev + 1) % BANNERS.length);
   }, []);
 
-  // Resize listener for hero canvas (desktop only)
-  useEffect(() => {
-    if (isMobile) return;
+  const handlePrevBanner = useCallback(() => {
+    setCurrentBannerIndex((prev) => (prev - 1 + BANNERS.length) % BANNERS.length);
+  }, []);
 
-    const handleResize = () => {
-      resizeCanvas(heroCanvasRef.current);
-      renderHeroFrame(HERO_TOTAL_FRAMES - 1);
-    };
+  const handleSelectBanner = useCallback((idx: number) => {
+    setCurrentBannerIndex(idx);
+  }, []);
 
-    handleResize();
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, [isMobile, resizeCanvas, renderHeroFrame]);
-
-  // Hero Animation loop - Butter-smooth 60fps canvas playback with 0 React render churn
-  const animateHero = useCallback((timestamp: number) => {
-    if (!heroStartTimeRef.current) {
-      heroStartTimeRef.current = timestamp;
-    }
-
-    const elapsed = timestamp - heroStartTimeRef.current;
-    const currentProgress = Math.min(elapsed / HERO_ANIMATION_DURATION_MS, 1);
-
-    const targetFrame = Math.min(
-      Math.floor(currentProgress * HERO_TOTAL_FRAMES),
-      HERO_TOTAL_FRAMES - 1
-    );
-
-    if (heroContainerRef.current) {
-      heroContainerRef.current.style.setProperty('--light-level', currentProgress.toString());
-    }
-
-    renderHeroFrame(targetFrame);
-
-    if (currentProgress < 1) {
-      heroRequestRef.current = requestAnimationFrame(animateHero);
-    } else {
-      if (heroContainerRef.current) {
-        heroContainerRef.current.style.setProperty('--light-level', '1');
-      }
-      renderHeroFrame(HERO_TOTAL_FRAMES - 1);
-    }
-  }, [renderHeroFrame]);
-
-  // Start Hero Canvas Frame Animation immediately when loading screen split begins
-  useEffect(() => {
-    if (isMobile || !isSplitting) return;
-
-    resizeCanvas(heroCanvasRef.current);
-    renderHeroFrame(0);
-    heroStartTimeRef.current = performance.now();
-    heroRequestRef.current = requestAnimationFrame(animateHero);
-
-    return () => {
-      if (heroRequestRef.current) {
-        cancelAnimationFrame(heroRequestRef.current);
-      }
-    };
-  }, [isMobile, isSplitting, resizeCanvas, renderHeroFrame, animateHero]);
-
-  const SLICE_COUNT = 12; // 12 narrow vertical slices across loading screen
-  const currentLightLevel = isLoaded ? 1 : (isSplitting ? 0.7 : 0);
+  const SLICE_COUNT = 12; // 12 vertical slices for loading screen curtain
 
   return (
     <>
-      {/* 1. FIRST VIEW: HERO SECTION WITH FRAME ANIMATION (desktop) or STATIC IMAGE (mobile) */}
+      {/* 1. FIRST VIEW: HERO SECTION WITH FULL-SCREEN ARCHITECTURAL BACKGROUND IMAGES */}
       <section className="hero-section">
-        {/* Desktop: animated canvas */}
-        {!isMobile && <canvas ref={heroCanvasRef} />}
+        {/* Full Hero Background Image Carousel */}
+        <div className="hero-banners-ambient" aria-hidden="true">
+          {BANNERS.map((banner, index) => (
+            <div
+              key={banner.id}
+              className={`hero-ambient-slide ${index === currentBannerIndex ? 'active' : ''}`}
+            >
+              <img
+                src={(!isMobile && banner.desktopSrc) ? banner.desktopSrc : banner.src}
+                alt={banner.alt}
+                className="hero-ambient-img"
+                loading={index === 0 ? 'eager' : 'lazy'}
+              />
+            </div>
+          ))}
+        </div>
+        <div className="hero-backdrop-scrim" aria-hidden="true" />
 
-        {/* Mobile: static last frame image as full background with no overlay */}
-        {isMobile && (
-          <div className="hero-mobile-bg">
-            <img
-              src={HERO_LAST_FRAME}
-              alt="Jameel Traders Lighting"
-              className="hero-mobile-bg-img"
-            />
-          </div>
-        )}
-
-        {/* Loading Screen Overlay with Marquee Image & Progressive Jamil Traders Text Writing */}
+        {/* Loading Screen Overlay with Logo & Progressive Jamil Traders Text Writing */}
         {!isLoaded && (
           <div className={`rope-loader-overlay ${isSplitting ? 'splitting' : ''}`}>
             {/* 12 Vertical Slice Panels Split in 2 Halves (Left half -> Left, Right half -> Right) */}
@@ -425,9 +258,8 @@ export default function FramePlayer() {
               {Array.from({ length: SLICE_COUNT }).map((_, idx) => {
                 const isLeftHalf = idx < SLICE_COUNT / 2;
                 const dirClass = isLeftHalf ? 'slide-left' : 'slide-right';
-                // Stagger delay from center outward wave to left and right edges
                 const distFromCenter = isLeftHalf ? (SLICE_COUNT / 2 - 1 - idx) : (idx - SLICE_COUNT / 2);
-                const delayMs = distFromCenter * 45; 
+                const delayMs = distFromCenter * 45;
                 return (
                   <div
                     key={idx}
@@ -444,7 +276,7 @@ export default function FramePlayer() {
 
             {/* Center Loading Content */}
             <div className={`rope-loader-center ${isSplitting ? 'fade-out-logo' : ''}`}>
-              {/* Official Brand Logo from Header */}
+              {/* Brand Logo */}
               <div className="loader-image-wrapper">
                 <img
                   src="/logojamiltraders.png"
@@ -488,14 +320,8 @@ export default function FramePlayer() {
           </div>
         )}
 
-        {/* Hero Container */}
-        <div
-          ref={heroContainerRef}
-          className="hero-container"
-          style={{
-            '--light-level': currentLightLevel,
-          } as React.CSSProperties}
-        >
+        {/* Hero Content Container */}
+        <div className="hero-container">
           {/* Hero Main Content */}
           <main className="hero-body">
             <div className="hero-body-left">
@@ -525,35 +351,58 @@ export default function FramePlayer() {
               </div>
             </div>
 
-            {/* Hero Right Light Bulb Container Wrapper — hidden on mobile */}
-            <div className="bulb-card-wrapper">
-              {/* User Light Bulb PNG Image Asset Rotated Upside-Down */}
-              <img
-                src="/bulb.png"
-                alt="Light Bulb"
-                className="bulb-bg-img"
-                loading="eager"
-                decoding="sync"
-              />
-
-              {/* Text Content & Button Floating Gracefully Inside Large Bulb Dome */}
-              <div className="hero-floating-card">
-                <div className="bulb-card-headline-group">
-                  <h3 className="bulb-card-title">
-                    Where Light<br />
-                    <span className="hero-title-italic">Meets Masterpiece.</span>
-                  </h3>
-                  <p className="bulb-card-sub">
-                    Sculpting atmosphere, highlighting architecture, and elevating how illuminated spaces are felt.
-                  </p>
+            {/* Right Side: Interactive Architectural Luminaire Showcase */}
+            <div className="hero-banner-controls">
+              <div className="banner-control-glass">
+                {/* Scene Badge & Tag Header */}
+                <div className="banner-control-header">
+                  <div className="banner-control-badge">
+                    <span className="banner-badge-dot" />
+                    <span>SCENE 0{currentBannerIndex + 1} / 0{BANNERS.length}</span>
+                  </div>
+                  <span className="banner-control-tag">{BANNERS[currentBannerIndex].tag}</span>
                 </div>
 
-                <a href="#services" className="hero-cta-btn bulb-discover-btn">
-                  <span>DISCOVER LIGHTING</span>
-                  <div className="hero-cta-arrow">
-                    <ArrowRight size={13} />
-                  </div>
-                </a>
+                <div className="banner-control-info">
+                  <h3 className="banner-control-title">{BANNERS[currentBannerIndex].title}</h3>
+                  <p className="banner-control-sub">{BANNERS[currentBannerIndex].subtitle}</p>
+                </div>
+
+                {/* Progress Indicators for all 4 banners */}
+                <div className="banner-pills-row">
+                  {BANNERS.map((banner, idx) => (
+                    <button
+                      key={banner.id}
+                      type="button"
+                      className={`banner-pill-btn ${idx === currentBannerIndex ? 'active' : ''}`}
+                      onClick={() => handleSelectBanner(idx)}
+                      aria-label={`Switch to banner ${idx + 1}: ${banner.title}`}
+                    >
+                      <span className="banner-pill-bar" />
+                      <span className="banner-pill-label">0{idx + 1}</span>
+                    </button>
+                  ))}
+                </div>
+
+                {/* Prev / Next controls */}
+                <div className="banner-nav-arrows">
+                  <button
+                    type="button"
+                    className="banner-nav-arrow-btn"
+                    onClick={handlePrevBanner}
+                    aria-label="Previous banner"
+                  >
+                    <ChevronLeft size={16} />
+                  </button>
+                  <button
+                    type="button"
+                    className="banner-nav-arrow-btn"
+                    onClick={handleNextBanner}
+                    aria-label="Next banner"
+                  >
+                    <ChevronRight size={16} />
+                  </button>
+                </div>
               </div>
             </div>
           </main>
