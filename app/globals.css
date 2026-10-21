@@ -2946,6 +2946,7 @@ button.about-seal-badge:hover .about-seal-icon {
   overflow: hidden;
   cursor: grab;
 }
+
 .clients-carousel-viewport:active {
   cursor: grabbing;
 }
@@ -2994,14 +2995,16 @@ button.about-seal-badge:hover .about-seal-icon {
 
 @media (max-width: 639px) {
   .client-logo-img {
-    max-width: 240px;
-    max-height: 110px;
+    max-width: 400px;
+    max-height: 240px;
   }
+
   .client-logo-item {
-    min-height: 120px;
+    min-height: 160px;
   }
+
   .clients-carousel-page {
-    padding: 1.5rem 1.5rem;
+    padding: 1.5rem 1rem;
   }
 }
 
@@ -3053,7 +3056,9 @@ button.about-seal-badge:hover .about-seal-icon {
 .client-card-inner,
 .client-card-cat,
 .client-card-name,
-.client-card-highlight { display: none; }
+.client-card-highlight {
+  display: none;
+}
 
 /* ------------------------------------------
    CERTIFICATES SECTION
@@ -3098,6 +3103,7 @@ button.about-seal-badge:hover .about-seal-icon {
     grid-template-columns: 1fr;
     gap: 1.25rem;
   }
+
   .cert-card {
     border-radius: 14px;
   }
