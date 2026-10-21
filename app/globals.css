@@ -114,7 +114,7 @@ html.lenis body {
   inset: 0;
   z-index: 2;
   pointer-events: none;
-  background: 
+  background:
     linear-gradient(90deg, rgba(255, 255, 255, 0.94) 0%, rgba(255, 255, 255, 0.82) 36%, rgba(255, 255, 255, 0.3) 68%, rgba(255, 255, 255, 0.05) 100%),
     linear-gradient(180deg, rgba(255, 255, 255, 0.78) 0%, transparent 20%),
     linear-gradient(0deg, rgba(255, 255, 255, 0.8) 0%, transparent 22%);
@@ -199,7 +199,7 @@ html.lenis body {
   box-shadow: 0 14px 40px rgba(0, 0, 0, 0.08), 0 0 25px rgba(200, 16, 46, 0.08);
 }
 
-.hero-header > * {
+.hero-header>* {
   pointer-events: auto;
 }
 
@@ -941,10 +941,13 @@ html.lenis body {
 }
 
 @keyframes pulse-dot {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: scale(1);
     opacity: 1;
   }
+
   50% {
     transform: scale(1.3);
     opacity: 0.7;
@@ -1420,8 +1423,13 @@ html.lenis body {
 }
 
 @keyframes textCompleteFlash {
-  0% { filter: brightness(1.2); }
-  100% { filter: brightness(1); }
+  0% {
+    filter: brightness(1.2);
+  }
+
+  100% {
+    filter: brightness(1);
+  }
 }
 
 /* Crimson Writing Stylus / Spark Nib */
@@ -1433,7 +1441,7 @@ html.lenis body {
   height: 12px;
   background: #C8102E;
   border-radius: 50%;
-  box-shadow: 
+  box-shadow:
     0 0 10px #E31B23,
     0 0 20px rgba(200, 16, 46, 0.8),
     0 0 35px rgba(200, 16, 46, 0.4);
@@ -1835,10 +1843,13 @@ html.lenis body {
 }
 
 @keyframes pulse-dot {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: scale(1);
     opacity: 1;
   }
+
   50% {
     transform: scale(1.4);
     opacity: 0.6;
@@ -2317,7 +2328,8 @@ button.about-seal-badge:hover .about-seal-icon {
   padding-top: 100px;
 }
 
-.home-container, .page-hero-container {
+.home-container,
+.page-hero-container {
   max-width: 1280px;
   margin: 0 auto;
   padding: 0 2rem;
@@ -2403,13 +2415,19 @@ button.about-seal-badge:hover .about-seal-icon {
 .home-section-projects,
 .home-section-spotlight,
 .home-section-numbers,
-.home-section-clients,
 .home-section-ceo,
 .home-section-final-cta,
 .main-site-footer {
   background: linear-gradient(180deg, #ffffff 0%, #fff9f9 50%, #fdf5f5 100%) !important;
   color: #18181b !important;
   border-top: 1px solid rgba(200, 16, 46, 0.12) !important;
+}
+
+/* Clients section — pure white, no red tint */
+.home-section-clients {
+  background: #ffffff !important;
+  color: #18181b !important;
+  border-top: 1px solid rgba(200, 16, 46, 0.08) !important;
 }
 
 /* ------------------------------------------
@@ -2903,58 +2921,113 @@ button.about-seal-badge:hover .about-seal-icon {
 }
 
 /* ------------------------------------------
-   SECTION 7: TRUSTED BY / CLIENTS
+   SECTION 7: CLIENTS — INFINITE SCROLL MARQUEE
    ------------------------------------------ */
-.client-logos-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 1.5rem;
-}
 
-.client-logo-card {
-  background: #ffffff;
-  border: 1px solid rgba(200, 16, 46, 0.14);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.03);
-  border-radius: 18px;
-  padding: 1.75rem 1.5rem;
-  transition: all 0.35s ease;
-}
-
-.client-logo-card:hover {
-  border-color: rgba(200, 16, 46, 0.4);
-  background: #ffffff;
-  transform: translateY(-3px);
-  box-shadow: 0 15px 35px rgba(200, 16, 46, 0.1);
-}
-
-.client-card-inner {
+/* Section header */
+.clients-section-header {
+  padding: 4rem 2rem 2.5rem;
+  text-align: center;
   display: flex;
   flex-direction: column;
-  gap: 0.35rem;
+  align-items: center;
+  gap: 0.5rem;
 }
 
-.client-card-cat {
-  font-family: var(--font-sans);
-  font-size: 0.65rem;
-  font-weight: 700;
-  letter-spacing: 0.18em;
-  color: #C8102E;
-  text-transform: uppercase;
+/* Marquee outer wrapper */
+.clients-marquee-wrapper {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  padding: 2rem 0 3.5rem;
 }
 
-.client-card-name {
-  font-family: var(--font-sans);
-  font-size: 1.35rem;
-  font-weight: 800;
-  color: #09090b;
+/* Fade edges */
+.clients-marquee-fade-left,
+.clients-marquee-fade-right {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 180px;
+  z-index: 2;
+  pointer-events: none;
+}
+.clients-marquee-fade-left {
+  left: 0;
+  background: linear-gradient(to right, #ffffff 0%, rgba(255,255,255,0) 100%);
+}
+.clients-marquee-fade-right {
+  right: 0;
+  background: linear-gradient(to left, #ffffff 0%, rgba(255,255,255,0) 100%);
 }
 
-.client-card-highlight {
-  font-family: var(--font-sans);
-  font-size: 0.8rem;
-  font-weight: 500;
-  color: #52525b;
+/* The moving track: two identical .clients-marquee-inner blocks side by side */
+.clients-marquee-track {
+  display: flex;
+  width: max-content;
+  animation: clients-scroll 28s linear infinite;
 }
+
+.clients-marquee-track:hover {
+  animation-play-state: paused;
+}
+
+@keyframes clients-scroll {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* Inner row of logos */
+.clients-marquee-inner {
+  display: flex;
+  align-items: center;
+  gap: 3.5rem;
+  padding: 0 1.75rem;
+}
+
+/* Individual logo card */
+.client-logo-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  padding: 0.75rem 2rem;
+  min-width: 160px;
+  height: 90px;
+  box-shadow: none;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  flex-shrink: 0;
+}
+
+.client-logo-item:hover {
+  transform: translateY(-3px);
+}
+
+/* Logo image */
+.client-logo-img {
+  max-width: 160px;
+  max-height: 72px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  filter: grayscale(10%) contrast(1.05);
+  opacity: 0.85;
+  transition: opacity 0.3s ease, filter 0.3s ease;
+}
+
+.client-logo-item:hover .client-logo-img {
+  opacity: 1;
+  filter: grayscale(0%) contrast(1.1);
+}
+
+/* Legacy card selectors kept (in case used elsewhere) */
+.client-logo-card,
+.client-card-inner,
+.client-card-cat,
+.client-card-name,
+.client-card-highlight { display: none; }
 
 /* ------------------------------------------
    SECTION 8: CEO PERSPECTIVE
@@ -3396,7 +3469,11 @@ button.about-seal-badge:hover .about-seal-icon {
   text-transform: uppercase;
 }
 
-.form-group input, .form-group textarea, .form-field-group input, .form-field-group select, .form-field-group textarea {
+.form-group input,
+.form-group textarea,
+.form-field-group input,
+.form-field-group select,
+.form-field-group textarea {
   padding: 0.75rem 1rem;
   background: #ffffff;
   border: 1px solid rgba(200, 16, 46, 0.2);
@@ -3407,7 +3484,11 @@ button.about-seal-badge:hover .about-seal-icon {
   outline: none;
 }
 
-.form-group input:focus, .form-group textarea:focus, .form-field-group input:focus, .form-field-group select:focus, .form-field-group textarea:focus {
+.form-group input:focus,
+.form-group textarea:focus,
+.form-field-group input:focus,
+.form-field-group select:focus,
+.form-field-group textarea:focus {
   border-color: #C8102E;
   box-shadow: 0 0 12px rgba(200, 16, 46, 0.2);
 }
@@ -3433,6 +3514,7 @@ button.about-seal-badge:hover .about-seal-icon {
   from {
     transform: translateX(100%);
   }
+
   to {
     transform: translateX(0);
   }
@@ -3625,7 +3707,8 @@ button.about-seal-badge:hover .about-seal-icon {
   box-shadow: 0 4px 15px rgba(200, 16, 46, 0.25);
 }
 
-.product-card-add-list-btn:hover, .product-card-add-list-btn.added {
+.product-card-add-list-btn:hover,
+.product-card-add-list-btn.added {
   background: #09090b;
   color: #ffffff;
   border-color: #09090b;
@@ -3732,7 +3815,8 @@ button.about-seal-badge:hover .about-seal-icon {
 /* ------------------------------------------
    PRODUCT & CASE STUDY MODALS
    ------------------------------------------ */
-.project-modal-overlay, .product-modal-overlay {
+.project-modal-overlay,
+.product-modal-overlay {
   position: fixed;
   inset: 0;
   background: rgba(0, 0, 0, 0.65);
@@ -3744,7 +3828,8 @@ button.about-seal-badge:hover .about-seal-icon {
   padding: 1.5rem;
 }
 
-.project-modal-content, .product-modal-content {
+.project-modal-content,
+.product-modal-content {
   background: #ffffff;
   border: 1px solid rgba(200, 16, 46, 0.2);
   border-radius: 28px;
@@ -3760,7 +3845,8 @@ button.about-seal-badge:hover .about-seal-icon {
   color: #18181b;
 }
 
-.project-modal-header, .product-modal-header {
+.project-modal-header,
+.product-modal-header {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
@@ -3786,7 +3872,8 @@ button.about-seal-badge:hover .about-seal-icon {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
-.project-modal-cat, .product-modal-cat {
+.project-modal-cat,
+.product-modal-cat {
   font-family: var(--font-sans);
   font-size: 0.7rem;
   font-weight: 700;
@@ -3795,7 +3882,8 @@ button.about-seal-badge:hover .about-seal-icon {
   text-transform: uppercase;
 }
 
-.project-modal-title, .product-modal-title {
+.project-modal-title,
+.product-modal-title {
   font-family: var(--font-sans);
   font-weight: 800;
   font-size: 1.85rem;
@@ -3812,7 +3900,8 @@ button.about-seal-badge:hover .about-seal-icon {
   margin-top: 0.2rem;
 }
 
-.project-modal-close, .product-modal-close {
+.project-modal-close,
+.product-modal-close {
   background: rgba(200, 16, 46, 0.08);
   border: 1px solid rgba(200, 16, 46, 0.2);
   color: #C8102E;
@@ -3827,7 +3916,8 @@ button.about-seal-badge:hover .about-seal-icon {
   transition: all 0.25s ease;
 }
 
-.project-modal-close:hover, .product-modal-close:hover {
+.project-modal-close:hover,
+.product-modal-close:hover {
   background: #C8102E;
   color: #ffffff;
 }
@@ -3838,7 +3928,8 @@ button.about-seal-badge:hover .about-seal-icon {
   border-radius: 18px;
   overflow: hidden;
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
-  margin-bottom: 2.25rem; /* Generous gap between hero image & text below */
+  margin-bottom: 2.25rem;
+  /* Generous gap between hero image & text below */
 }
 
 .project-modal-hero-img {
@@ -3860,7 +3951,8 @@ button.about-seal-badge:hover .about-seal-icon {
   gap: 1.75rem;
 }
 
-.project-modal-sec h4, .product-modal-sec h4 {
+.project-modal-sec h4,
+.product-modal-sec h4 {
   font-family: var(--font-sans);
   font-size: 0.72rem;
   font-weight: 800;
@@ -3870,7 +3962,8 @@ button.about-seal-badge:hover .about-seal-icon {
   text-transform: uppercase;
 }
 
-.project-modal-sec p, .product-modal-description {
+.project-modal-sec p,
+.product-modal-description {
   font-family: var(--font-sans);
   font-size: 0.92rem;
   color: #3f3f46;
@@ -4051,7 +4144,7 @@ button.about-seal-badge:hover .about-seal-icon {
   display: block !important;
 }
 
-.expertise-detail-card > * {
+.expertise-detail-card>* {
   position: relative;
   z-index: 1;
 }
@@ -4950,17 +5043,24 @@ button.about-seal-badge:hover .about-seal-icon {
    RESPONSIVE MEDIA QUERIES FOR MULTI-PAGE
    ------------------------------------------ */
 @media (max-width: 1024px) {
-  .ceo-perspective-card, .ceo-feature-grid, .industry-card, .contact-grid {
+
+  .ceo-perspective-card,
+  .ceo-feature-grid,
+  .industry-card,
+  .contact-grid {
     grid-template-columns: 1fr;
     gap: 2.5rem;
   }
+
   .expertise-card-content-grid {
     grid-template-columns: 1fr;
     gap: 2rem;
   }
+
   .footer-grid {
     grid-template-columns: 1fr 1fr;
   }
+
   .product-modal-grid {
     grid-template-columns: 1fr;
   }
@@ -5131,7 +5231,8 @@ button.about-seal-badge:hover .about-seal-icon {
     gap: 0.75rem;
     padding-bottom: 0.5rem;
     margin-top: auto;
-    transform: none !important; /* CRITICAL: REMOVES DESKTOP -24px SHIFT THAT CAUSED OVERLAP */
+    transform: none !important;
+    /* CRITICAL: REMOVES DESKTOP -24px SHIFT THAT CAUSED OVERLAP */
     width: 100%;
   }
 
@@ -5805,10 +5906,12 @@ button.about-seal-badge:hover .about-seal-icon {
     transform: scale(0.95);
     opacity: 0.9;
   }
+
   50% {
     transform: scale(1.25);
     opacity: 0;
   }
+
   100% {
     transform: scale(1.35);
     opacity: 0;
@@ -5929,7 +6032,8 @@ button.about-seal-badge:hover .about-seal-icon {
 .project-video-iframe-wrap {
   position: relative;
   width: 100%;
-  padding-top: 177.78%; /* 9:16 vertical shorts aspect ratio */
+  padding-top: 177.78%;
+  /* 9:16 vertical shorts aspect ratio */
   background: #000;
 }
 

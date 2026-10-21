@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { ArrowRight, Sparkles, X, CheckCircle2, ArrowUpRight, Play } from 'lucide-react';
-import { PROJECTS, CLIENT_LOGOS, EXPERTISE_AREAS, Project, getYoutubeEmbedUrl } from '@/lib/data';
+import { PROJECTS, EXPERTISE_AREAS, Project, getYoutubeEmbedUrl } from '@/lib/data';
 import ProjectCard from '@/components/ProjectCard';
 
 export default function HomeSections() {
@@ -13,6 +13,10 @@ export default function HomeSections() {
   const filteredProjects = activeProjectCategory === 'ALL'
     ? PROJECTS
     : PROJECTS.filter((p) => p.categorySlug === activeProjectCategory.toLowerCase());
+
+  const HOME_LIMIT = activeProjectCategory === 'ALL' ? 6 : 4;
+  const displayedProjects = filteredProjects.slice(0, HOME_LIMIT);
+  const hasMore = filteredProjects.length > HOME_LIMIT;
 
   const categories = [
     { label: 'ALL', value: 'ALL' },
@@ -26,6 +30,69 @@ export default function HomeSections() {
 
   return (
     <>
+      {/* CLIENTS INFINITE SCROLL — directly below hero */}
+      <section className="home-section home-section-clients">
+        <div className="clients-section-header">
+          <div className="hero-eyebrow" style={{ justifyContent: 'center' }}>
+            <span className="hero-eyebrow-pill">CLIENTS</span>
+            <span>TRUSTED BY INDUSTRY LEADERS</span>
+          </div>
+          <h2 className="home-section-title" style={{ textAlign: 'center', marginTop: '0.75rem' }}>
+            Chosen for Spaces <span className="hero-title-italic">That Matter.</span>
+          </h2>
+        </div>
+
+        {/* Infinite Scroll Marquee */}
+        <div className="clients-marquee-wrapper">
+          <div className="clients-marquee-fade-left" />
+          <div className="clients-marquee-fade-right" />
+          <div className="clients-marquee-track">
+            {/* First set */}
+            <div className="clients-marquee-inner">
+              <div className="client-logo-item">
+                <img src="/logo/ajlogo.png" alt="AJ Enterprises" className="client-logo-img" />
+              </div>
+              <div className="client-logo-item">
+                <img src="/logo/Bold Generation Wordmark.png" alt="Bold Generation" className="client-logo-img" />
+              </div>
+              <div className="client-logo-item">
+                <img src="/logo/Farooq Hospital West Wood Logo.png" alt="Farooq Hospital" className="client-logo-img" />
+              </div>
+              <div className="client-logo-item">
+                <img src="/logo/Golden Family Emblem.png" alt="Golden Family" className="client-logo-img" />
+              </div>
+              <div className="client-logo-item">
+                <img src="/logo/Shalamar Hospital Logo.png" alt="Shalamar Hospital" className="client-logo-img" />
+              </div>
+              <div className="client-logo-item">
+                <img src="/logo/The United Mall Logo.png" alt="The United Mall" className="client-logo-img" />
+              </div>
+            </div>
+            {/* Duplicate set for seamless loop */}
+            <div className="clients-marquee-inner" aria-hidden="true">
+              <div className="client-logo-item">
+                <img src="/logo/ajlogo.png" alt="AJ Enterprises" className="client-logo-img" />
+              </div>
+              <div className="client-logo-item">
+                <img src="/logo/Bold Generation Wordmark.png" alt="Bold Generation" className="client-logo-img" />
+              </div>
+              <div className="client-logo-item">
+                <img src="/logo/Farooq Hospital West Wood Logo.png" alt="Farooq Hospital" className="client-logo-img" />
+              </div>
+              <div className="client-logo-item">
+                <img src="/logo/Golden Family Emblem.png" alt="Golden Family" className="client-logo-img" />
+              </div>
+              <div className="client-logo-item">
+                <img src="/logo/Shalamar Hospital Logo.png" alt="Shalamar Hospital" className="client-logo-img" />
+              </div>
+              <div className="client-logo-item">
+                <img src="/logo/The United Mall Logo.png" alt="The United Mall" className="client-logo-img" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* SECTION 3 — SELECTED WORK / PORTFOLIO */}
       <section id="projects" className="home-section home-section-projects">
         <div className="home-container">
@@ -57,7 +124,7 @@ export default function HomeSections() {
 
           {/* Project Grid */}
           <div className="home-projects-grid">
-            {filteredProjects.map((project) => (
+            {displayedProjects.map((project) => (
               <ProjectCard
                 key={project.id}
                 project={project}
@@ -68,7 +135,7 @@ export default function HomeSections() {
 
           <div className="home-section-cta-wrap" style={{ marginTop: '3rem' }}>
             <Link href="/projects" className="hero-cta-btn">
-              <span>VIEW FULL PORTFOLIO</span>
+              <span>{hasMore ? `EXPLORE ALL ${filteredProjects.length} PROJECTS` : 'VIEW FULL PORTFOLIO'}</span>
               <div className="hero-cta-arrow">
                 <ArrowRight size={14} />
               </div>
@@ -222,70 +289,8 @@ export default function HomeSections() {
         </div>
       </section>
 
-      {/* SECTION 7 — TRUSTED BY / CLIENTS */}
-      <section className="home-section home-section-clients">
-        <div className="home-container">
-          <div className="home-section-header">
-            <div className="hero-eyebrow">
-              <span className="hero-eyebrow-pill">PROVEN REPUTATION</span>
-              <span>CLIENTS & PARTNERSHIPS</span>
-            </div>
-            <h2 className="home-section-title">
-              Chosen for Spaces <br />
-              <span className="hero-title-italic">That Matter.</span>
-            </h2>
-          </div>
 
-          <div className="client-logos-grid">
-            {CLIENT_LOGOS.map((client) => (
-              <div key={client.name} className="client-logo-card">
-                <div className="client-card-inner">
-                  <span className="client-card-cat">{client.category}</span>
-                  <h4 className="client-card-name">{client.name}</h4>
-                  <span className="client-card-highlight">{client.highlight}</span>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
 
-      {/* SECTION 8 — CEO PERSPECTIVE */}
-      <section className="home-section home-section-ceo">
-        <div className="home-container">
-          <div className="ceo-perspective-card">
-            <div className="ceo-card-left">
-              <img src="/ceo.png" alt="Malik Abdul Jamil" className="ceo-portrait-img" />
-              <div className="ceo-portrait-glow" />
-            </div>
-
-            <div className="ceo-card-right">
-              <div className="hero-eyebrow">
-                <span className="hero-eyebrow-pill">A STANDARD BUILT OVER TIME</span>
-                <span>LEADERSHIP STATEMENT</span>
-              </div>
-
-              <h2 className="ceo-quote-heading">
-                “Quality, creativity and trust are not features of our work. They are the standard behind it.”
-              </h2>
-
-              <div className="ceo-signature-block">
-                <strong className="ceo-name-text">Malik Abdul Jamil</strong>
-                <span className="ceo-title-text">Chief Executive Officer, Jamil Traders</span>
-              </div>
-
-              <div className="ceo-cta-wrap">
-                <Link href="/about" className="hero-cta-btn">
-                  <span>MEET THE COMPANY</span>
-                  <div className="hero-cta-arrow">
-                    <ArrowRight size={14} />
-                  </div>
-                </Link>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* SECTION 9 — FINAL CTA */}
       <section className="home-section home-section-final-cta">

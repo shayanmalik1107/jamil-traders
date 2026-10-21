@@ -2,8 +2,8 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { ArrowRight, Sparkles, CheckCircle2, Award, ShieldCheck, Building2 } from 'lucide-react';
-import { COMPANY_TIMELINE, CORE_PRINCIPLES } from '@/lib/data';
+import { ArrowRight, Sparkles } from 'lucide-react';
+import { COMPANY_TIMELINE } from '@/lib/data';
 
 export default function AboutPage() {
   return (
@@ -99,96 +99,6 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* 5. What Drives Us (4 Principles) */}
-      <section className="about-principles-section">
-        <div className="home-container">
-          <div className="home-section-header">
-            <div className="hero-eyebrow">
-              <span className="hero-eyebrow-pill">OUR PHILOSOPHY</span>
-              <span>CORE DRIVING VALUES</span>
-            </div>
-            <h2 className="home-section-title">
-              What Drives <span className="hero-title-italic">Us.</span>
-            </h2>
-          </div>
-
-          <div className="principles-vertical-grid">
-            {CORE_PRINCIPLES.map((principle, index) => (
-              <div key={principle.title} className="principle-card">
-                <div className="principle-num">0{index + 1}</div>
-                <div className="principle-body">
-                  <h3 className="principle-title">{principle.title}</h3>
-                  <span className="principle-subtitle">{principle.subtitle}</span>
-                  <p className="principle-desc">{principle.description}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-
-      {/* 7. Recognition & Certifications */}
-      <section className="about-recognition-section">
-        <div className="home-container">
-          <div className="home-section-header">
-            <div className="hero-eyebrow">
-              <span className="hero-eyebrow-pill">VERIFIED STANDARDS</span>
-              <span>ACCREDITATIONS & RECOGNITION</span>
-            </div>
-            <h2 className="home-section-title">
-              Recognized for <span className="hero-title-italic">Excellence.</span>
-            </h2>
-          </div>
-
-          <div className="cert-grid">
-            <div className="cert-card">
-              <div className="cert-card-badge">
-                <CheckCircle2 size={12} />
-                <span>ISO CERTIFIED</span>
-              </div>
-              <div className="cert-preview-frame">
-                <Award size={36} className="cert-icon-gold" />
-                <span className="cert-watermark">ISO 9001:2015</span>
-              </div>
-              <div className="cert-card-info">
-                <h4 className="cert-title">ISO 9001:2015 Quality Management</h4>
-                <p className="cert-desc">Certified quality management systems across luxury luminaire design, supply chain, and site execution.</p>
-              </div>
-            </div>
-
-            <div className="cert-card">
-              <div className="cert-card-badge">
-                <CheckCircle2 size={12} />
-                <span>ACCREDITED</span>
-              </div>
-              <div className="cert-preview-frame">
-                <ShieldCheck size={36} className="cert-icon-gold" />
-                <span className="cert-watermark">LUXURY LIGHTING</span>
-              </div>
-              <div className="cert-card-info">
-                <h4 className="cert-title">Middle East Luxury Illumination Accreditation</h4>
-                <p className="cert-desc">Recognized for high-end optical engineering and architectural luminaire standards across Asia & GCC.</p>
-              </div>
-            </div>
-
-            <div className="cert-card">
-              <div className="cert-card-badge">
-                <CheckCircle2 size={12} />
-                <span>COMPLIANT</span>
-              </div>
-              <div className="cert-preview-frame">
-                <Building2 size={36} className="cert-icon-gold" />
-                <span className="cert-watermark">OPTICS BOARD</span>
-              </div>
-              <div className="cert-card-info">
-                <h4 className="cert-title">International Optical Sourcing Board</h4>
-                <p className="cert-desc">Ethical sourcing authentication for high-grade German optical lenses and Italian crystal luminaires.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
     </main>
   );
 }
