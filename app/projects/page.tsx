@@ -11,6 +11,7 @@ export default function ProjectsPage() {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [activeVideoUrl, setActiveVideoUrl] = useState<string | null>(null);
   const [isPlayingHeroVideo, setIsPlayingHeroVideo] = useState<boolean>(false);
+  const [modalHeroImage, setModalHeroImage] = useState<string | null>(null);
 
   const filters = [
     { label: 'ALL', value: 'ALL' },
@@ -86,6 +87,7 @@ export default function ProjectsPage() {
           onClick={() => {
             setSelectedProject(null);
             setIsPlayingHeroVideo(false);
+            setModalHeroImage(null);
           }}
         >
           <div className="project-modal-content" onClick={(e) => e.stopPropagation()}>
@@ -116,6 +118,7 @@ export default function ProjectsPage() {
                 onClick={() => {
                   setSelectedProject(null);
                   setIsPlayingHeroVideo(false);
+                  setModalHeroImage(null);
                 }}
               >
                 <X size={20} />
@@ -142,7 +145,11 @@ export default function ProjectsPage() {
                     }}
                     style={{ cursor: selectedProject.youtubeUrl ? 'pointer' : 'default', width: '100%', height: '100%', position: 'relative' }}
                   >
-                    <img src={selectedProject.image} alt={selectedProject.title} className="project-modal-hero-img" />
+                    <img
+                      src={modalHeroImage || selectedProject.image}
+                      alt={selectedProject.title}
+                      className="project-modal-hero-img"
+                    />
                     {selectedProject.youtubeUrl && (
                       <button
                         type="button"
@@ -211,7 +218,14 @@ export default function ProjectsPage() {
                           key={i}
                           src={mediaUrl}
                           alt={`${selectedProject.title} view ${i + 1}`}
-                          className="project-gallery-img"
+                          className={`project-gallery-img modal-thumb${
+                            (modalHeroImage || selectedProject.image) === mediaUrl ? ' modal-thumb-active' : ''
+                          }`}
+                          onClick={() => {
+                            setModalHeroImage(mediaUrl);
+                            setIsPlayingHeroVideo(false);
+                          }}
+                          style={{ cursor: 'pointer' }}
                         />
                       )
                     )}
@@ -226,6 +240,7 @@ export default function ProjectsPage() {
                   onClick={() => {
                     setSelectedProject(null);
                     setIsPlayingHeroVideo(false);
+                    setModalHeroImage(null);
                   }}
                 >
                   <span>START A SIMILAR PROJECT</span>
