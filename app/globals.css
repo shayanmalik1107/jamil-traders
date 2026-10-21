@@ -2934,71 +2934,46 @@ button.about-seal-badge:hover .about-seal-icon {
   gap: 0.5rem;
 }
 
-/* Marquee outer wrapper */
-.clients-marquee-wrapper {
-  position: relative;
+/* Manual-swipe carousel */
+.clients-carousel-outer {
+  width: 100%;
+  padding: 1rem 0 2.5rem;
+  user-select: none;
+}
+
+.clients-carousel-viewport {
   width: 100%;
   overflow: hidden;
-  padding: 2rem 0 3.5rem;
+  cursor: grab;
+}
+.clients-carousel-viewport:active {
+  cursor: grabbing;
 }
 
-/* Fade edges */
-.clients-marquee-fade-left,
-.clients-marquee-fade-right {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 180px;
-  z-index: 2;
-  pointer-events: none;
-}
-.clients-marquee-fade-left {
-  left: 0;
-  background: linear-gradient(to right, #ffffff 0%, rgba(255,255,255,0) 100%);
-}
-.clients-marquee-fade-right {
-  right: 0;
-  background: linear-gradient(to left, #ffffff 0%, rgba(255,255,255,0) 100%);
+.clients-carousel-track {
+  display: grid;
+  width: 100%;
+  transition: transform 0.45s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
-/* The moving track: two identical .clients-marquee-inner blocks side by side */
-.clients-marquee-track {
-  display: flex;
-  width: max-content;
-  animation: clients-scroll 28s linear infinite;
-}
-
-.clients-marquee-track:hover {
-  animation-play-state: paused;
-}
-
-@keyframes clients-scroll {
-  0%   { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
-}
-
-/* Inner row of logos */
-.clients-marquee-inner {
-  display: flex;
-  align-items: center;
-  gap: 3.5rem;
-  padding: 0 1.75rem;
-}
-
-/* Individual logo card */
-.client-logo-item {
+/* Each "page" is a flex row of logos filling the full viewport width */
+.clients-carousel-page {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: transparent;
-  border: none;
-  border-radius: 0;
-  padding: 0.75rem 2rem;
-  min-width: 160px;
-  height: 90px;
-  box-shadow: none;
+  gap: 2rem;
+  padding: 1rem 2rem;
+  width: 100%;
+}
+
+/* Individual logo item */
+.client-logo-item {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 90px;
   transition: transform 0.3s ease, opacity 0.3s ease;
-  flex-shrink: 0;
 }
 
 .client-logo-item:hover {
@@ -3007,9 +2982,9 @@ button.about-seal-badge:hover .about-seal-icon {
 
 /* Logo image */
 .client-logo-img {
-  max-width: 160px;
-  max-height: 72px;
-  width: auto;
+  max-width: 200px;
+  max-height: 90px;
+  width: 100%;
   height: auto;
   object-fit: contain;
   filter: grayscale(10%) contrast(1.05);
@@ -3017,17 +2992,124 @@ button.about-seal-badge:hover .about-seal-icon {
   transition: opacity 0.3s ease, filter 0.3s ease;
 }
 
+@media (max-width: 639px) {
+  .client-logo-img {
+    max-width: 240px;
+    max-height: 110px;
+  }
+  .client-logo-item {
+    min-height: 120px;
+  }
+  .clients-carousel-page {
+    padding: 1.5rem 1.5rem;
+  }
+}
+
 .client-logo-item:hover .client-logo-img {
   opacity: 1;
   filter: grayscale(0%) contrast(1.1);
 }
 
-/* Legacy card selectors kept (in case used elsewhere) */
+/* Dot indicators — scoped to avoid conflict with project card dots */
+.clients-carousel-dots {
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+  gap: 0.6rem;
+  margin-top: 1.75rem;
+  padding-bottom: 1rem;
+  position: relative;
+  z-index: 5;
+}
+
+.clients-carousel-dots .carousel-dot {
+  width: 10px !important;
+  height: 10px !important;
+  border-radius: 50% !important;
+  background: rgba(200, 16, 46, 0.25) !important;
+  border: none !important;
+  cursor: pointer !important;
+  padding: 0 !important;
+  box-shadow: none !important;
+  transition: background 0.3s ease, width 0.3s ease !important;
+  flex-shrink: 0;
+  display: block !important;
+}
+
+.clients-carousel-dots .carousel-dot.active {
+  background: #C8102E !important;
+  width: 28px !important;
+  height: 10px !important;
+  border-radius: 5px !important;
+}
+
+/* Legacy selectors (kept for safety) */
+.clients-marquee-wrapper,
+.clients-marquee-fade-left,
+.clients-marquee-fade-right,
+.clients-marquee-track,
+.clients-marquee-inner,
 .client-logo-card,
 .client-card-inner,
 .client-card-cat,
 .client-card-name,
 .client-card-highlight { display: none; }
+
+/* ------------------------------------------
+   CERTIFICATES SECTION
+   ------------------------------------------ */
+.home-section-certs {
+  background: linear-gradient(180deg, #ffffff 0%, #fff9f9 50%, #fdf5f5 100%) !important;
+  border-top: 1px solid rgba(200, 16, 46, 0.12) !important;
+}
+
+.certs-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.75rem;
+  margin-top: 2.5rem;
+}
+
+.cert-card {
+  background: #ffffff;
+  border: 1px solid rgba(200, 16, 46, 0.14);
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.05);
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+  aspect-ratio: auto;
+}
+
+.cert-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 18px 40px rgba(200, 16, 46, 0.1);
+}
+
+.cert-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+/* Responsive: 1 column on mobile */
+@media (max-width: 767px) {
+  .certs-grid {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+  .cert-card {
+    border-radius: 14px;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .certs-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+
 
 /* ------------------------------------------
    SECTION 8: CEO PERSPECTIVE

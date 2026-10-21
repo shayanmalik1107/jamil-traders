@@ -1,14 +1,58 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import { ArrowRight, Sparkles, X, CheckCircle2, ArrowUpRight, Play } from 'lucide-react';
 import { PROJECTS, EXPERTISE_AREAS, Project, getYoutubeEmbedUrl } from '@/lib/data';
 import ProjectCard from '@/components/ProjectCard';
+
+const CLIENT_LOGOS = [
+  { src: '/logo/ajlogo.png', alt: 'AJ Enterprises' },
+  { src: '/logo/Bold Generation Wordmark.png', alt: 'Bold Generation' },
+  { src: '/logo/Farooq Hospital West Wood Logo.png', alt: 'Farooq Hospital' },
+  { src: '/logo/Golden Family Emblem.png', alt: 'Golden Family' },
+  { src: '/logo/Shalamar Hospital Logo.png', alt: 'Shalamar Hospital' },
+  { src: '/logo/The United Mall Logo.png', alt: 'The United Mall' },
+];
 
 export default function HomeSections() {
   const [activeProjectCategory, setActiveProjectCategory] = useState<string>('ALL');
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [activeVideoUrl, setActiveVideoUrl] = useState<string | null>(null);
   const [isPlayingHeroVideo, setIsPlayingHeroVideo] = useState<boolean>(false);
+
+  // Clients carousel state
+  const [logoIndex, setLogoIndex] = useState(0);
+  const [logosPerPage, setLogosPerPage] = useState(1);
+  const carouselRef = useRef<HTMLDivElement>(null);
+  const dragStartX = useRef<number | null>(null);
+
+  useEffect(() => {
+    const update = () => {
+      const w = window.innerWidth;
+      if (w >= 1280) setLogosPerPage(4);
+      else if (w >= 1024) setLogosPerPage(3);
+      else if (w >= 640) setLogosPerPage(2);
+      else setLogosPerPage(1);
+    };
+    update();
+    window.addEventListener('resize', update);
+    return () => window.removeEventListener('resize', update);
+  }, []);
+
+  const totalPages = Math.ceil(CLIENT_LOGOS.length / logosPerPage);
+  const clampedIndex = Math.min(logoIndex, totalPages - 1);
+
+  const goToPage = useCallback((page: number) => {
+    setLogoIndex(Math.max(0, Math.min(page, totalPages - 1)));
+  }, [totalPages]);
+
+  // Touch / drag handlers
+  const onDragStart = (clientX: number) => { dragStartX.current = clientX; };
+  const onDragEnd = (clientX: number) => {
+    if (dragStartX.current === null) return;
+    const diff = dragStartX.current - clientX;
+    if (Math.abs(diff) > 40) goToPage(clampedIndex + (diff > 0 ? 1 : -1));
+    dragStartX.current = null;
+  };
 
   const filteredProjects = activeProjectCategory === 'ALL'
     ? PROJECTS
@@ -30,7 +74,7 @@ export default function HomeSections() {
 
   return (
     <>
-      {/* CLIENTS INFINITE SCROLL — directly below hero */}
+      {/* CLIENTS CAROUSEL — directly below hero */}
       <section className="home-section home-section-clients">
         <div className="clients-section-header">
           <div className="hero-eyebrow" style={{ justifyContent: 'center' }}>
@@ -42,53 +86,46 @@ export default function HomeSections() {
           </h2>
         </div>
 
-        {/* Infinite Scroll Marquee */}
-        <div className="clients-marquee-wrapper">
-          <div className="clients-marquee-fade-left" />
-          <div className="clients-marquee-fade-right" />
-          <div className="clients-marquee-track">
-            {/* First set */}
-            <div className="clients-marquee-inner">
-              <div className="client-logo-item">
-                <img src="/logo/ajlogo.png" alt="AJ Enterprises" className="client-logo-img" />
-              </div>
-              <div className="client-logo-item">
-                <img src="/logo/Bold Generation Wordmark.png" alt="Bold Generation" className="client-logo-img" />
-              </div>
-              <div className="client-logo-item">
-                <img src="/logo/Farooq Hospital West Wood Logo.png" alt="Farooq Hospital" className="client-logo-img" />
-              </div>
-              <div className="client-logo-item">
-                <img src="/logo/Golden Family Emblem.png" alt="Golden Family" className="client-logo-img" />
-              </div>
-              <div className="client-logo-item">
-                <img src="/logo/Shalamar Hospital Logo.png" alt="Shalamar Hospital" className="client-logo-img" />
-              </div>
-              <div className="client-logo-item">
-                <img src="/logo/The United Mall Logo.png" alt="The United Mall" className="client-logo-img" />
-              </div>
+        {/* Carousel viewport */}
+        <div className="clients-carousel-outer">
+          <div
+            className="clients-carousel-viewport"
+            ref={carouselRef}
+            onMouseDown={(e) => onDragStart(e.clientX)}
+            onMouseUp={(e) => onDragEnd(e.clientX)}
+            onTouchStart={(e) => onDragStart(e.touches[0].clientX)}
+            onTouchEnd={(e) => onDragEnd(e.changedTouches[0].clientX)}
+          >
+            <div
+              className="clients-carousel-track"
+              style={{
+                transform: `translateX(-${clampedIndex * 100}%)`,
+                gridTemplateColumns: `repeat(${totalPages}, 100%)`,
+              }}
+            >
+              {Array.from({ length: totalPages }).map((_, pageIdx) => (
+                <div key={pageIdx} className="clients-carousel-page">
+                  {CLIENT_LOGOS.slice(pageIdx * logosPerPage, pageIdx * logosPerPage + logosPerPage).map((logo) => (
+                    <div key={logo.alt} className="client-logo-item">
+                      <img src={logo.src} alt={logo.alt} className="client-logo-img" />
+                    </div>
+                  ))}
+                </div>
+              ))}
             </div>
-            {/* Duplicate set for seamless loop */}
-            <div className="clients-marquee-inner" aria-hidden="true">
-              <div className="client-logo-item">
-                <img src="/logo/ajlogo.png" alt="AJ Enterprises" className="client-logo-img" />
-              </div>
-              <div className="client-logo-item">
-                <img src="/logo/Bold Generation Wordmark.png" alt="Bold Generation" className="client-logo-img" />
-              </div>
-              <div className="client-logo-item">
-                <img src="/logo/Farooq Hospital West Wood Logo.png" alt="Farooq Hospital" className="client-logo-img" />
-              </div>
-              <div className="client-logo-item">
-                <img src="/logo/Golden Family Emblem.png" alt="Golden Family" className="client-logo-img" />
-              </div>
-              <div className="client-logo-item">
-                <img src="/logo/Shalamar Hospital Logo.png" alt="Shalamar Hospital" className="client-logo-img" />
-              </div>
-              <div className="client-logo-item">
-                <img src="/logo/The United Mall Logo.png" alt="The United Mall" className="client-logo-img" />
-              </div>
-            </div>
+          </div>
+
+          {/* Dot indicators */}
+          <div className="clients-carousel-dots">
+            {Array.from({ length: totalPages }).map((_, i) => (
+              <button
+                key={i}
+                type="button"
+                className={`carousel-dot${clampedIndex === i ? ' active' : ''}`}
+                onClick={() => goToPage(i)}
+                aria-label={`Go to page ${i + 1}`}
+              />
+            ))}
           </div>
         </div>
       </section>
@@ -140,6 +177,32 @@ export default function HomeSections() {
                 <ArrowRight size={14} />
               </div>
             </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* CERTIFICATES SECTION */}
+      <section className="home-section home-section-certs">
+        <div className="home-container">
+          <div className="home-section-header">
+            <div className="hero-eyebrow">
+              <span className="hero-eyebrow-pill">CERTIFICATIONS</span>
+              <span>QUALITY & COMPLIANCE</span>
+            </div>
+            <h2 className="home-section-title">
+              Certified for <span className="hero-title-italic">Excellence.</span>
+            </h2>
+          </div>
+          <div className="certs-grid">
+            <div className="cert-card">
+              <img src="/cert1.png" alt="Certificate 1" className="cert-img" />
+            </div>
+            <div className="cert-card">
+              <img src="/cert2.png" alt="Certificate 2" className="cert-img" />
+            </div>
+            <div className="cert-card">
+              <img src="/cert3.png" alt="Certificate 3" className="cert-img" />
+            </div>
           </div>
         </div>
       </section>
