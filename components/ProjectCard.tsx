@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { ArrowUpRight, Play, X } from 'lucide-react';
 import { Project, getYoutubeEmbedUrl } from '@/lib/data';
 
@@ -10,7 +10,6 @@ interface ProjectCardProps {
 }
 
 export default function ProjectCard({ project, onClick }: ProjectCardProps) {
-  // Use gallery if available, fallback to single main image
   const images = (project.gallery && project.gallery.length > 0)
     ? project.gallery
     : [project.image];
@@ -19,14 +18,38 @@ export default function ProjectCard({ project, onClick }: ProjectCardProps) {
   const [isHovered, setIsHovered] = useState(false);
   const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
 
-  useEffect(() => {
-    // Only set up auto-scroll if there are multiple images, user is NOT hovering, and modal not open
-    if (images.length <= 1 || isHovered || isVideoModalOpen) return;
+  // Drag state for manual swipe on card slider
+  const dragStart = useRef<number | null>(null);
+  const isDragging = useRef(false);
 
+  const handleDragStart = (x: number) => {
+    dragStart.current = x;
+    isDragging.current = false;
+  };
+  const handleDragMove = (x: number) => {
+    if (dragStart.current !== null && Math.abs(x - dragStart.current) > 5) {
+      isDragging.current = true;
+    }
+  };
+  const handleDragEnd = (x: number, e: React.MouseEvent | React.TouchEvent) => {
+    if (dragStart.current === null) return;
+    const diff = dragStart.current - x;
+    if (Math.abs(diff) > 40) {
+      e.stopPropagation();
+      setCurrentIndex((prev) =>
+        diff > 0
+          ? Math.min(prev + 1, images.length - 1)
+          : Math.max(prev - 1, 0)
+      );
+    }
+    dragStart.current = null;
+  };
+
+  useEffect(() => {
+    if (images.length <= 1 || isHovered || isVideoModalOpen) return;
     const timer = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % images.length);
     }, 3500);
-
     return () => clearInterval(timer);
   }, [images.length, isHovered, isVideoModalOpen]);
 
@@ -34,12 +57,20 @@ export default function ProjectCard({ project, onClick }: ProjectCardProps) {
     <>
       <div
         className="home-project-card project-card-carousel-wrap"
-        onClick={() => onClick(project)}
+        onClick={(e) => { if (!isDragging.current) onClick(project); }}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
-        <div className="project-card-img-wrap">
-          {/* Horizontal sliding animation track */}
+        <div
+          className="project-card-img-wrap"
+          onMouseDown={(e) => handleDragStart(e.clientX)}
+          onMouseMove={(e) => handleDragMove(e.clientX)}
+          onMouseUp={(e) => handleDragEnd(e.clientX, e)}
+          onTouchStart={(e) => handleDragStart(e.touches[0].clientX)}
+          onTouchMove={(e) => handleDragMove(e.touches[0].clientX)}
+          onTouchEnd={(e) => handleDragEnd(e.changedTouches[0].clientX, e)}
+          style={{ cursor: images.length > 1 ? 'grab' : 'default', userSelect: 'none' }}
+        >
           <div
             className="project-card-slider-track"
             style={{ transform: `translateX(-${currentIndex * 100}%)` }}
@@ -70,7 +101,6 @@ export default function ProjectCard({ project, onClick }: ProjectCardProps) {
 
           <div className="project-card-badge">{project.category}</div>
 
-          {/* Center Play Button on Slide 0 if Project has YouTube Video */}
           {project.youtubeUrl && currentIndex === 0 && (
             <button
               type="button"
@@ -87,7 +117,6 @@ export default function ProjectCard({ project, onClick }: ProjectCardProps) {
             </button>
           )}
 
-          {/* Carousel indicator dots if multiple images */}
           {images.length > 1 && (
             <div className="project-card-carousel-dots">
               {images.map((_, idx) => (
