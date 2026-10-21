@@ -87,15 +87,15 @@ export default function Footer() {
               <ul className="footer-contact-list">
                 <li>
                   <MapPin size={16} className="footer-contact-icon" />
-                  <span>Main Showroom & Corporate Office, Lahore, Pakistan</span>
+                  <span>90C, Second Floor, DHA Phase 8, Commercial Broadway, Lahore, Pakistan</span>
                 </li>
                 <li>
                   <Phone size={16} className="footer-contact-icon" />
-                  <span>+92 (042) 3578-9000 / <a href="https://wa.me/923008456789" target="_blank" rel="noopener noreferrer" style={{ color: '#25D366', textDecoration: 'none', fontWeight: 600 }}>+92 300 8456-789 <WhatsAppIcon size={14} color="#25D366" style={{ display: 'inline-block', verticalAlign: 'middle', marginLeft: 3 }} /></a></span>
+                  <span><a href="https://wa.me/923334207691" target="_blank" rel="noopener noreferrer" style={{ color: '#25D366', textDecoration: 'none', fontWeight: 600 }}>03334207691 <WhatsAppIcon size={14} color="#25D366" style={{ display: 'inline-block', verticalAlign: 'middle', marginLeft: 3 }} /></a></span>
                 </li>
                 <li>
                   <Mail size={16} className="footer-contact-icon" />
-                  <span>info@jameeltraders.com</span>
+                  <span><a href="mailto:jamiltraders1972@gmail.com" style={{ color: 'inherit', textDecoration: 'none' }}>jamiltraders1972@gmail.com</a></span>
                 </li>
               </ul>
 
