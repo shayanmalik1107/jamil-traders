@@ -5,12 +5,37 @@ import { PROJECTS, EXPERTISE_AREAS, Project, getYoutubeEmbedUrl } from '@/lib/da
 import ProjectCard from '@/components/ProjectCard';
 
 const CLIENT_LOGOS = [
+  // Existing logos
   { src: '/logo/ajlogo.png', alt: 'AJ Enterprises' },
   { src: '/logo/Bold Generation Wordmark.png', alt: 'Bold Generation' },
   { src: '/logo/Farooq Hospital West Wood Logo.png', alt: 'Farooq Hospital' },
   { src: '/logo/Golden Family Emblem.png', alt: 'Golden Family' },
   { src: '/logo/Shalamar Hospital Logo.png', alt: 'Shalamar Hospital' },
   { src: '/logo/The United Mall Logo.png', alt: 'The United Mall' },
+  // HD Logos
+  { src: '/hdlogo/Al-Fatah Heritage Logo.png', alt: 'Al-Fatah' },
+  { src: '/hdlogo/Aqsa Mall Boutique Display.png', alt: 'Aqsa Mall' },
+  { src: '/hdlogo/Bank AL Habib Heraldic Green Crest.png', alt: 'Bank Al Habib' },
+  { src: '/hdlogo/Bold White ECS Monogram on Red.png', alt: 'ECS' },
+  { src: '/hdlogo/Cambridge® Minimalist Blue Wordmark.png', alt: 'Cambridge' },
+  { src: '/hdlogo/Canal City Housing Society Logo.png', alt: 'Canal City' },
+  { src: '/hdlogo/Counter Terrorism Department Eagle Badge.png', alt: 'Counter Terrorism Department' },
+  { src: '/hdlogo/DIN Group Geometric Logo.png', alt: 'DIN Group' },
+  { src: '/hdlogo/Elegant Gold Floral C Emblem Logo.png', alt: 'Elegant Gold' },
+  { src: '/hdlogo/Garrison Academy Multan Crest.png', alt: 'Garrison Academy Multan' },
+  { src: '/hdlogo/Glossy Gold Nishat Wordmark.png', alt: 'Nishat' },
+  { src: '/hdlogo/MCB Bank for Life Logo.png', alt: 'MCB Bank' },
+  { src: '/hdlogo/Meraj Housing Luxury Living Logo.png', alt: 'Meraj Housing' },
+  { src: '/hdlogo/Metro Shoes Branding Logo.png', alt: 'Metro Shoes' },
+  { src: '/hdlogo/Monochrome Shipping Container Logo.png', alt: 'Shipping Container' },
+  { src: '/hdlogo/Orange Cougar Crest Logo.png', alt: 'Orange Cougar' },
+  { src: '/hdlogo/Raja Sahib Shopping Mall Logo.png', alt: 'Raja Sahib Mall' },
+  { src: '/hdlogo/Red Swoosh and STARLET Logo.png', alt: 'Starlet' },
+  { src: '/hdlogo/Rock Shield Group Emblem.png', alt: 'Rock Shield Group' },
+  { src: '/hdlogo/Royal Residencia Heraldic Crest.png', alt: 'Royal Residencia' },
+  { src: '/hdlogo/Royal Tag Laurel Emblem.png', alt: 'Royal Tag' },
+  { src: '/hdlogo/Uniworth Heritage Shield Logo.png', alt: 'Uniworth' },
+  { src: '/hdlogo/Wapda Town Multan Entrance Gate.png', alt: 'Wapda Town Multan' },
 ];
 
 export default function HomeSections() {
@@ -116,17 +141,35 @@ export default function HomeSections() {
             </div>
           </div>
 
-          {/* Dot indicators */}
-          <div className="clients-carousel-dots">
-            {Array.from({ length: totalPages }).map((_, i) => (
-              <button
-                key={i}
-                type="button"
-                className={`carousel-dot${clampedIndex === i ? ' active' : ''}`}
-                onClick={() => goToPage(i)}
-                aria-label={`Go to page ${i + 1}`}
+          {/* Progress bar + arrows */}
+          <div className="clients-carousel-controls">
+            <button
+              type="button"
+              className="clients-carousel-arrow"
+              onClick={() => goToPage(clampedIndex - 1)}
+              disabled={clampedIndex === 0}
+              aria-label="Previous"
+            >
+              ‹
+            </button>
+            <div className="clients-progress-bar">
+              <div
+                className="clients-progress-fill"
+                style={{ width: `${((clampedIndex + 1) / totalPages) * 100}%` }}
               />
-            ))}
+            </div>
+            <button
+              type="button"
+              className="clients-carousel-arrow"
+              onClick={() => goToPage(clampedIndex + 1)}
+              disabled={clampedIndex === totalPages - 1}
+              aria-label="Next"
+            >
+              ›
+            </button>
+            <span className="clients-carousel-counter">
+              {clampedIndex + 1} / {totalPages}
+            </span>
           </div>
         </div>
       </section>
