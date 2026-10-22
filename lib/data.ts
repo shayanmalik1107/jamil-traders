@@ -186,29 +186,28 @@ export const PROJECTS: Project[] = [
   },
   {
     id: 'proj-16',
-    title: 'Mega Mart',
-    location: 'Mian Mohammad Road, New Mirpur City',
+    title: 'Meezan Group',
+    location: 'Headquarters, Islamabad',
     category: 'Commercial',
     categorySlug: 'commercial',
-    image: '/mega-mart-1.jpeg',
-    logo: '/megamart-logo.jpeg',
-    client: 'Mega Mart Management',
+    image: '/M1.jpeg',
+    client: 'Meezan Group',
     year: '2024',
-    challenge: 'Execute turnkey commercial illumination for Mega Mart on Mian Mohammad Road, New Mirpur City, requiring continuous high-uniformity ceiling linear systems, wide-angle aisle downlighting, and dedicated cashier counter lighting.',
-    approach: 'Engineered an energy-efficient commercial retail lighting design using continuous recessed linear LED slot channels, low-glare wide-beam downlights for merchandise aisles, and high-CRI accent illumination.',
-    solution: 'Turnkey delivery and precision installation of commercial-grade supermarket luminaires, delivering vibrant illumination, optimized lux levels for shopping visibility, and substantial energy savings.',
+    challenge: 'At the Meezan Group Headquarters in Islamabad, we installed high-quality linear hanging lights featuring 24V electroplated LED strips, paired with power factor (PF) 0.95 drivers to ensure reliable performance and long-lasting quality.',
+    approach: 'We also installed magnetic lighting systems to enhance the headquarters’ ambiance and create a modern, premium corporate look.',
+    solution: 'All products were supplied with a 3-year warranty, providing the client with peace of mind and support for maintenance-related issues throughout the warranty period.',
     luminairesUsed: [
-      'Commercial Continuous Linear LED Profile',
-      'Architectural Wide-Beam Recessed Downlight',
-      'High-CRI Supermarket Aisle Reflector',
-      'Cashier & Reception Task Slot Light'
+      'Ultra Bright Linear Hanging Lights (24V Electroplated Strip, 0.95 PF Driver)',
+      'Magnetic Lights System',
+      'Magnetic Linear Lights',
+      'Magnetic Laser Lights',
+      'Magnetic Track Lights'
     ],
     gallery: [
-      '/mega-mart-1.jpeg',
-      '/mega-mart-2.jpeg',
-      '/mega-mart-3.jpeg',
-      '/mega-mart-4.jpeg',
-      '/mega-mart-5.jpeg'
+      '/M1.jpeg',
+      '/M2.jpeg',
+      '/M3.jpeg',
+      '/M4.jpeg'
     ]
   },
   {
@@ -788,7 +787,7 @@ export const CLIENT_LOGOS: ClientLogo[] = [
   { name: 'Metro Shoes', category: 'Commercial Footwear', highlight: '25+ Nationwide Branches' },
   { name: 'Uni Worth', category: 'Menswear Flagships', highlight: 'Luxury Suiting Outlets' },
   { name: 'The United Mall', category: 'Commercial Shopping Mall', highlight: 'Full Ceiling Linear Lighting Project', location: 'Brand Road, near Tehsil Chowk and Bosan Road in Gulgasht Colony, Multan' },
-  { name: 'Mega Mart', category: 'Commercial Supermarket', highlight: 'Full Supermarket Lighting Project', location: 'Mian Mohammad Road, New Mirpur City' },
+  { name: 'Meezan Group', category: 'Corporate Commercial', highlight: 'Headquarters Lighting Project', location: 'Islamabad' },
   { name: 'AJ Towers', category: 'Commercial Complex', highlight: 'Commercial Complex Lighting Project', location: 'Block A, Gulberg Expressway, Gulberg Greens, Islamabad' },
   { name: 'Box Club', category: 'Outdoor Hospitality', highlight: 'Turnkey Pergola & Landscape Lighting', location: 'Pine Avenue, Lahore' },
   { name: 'A.rehman Jewels', category: 'Luxury Jewelry Retail', highlight: 'Complete Indoor & Outdoor Lighting', location: 'Near Dolmen Mall, Phase 6, DHA, Lahore' },
