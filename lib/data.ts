@@ -269,28 +269,25 @@ export const PROJECTS: Project[] = [
   {
     id: 'proj-20',
     title: 'A.rehman Jewels',
-    location: 'Near Dolmen Mall, Phase 6, DHA, Lahore',
+    location: 'DHA Phase 6, Lahore',
     category: 'Retail',
     categorySlug: 'retail',
-    image: '/A1.jpeg',
+    image: '/ar1.jpeg',
     client: 'A.rehman Jewels',
     year: '2024',
-    challenge: 'Execute complete turnkey architectural indoor and outdoor lighting for A.rehman Jewels flagship boutique near Dolmen Mall in Phase 6, DHA Lahore, requiring specialized high-CRI showcase illumination for fine gold and gemstone jewelry paired with grand, prestigious exterior architectural facade illumination.',
-    approach: 'Engineered a dual-spectrum lighting concept combining 98+ CRI anti-glare micro pin-spots and display downlights indoors to accentuate gemstone brilliance, alongside custom warm vertical onyx facade light columns, up-down exterior wall grazers, and backlit 3D signage on the building entrance.',
-    solution: 'Turnkey engineering and precision electrical execution of high-lumen, high-CRI boutique jewelry showroom fixtures and IP65 architectural exterior facade illumination, creating a commanding luxury presence in DHA Phase 6.',
+    challenge: 'We completed this jewellery shop project in DHA Phase 6. We used ultra-slim COB downlights with narrow-beam spotlights to precisely highlight the jewellery counters and enhance the display of the jewellery. These lights feature a CRI of 90+, ensuring excellent colour rendering and allowing the jewellery to appear more vibrant and natural under the lighting.',
+    approach: 'Precision optical illumination engineered to highlight fine gold and diamond collections without harsh glare. Narrow-beam spotlights and rose gold COB downlights maximize gemstone clarity, luster, and color rendering.',
+    solution: 'Turnkey architectural lighting execution featuring 12W ultra-slim rose gold COB lights, 12W magnetic track lights, and 20W Bridgelux chip uplighters with high power factor (0.95) and CRI 90+.',
     luminairesUsed: [
-      'Aura Spot Architectural Zoom Downlight CRI98',
-      'Precision Recessed Micro Pin-Spot 3000K',
-      'Exterior Vertical Facade Light Column IP65',
-      'Architectural Up-Down Wall Grazer IP65'
+      '12W Ultra-Slim Rose Gold COB Lights (CRI 90+, Power Factor 0.95)',
+      '12W Magnetic Track Lights (CRI 90+)',
+      '20W Uplighter (Bridgelux Chip, 0.95 PF)'
     ],
     gallery: [
-      '/A1.jpeg',
-      '/A2.jpeg',
-      '/A3.jpeg',
-      '/A4.jpeg',
-      '/A5.jpeg',
-      '/A6.jpeg'
+      '/ar1.jpeg',
+      '/ar2.jpeg',
+      '/ar3.jpeg',
+      '/ar4.jpeg'
     ]
   },
   {
@@ -790,7 +787,7 @@ export const CLIENT_LOGOS: ClientLogo[] = [
   { name: 'Meezan Group', category: 'Corporate Commercial', highlight: 'Headquarters Lighting Project', location: 'Islamabad' },
   { name: 'AJ Towers', category: 'Commercial Complex', highlight: 'Commercial Complex Lighting Project', location: 'Block A, Gulberg Expressway, Gulberg Greens, Islamabad' },
   { name: 'Box Club', category: 'Outdoor Hospitality', highlight: 'Turnkey Pergola & Landscape Lighting', location: 'Pine Avenue, Lahore' },
-  { name: 'A.rehman Jewels', category: 'Luxury Jewelry Retail', highlight: 'Complete Indoor & Outdoor Lighting', location: 'Near Dolmen Mall, Phase 6, DHA, Lahore' },
+  { name: 'A.rehman Jewels', category: 'Luxury Jewelry Retail', highlight: 'Complete Indoor & Outdoor Lighting', location: 'DHA Phase 6, Lahore' },
   { name: 'SKMCH Hospital', category: 'Healthcare Institution', highlight: 'Specialty Medical Wings' },
   { name: 'Hameed Latif Teaching Hospital (HLTH)', category: 'Healthcare Institution', highlight: 'Complete Lighting Project', location: '2.5 km Haeir Road, Ferozepur Road, Lahore' },
   { name: 'Shalamar Hospital', category: 'Healthcare Institution', highlight: 'Auditorium Lighting Project', location: 'Shalimar Link Road, Lahore' },
