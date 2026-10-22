@@ -243,7 +243,8 @@ export default function FramePlayer() {
                 src={(!isMobile && banner.desktopSrc) ? banner.desktopSrc : banner.src}
                 alt={banner.alt}
                 className="hero-ambient-img"
-                loading={index === 0 ? 'eager' : 'lazy'}
+                loading="eager"
+                decoding="async"
               />
             </div>
           ))}
