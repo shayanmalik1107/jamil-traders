@@ -10,6 +10,7 @@ const CLIENT_LOGOS = [
   { src: '/hdlogo/l3.png', alt: 'Client Partner 3' },
   { src: '/hdlogo/l4.png', alt: 'Client Partner 4' },
   { src: '/hdlogo/l5.png', alt: 'Client Partner 5' },
+  { src: '/hdlogo/l6.png', alt: 'Client Partner 6' },
   { src: '/hdlogo/l7.png', alt: 'Client Partner 7' },
   { src: '/hdlogo/l8.png', alt: 'Client Partner 8' },
   { src: '/hdlogo/l9.png', alt: 'Client Partner 9' },
