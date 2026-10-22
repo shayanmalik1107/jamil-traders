@@ -174,7 +174,7 @@ function ProductCatalogueContent() {
               <div className="product-modal-grid">
                 {/* Left Column: Image & Gallery */}
                 <div className="product-modal-img-col">
-                  <div style={{ position: 'relative' }}>
+                  <div style={{ position: 'relative', background: '#ffffff', borderRadius: '18px', overflow: 'hidden', border: '1px solid rgba(200, 16, 46, 0.12)' }}>
                     <img
                       src={activeModalImg || selectedProduct.image}
                       alt={selectedProduct.name}
@@ -200,11 +200,13 @@ function ProductCatalogueContent() {
                               style={{
                                 width: '100%',
                                 height: '56px',
-                                objectFit: 'cover',
+                                objectFit: 'contain',
+                                background: '#ffffff',
+                                padding: '3px',
                                 borderRadius: '8px',
                                 cursor: 'pointer',
                                 border: isSelected ? '2px solid #C8102E' : '1px solid rgba(200, 16, 46, 0.15)',
-                                opacity: isSelected ? 1 : 0.65,
+                                opacity: isSelected ? 1 : 0.75,
                                 transition: 'all 0.2s ease',
                                 transform: isSelected ? 'scale(1.04)' : 'scale(1)'
                               }}
