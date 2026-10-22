@@ -575,9 +575,10 @@ html.lenis body {
 .mobile-nav-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.6);
-  backdrop-filter: blur(4px);
-  z-index: 90;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 9999;
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.35s ease;
@@ -586,6 +587,14 @@ html.lenis body {
 .mobile-nav-overlay.open {
   opacity: 1;
   pointer-events: all;
+}
+
+/* Hide background header completely when mobile menu drawer is open so logos/buttons never bleed through or overlap */
+.hero-header.menu-open {
+  opacity: 0 !important;
+  pointer-events: none !important;
+  visibility: hidden !important;
+  transition: opacity 0.25s ease, visibility 0.25s ease;
 }
 
 .mobile-nav-drawer {
@@ -613,6 +622,13 @@ html.lenis body {
   justify-content: space-between;
   padding: 1.25rem 1.5rem;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.mobile-nav-drawer-header .hero-logo-img {
+  height: 48px;
+  max-width: 170px;
+  width: auto;
+  object-fit: contain;
 }
 
 .mobile-nav-close-btn {

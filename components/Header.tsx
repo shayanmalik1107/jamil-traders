@@ -50,7 +50,7 @@ export default function Header() {
 
   return (
     <>
-      <header className={`hero-header ${isScrolled ? 'is-scrolled' : ''}`}>
+      <header className={`hero-header ${isScrolled ? 'is-scrolled' : ''} ${mobileMenuOpen ? 'menu-open' : ''}`}>
         {/* Extra Large Logo on Left */}
         <div className="hero-header-left">
           <Link href="/" className="hero-logo">
