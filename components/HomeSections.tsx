@@ -5,68 +5,34 @@ import { PROJECTS, EXPERTISE_AREAS, Project, getYoutubeEmbedUrl } from '@/lib/da
 import ProjectCard from '@/components/ProjectCard';
 
 const CLIENT_LOGOS = [
-  // HD Logos l1-l29 (in order)
-  { src: '/hdlogo/l1.png', alt: '' },
-  { src: '/hdlogo/l2.png', alt: '' },
-  { src: '/hdlogo/l3.png', alt: '' },
-  { src: '/hdlogo/l4.png', alt: '' },
-  { src: '/hdlogo/l5.png', alt: '' },
-  { src: '/hdlogo/l7.png', alt: '' },
-  { src: '/hdlogo/l8.png', alt: '' },
-  { src: '/hdlogo/l9.png', alt: '' },
-  { src: '/hdlogo/l10.png', alt: '' },
-  { src: '/hdlogo/l11.jpeg', alt: '' },
-  { src: '/hdlogo/l12.png', alt: '' },
-  { src: '/hdlogo/l13.png', alt: '' },
-  { src: '/hdlogo/l14.png', alt: '' },
-  { src: '/hdlogo/l15.png', alt: '' },
-  { src: '/hdlogo/l16.png', alt: '' },
-  { src: '/hdlogo/l17.png', alt: '' },
-  { src: '/hdlogo/l18.png', alt: '' },
-  { src: '/hdlogo/l19.png', alt: '' },
-  { src: '/hdlogo/l20.png', alt: '' },
-  { src: '/hdlogo/l21.png', alt: '' },
-  { src: '/hdlogo/l22.png', alt: '' },
-  { src: '/hdlogo/l23.png', alt: '' },
-  { src: '/hdlogo/l24.png', alt: '' },
-  { src: '/hdlogo/l25.png', alt: '' },
-  { src: '/hdlogo/l26.png', alt: '' },
-  { src: '/hdlogo/l27.png', alt: '' },
-  { src: '/hdlogo/l28.png', alt: '' },
-  { src: '/hdlogo/l29.png', alt: '' },
-  // Remaining named logos
-  { src: '/hdlogo/ajlogo.png', alt: '' },
-  { src: '/hdlogo/Bold Generation Wordmark.png', alt: '' },
-  { src: '/hdlogo/Elegant Gold Floral C Emblem Logo.png', alt: '' },
-  { src: '/hdlogo/Garrison Academy Multan Crest.png', alt: '' },
-  { src: '/hdlogo/Monochrome Shipping Container Logo.png', alt: '' },
-  { src: '/hdlogo/Royal Residencia Heraldic Crest.png', alt: '' },
-  { src: '/hdlogo/The United Mall Logo.png', alt: '' },
-  { src: '/logo/ajlogo.png', alt: '' },
-  { src: '/logo/Bold Generation Wordmark.png', alt: '' },
-  { src: '/logo/Farooq Hospital West Wood Logo.png', alt: '' },
-  { src: '/logo/Golden Family Emblem.png', alt: '' },
-  { src: '/logo/Shalamar Hospital Logo.png', alt: '' },
-  { src: '/logo/The United Mall Logo.png', alt: '' },
-  { src: '/hdlogo/Al-Fatah Heritage Logo.png', alt: '' },
-  { src: '/hdlogo/Aqsa Mall Boutique Display.png', alt: '' },
-  { src: '/hdlogo/Bank AL Habib Heraldic Green Crest.png', alt: '' },
-  { src: '/hdlogo/Bold White ECS Monogram on Red.png', alt: '' },
-  { src: '/hdlogo/Cambridge® Minimalist Blue Wordmark.png', alt: '' },
-  { src: '/hdlogo/Canal City Housing Society Logo.png', alt: '' },
-  { src: '/hdlogo/Counter Terrorism Department Eagle Badge.png', alt: '' },
-  { src: '/hdlogo/DIN Group Geometric Logo.png', alt: '' },
-  { src: '/hdlogo/Glossy Gold Nishat Wordmark.png', alt: '' },
-  { src: '/hdlogo/MCB Bank for Life Logo.png', alt: '' },
-  { src: '/hdlogo/Meraj Housing Luxury Living Logo.png', alt: '' },
-  { src: '/hdlogo/Metro Shoes Branding Logo.png', alt: '' },
-  { src: '/hdlogo/Orange Cougar Crest Logo.png', alt: '' },
-  { src: '/hdlogo/Raja Sahib Shopping Mall Logo.png', alt: '' },
-  { src: '/hdlogo/Red Swoosh and STARLET Logo.png', alt: '' },
-  { src: '/hdlogo/Rock Shield Group Emblem.png', alt: '' },
-  { src: '/hdlogo/Royal Tag Laurel Emblem.png', alt: '' },
-  { src: '/hdlogo/Uniworth Heritage Shield Logo.png', alt: '' },
-  { src: '/hdlogo/Wapda Town Multan Entrance Gate.png', alt: '' },
+  { src: '/hdlogo/l1.png', alt: 'Client Partner 1' },
+  { src: '/hdlogo/l2.png', alt: 'Client Partner 2' },
+  { src: '/hdlogo/l3.png', alt: 'Client Partner 3' },
+  { src: '/hdlogo/l4.png', alt: 'Client Partner 4' },
+  { src: '/hdlogo/l5.png', alt: 'Client Partner 5' },
+  { src: '/hdlogo/l7.png', alt: 'Client Partner 7' },
+  { src: '/hdlogo/l8.png', alt: 'Client Partner 8' },
+  { src: '/hdlogo/l9.png', alt: 'Client Partner 9' },
+  { src: '/hdlogo/l10.png', alt: 'Client Partner 10' },
+  { src: '/hdlogo/l11.jpeg', alt: 'Client Partner 11' },
+  { src: '/hdlogo/l12.png', alt: 'Client Partner 12' },
+  { src: '/hdlogo/l13.png', alt: 'Client Partner 13' },
+  { src: '/hdlogo/l14.png', alt: 'Client Partner 14' },
+  { src: '/hdlogo/l15.png', alt: 'Client Partner 15' },
+  { src: '/hdlogo/l16.png', alt: 'Client Partner 16' },
+  { src: '/hdlogo/l17.png', alt: 'Client Partner 17' },
+  { src: '/hdlogo/l18.png', alt: 'Client Partner 18' },
+  { src: '/hdlogo/l19.png', alt: 'Client Partner 19' },
+  { src: '/hdlogo/l20.png', alt: 'Client Partner 20' },
+  { src: '/hdlogo/l21.png', alt: 'Client Partner 21' },
+  { src: '/hdlogo/l22.png', alt: 'Client Partner 22' },
+  { src: '/hdlogo/l23.png', alt: 'Client Partner 23' },
+  { src: '/hdlogo/l24.png', alt: 'Client Partner 24' },
+  { src: '/hdlogo/l25.png', alt: 'Client Partner 25' },
+  { src: '/hdlogo/l26.png', alt: 'Client Partner 26' },
+  { src: '/hdlogo/l27.png', alt: 'Client Partner 27' },
+  { src: '/hdlogo/l28.png', alt: 'Client Partner 28' },
+  { src: '/hdlogo/l29.png', alt: 'Client Partner 29' },
 ];
 
 export default function HomeSections() {
@@ -75,6 +41,8 @@ export default function HomeSections() {
   const [activeVideoUrl, setActiveVideoUrl] = useState<string | null>(null);
   const [isPlayingHeroVideo, setIsPlayingHeroVideo] = useState<boolean>(false);
   const [modalHeroImage, setModalHeroImage] = useState<string | null>(null);
+  const [certIndex, setCertIndex] = useState(0);
+  const CERTS = ['/cert1.png', '/cert2.png', '/cert3.png'];
 
   // Clients carousel state
   const [logoIndex, setLogoIndex] = useState(0);
@@ -82,11 +50,26 @@ export default function HomeSections() {
   const carouselRef = useRef<HTMLDivElement>(null);
   const dragStartX = useRef<number | null>(null);
 
+  // Cert carousel drag / swipe handlers
+  const certDragStartX = useRef<number | null>(null);
+  const onCertDragStart = (clientX: number) => { certDragStartX.current = clientX; };
+  const onCertDragEnd = (clientX: number) => {
+    if (certDragStartX.current === null) return;
+    const diff = certDragStartX.current - clientX;
+    if (Math.abs(diff) > 35) {
+      if (diff > 0 && certIndex < CERTS.length - 1) {
+        setCertIndex((prev) => Math.min(CERTS.length - 1, prev + 1));
+      } else if (diff < 0 && certIndex > 0) {
+        setCertIndex((prev) => Math.max(0, prev - 1));
+      }
+    }
+    certDragStartX.current = null;
+  };
+
   useEffect(() => {
     const update = () => {
       const w = window.innerWidth;
-      if (w >= 1280) setLogosPerPage(4);
-      else if (w >= 1024) setLogosPerPage(3);
+      if (w >= 1024) setLogosPerPage(4);
       else if (w >= 640) setLogosPerPage(2);
       else setLogosPerPage(1);
     };
@@ -162,8 +145,8 @@ export default function HomeSections() {
             >
               {Array.from({ length: totalPages }).map((_, pageIdx) => (
                 <div key={pageIdx} className="clients-carousel-page">
-                  {CLIENT_LOGOS.slice(pageIdx * logosPerPage, pageIdx * logosPerPage + logosPerPage).map((logo) => (
-                    <div key={logo.alt} className="client-logo-item">
+                  {CLIENT_LOGOS.slice(pageIdx * logosPerPage, pageIdx * logosPerPage + logosPerPage).map((logo, logoIdx) => (
+                    <div key={`${pageIdx}-${logoIdx}`} className="client-logo-item">
                       <img src={logo.src} alt={logo.alt} className="client-logo-img" />
                     </div>
                   ))}
@@ -268,17 +251,71 @@ export default function HomeSections() {
               Certified for <span className="hero-title-italic">Excellence.</span>
             </h2>
           </div>
-          <div className="certs-grid">
-            <div className="cert-card">
-              <img src="/cert1.png" alt="Certificate 1" className="cert-img" />
-            </div>
-            <div className="cert-card">
-              <img src="/cert2.png" alt="Certificate 2" className="cert-img" />
-            </div>
-            <div className="cert-card">
-              <img src="/cert3.png" alt="Certificate 3" className="cert-img" />
-            </div>
+        </div>
+
+        {/* Full-bleed carousel */}
+        <div
+          className="certs-carousel-outer"
+          onTouchStart={(e) => onCertDragStart(e.touches[0].clientX)}
+          onTouchEnd={(e) => onCertDragEnd(e.changedTouches[0].clientX)}
+          onMouseDown={(e) => onCertDragStart(e.clientX)}
+          onMouseUp={(e) => onCertDragEnd(e.clientX)}
+        >
+          <div
+            className="certs-carousel-inner"
+            style={{
+              transform: `translateX(calc(50vw - (var(--card-w) / 2) - (${certIndex} * (var(--card-w) + var(--card-gap)))))`
+            }}
+          >
+            {CERTS.map((src, i) => (
+              <div
+                key={i}
+                className={`cert-carousel-card${certIndex === i ? ' active' : ''}`}
+                onClick={() => setCertIndex(i)}
+              >
+                <img src={src} alt={`Certificate ${i + 1}`} className="cert-img" draggable={false} />
+              </div>
+            ))}
           </div>
+
+          {/* Prev / Next buttons */}
+          {certIndex > 0 && (
+            <button
+              type="button"
+              className="cert-nav-btn cert-nav-prev"
+              onClick={() => setCertIndex((prev) => Math.max(0, prev - 1))}
+              aria-label="Previous certificate"
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="15 18 9 12 15 6"></polyline>
+              </svg>
+            </button>
+          )}
+          {certIndex < CERTS.length - 1 && (
+            <button
+              type="button"
+              className="cert-nav-btn cert-nav-next"
+              onClick={() => setCertIndex((prev) => Math.min(CERTS.length - 1, prev + 1))}
+              aria-label="Next certificate"
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
+            </button>
+          )}
+        </div>
+
+        {/* Dot indicators */}
+        <div className="cert-dots">
+          {CERTS.map((_, i) => (
+            <button
+              key={i}
+              type="button"
+              className={`cert-dot${certIndex === i ? ' active' : ''}`}
+              onClick={() => setCertIndex(i)}
+              aria-label={`Go to certificate ${i + 1}`}
+            />
+          ))}
         </div>
       </section>
 

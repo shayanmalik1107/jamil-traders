@@ -33,6 +33,13 @@ body {
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
+  scrollbar-width: none;        /* Firefox */
+  -ms-overflow-style: none;    /* IE/Edge */
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none;               /* Chrome/Safari */
 }
 
 /* Lenis Inertial Smooth Scroll CSS Rules */
@@ -3091,34 +3098,95 @@ button.about-seal-badge:hover .about-seal-icon {
   display: none;
 }
 
-/* ------------------------------------------
-   CERTIFICATES SECTION
+/* ------------------------------------------ 
+   CERTIFICATES CAROUSEL
    ------------------------------------------ */
 .home-section-certs {
   background: linear-gradient(180deg, #ffffff 0%, #fff9f9 50%, #fdf5f5 100%) !important;
   border-top: 1px solid rgba(200, 16, 46, 0.12) !important;
-}
-
-.certs-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.75rem;
-  margin-top: 2.5rem;
-}
-
-.cert-card {
-  background: #ffffff;
-  border: 1px solid rgba(200, 16, 46, 0.14);
-  border-radius: 18px;
   overflow: hidden;
-  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.05);
-  transition: transform 0.35s ease, box-shadow 0.35s ease;
-  aspect-ratio: auto;
+  padding-bottom: 4.5rem;
 }
 
-.cert-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 18px 40px rgba(200, 16, 46, 0.1);
+/* Outer wrapper — holds viewport clipping and relative arrows */
+.certs-carousel-outer {
+  --card-w: 72vw;
+  --card-gap: 16px;
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  padding: 1.5rem 0 2rem;
+  user-select: none;
+  cursor: grab;
+}
+.certs-carousel-outer:active {
+  cursor: grabbing;
+}
+
+@media (min-width: 640px) {
+  .certs-carousel-outer {
+    --card-w: 60vw;
+    --card-gap: 24px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .certs-carousel-outer {
+    --card-w: 520px;
+    --card-gap: 32px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .certs-carousel-outer {
+    --card-w: 580px;
+    --card-gap: 40px;
+  }
+}
+
+/* Inner sliding strip */
+.certs-carousel-inner {
+  display: flex;
+  flex-direction: row;
+  gap: var(--card-gap);
+  width: max-content;
+  transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+  will-change: transform;
+}
+
+/* Individual Certificate Card */
+.cert-carousel-card {
+  flex: 0 0 var(--card-w);
+  width: var(--card-w);
+  aspect-ratio: 4 / 3;
+  background: #ffffff;
+  border: 1.5px solid rgba(200, 16, 46, 0.12);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+  opacity: 0.45;
+  transform: scale(0.92);
+  transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1),
+              opacity 0.5s cubic-bezier(0.25, 1, 0.5, 1),
+              box-shadow 0.5s cubic-bezier(0.25, 1, 0.5, 1),
+              border-color 0.4s ease;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
+}
+
+.cert-carousel-card.active {
+  opacity: 1;
+  transform: scale(1);
+  border-color: rgba(200, 16, 46, 0.45);
+  box-shadow: 0 18px 48px rgba(200, 16, 46, 0.16), 0 6px 20px rgba(0, 0, 0, 0.06);
+}
+
+.cert-carousel-card:hover:not(.active) {
+  opacity: 0.75;
+  transform: scale(0.95);
 }
 
 .cert-img {
@@ -3126,25 +3194,87 @@ button.about-seal-badge:hover .about-seal-icon {
   height: 100%;
   object-fit: contain;
   display: block;
+  border-radius: 10px;
+  pointer-events: none;
 }
 
-/* Responsive: 1 column on mobile */
-@media (max-width: 767px) {
-  .certs-grid {
-    grid-template-columns: 1fr;
-    gap: 1.25rem;
-  }
+/* Nav arrow buttons */
+.cert-nav-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(200, 16, 46, 0.2);
+  color: #111111;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+  z-index: 10;
+  transition: all 0.25s ease;
+}
 
-  .cert-card {
+.cert-nav-btn:hover {
+  background: #C8102E;
+  color: #ffffff;
+  border-color: #C8102E;
+  box-shadow: 0 8px 24px rgba(200, 16, 46, 0.35);
+  transform: translateY(-50%) scale(1.08);
+}
+
+.cert-nav-prev {
+  left: clamp(12px, 3vw, 40px);
+}
+
+.cert-nav-next {
+  right: clamp(12px, 3vw, 40px);
+}
+
+/* Dot indicators */
+.cert-dots {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 1rem;
+}
+
+.cert-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: rgba(200, 16, 46, 0.22);
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: all 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.cert-dot:hover {
+  background: rgba(200, 16, 46, 0.5);
+}
+
+.cert-dot.active {
+  width: 32px;
+  background: #C8102E;
+  box-shadow: 0 2px 10px rgba(200, 16, 46, 0.4);
+}
+
+@media (max-width: 639px) {
+  .cert-carousel-card {
     border-radius: 14px;
+    padding: 8px;
+  }
+  .cert-nav-btn {
+    width: 38px;
+    height: 38px;
   }
 }
 
-@media (min-width: 768px) and (max-width: 1023px) {
-  .certs-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
 
 
 
