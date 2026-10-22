@@ -77,6 +77,28 @@ export default function ProjectCard({ project, onClick }: ProjectCardProps) {
           >
             {images.map((mediaUrl, idx) => {
               const isVid = /\.(mov|mp4|webm)(\?.*)?$/i.test(mediaUrl);
+              const isBlurred = project.imageFit === 'blurred';
+
+              if (isBlurred && !isVid) {
+                return (
+                  <div key={idx} className="blurred-letterbox-slide">
+                    {/* Blurred cover background */}
+                    <img
+                      src={mediaUrl}
+                      aria-hidden="true"
+                      className="blurred-letterbox-bg"
+                      alt=""
+                    />
+                    {/* Sharp contain foreground */}
+                    <img
+                      src={mediaUrl}
+                      alt={`${project.title} slide ${idx + 1}`}
+                      className="blurred-letterbox-fg"
+                    />
+                  </div>
+                );
+              }
+
               return isVid ? (
                 <video
                   key={idx}

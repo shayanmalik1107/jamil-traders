@@ -143,13 +143,25 @@ export default function ProjectsPage() {
                         setIsPlayingHeroVideo(true);
                       }
                     }}
-                    style={{ cursor: selectedProject.youtubeUrl ? 'pointer' : 'default', width: '100%', height: '100%', position: 'relative' }}
+                    style={{
+                      cursor: selectedProject.youtubeUrl ? 'pointer' : 'default',
+                      width: '100%',
+                      height: '100%',
+                      position: 'relative',
+                    }}
                   >
-                    <img
-                      src={modalHeroImage || selectedProject.image}
-                      alt={selectedProject.title}
-                      className="project-modal-hero-img"
-                    />
+                    {selectedProject.imageFit === 'blurred' ? (
+                      <div className="blurred-letterbox-wrap">
+                        <img src={modalHeroImage || selectedProject.image} aria-hidden="true" className="blurred-letterbox-bg" alt="" />
+                        <img src={modalHeroImage || selectedProject.image} alt={selectedProject.title} className="blurred-letterbox-fg" />
+                      </div>
+                    ) : (
+                      <img
+                        src={modalHeroImage || selectedProject.image}
+                        alt={selectedProject.title}
+                        className="project-modal-hero-img"
+                      />
+                    )}
                     {selectedProject.youtubeUrl && (
                       <button
                         type="button"
@@ -213,12 +225,26 @@ export default function ProjectsPage() {
                           className="project-gallery-img"
                           style={{ objectFit: 'cover', width: '100%', height: '100%' }}
                         />
+                      ) : selectedProject.imageFit === 'blurred' ? (
+                        <div
+                          key={i}
+                          className={`blurred-letterbox-thumb${
+                            (modalHeroImage || selectedProject.image) === mediaUrl ? ' modal-thumb-active' : ''
+                          }`}
+                          onClick={() => {
+                            setModalHeroImage(mediaUrl);
+                            setIsPlayingHeroVideo(false);
+                          }}
+                        >
+                          <img src={mediaUrl} aria-hidden="true" className="blurred-letterbox-bg" alt="" />
+                          <img src={mediaUrl} alt={`${selectedProject.title} view ${i + 1}`} className="blurred-letterbox-fg" />
+                        </div>
                       ) : (
                         <img
                           key={i}
                           src={mediaUrl}
                           alt={`${selectedProject.title} view ${i + 1}`}
-                          className={`project-gallery-img modal-thumb${
+                          className={`project-gallery-img modal-thumb${selectedProject.imageFit === 'fill' ? ' img-fit-contain' : ''}${
                             (modalHeroImage || selectedProject.image) === mediaUrl ? ' modal-thumb-active' : ''
                           }`}
                           onClick={() => {

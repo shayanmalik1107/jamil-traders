@@ -5,37 +5,68 @@ import { PROJECTS, EXPERTISE_AREAS, Project, getYoutubeEmbedUrl } from '@/lib/da
 import ProjectCard from '@/components/ProjectCard';
 
 const CLIENT_LOGOS = [
-  // Existing logos
-  { src: '/logo/ajlogo.png', alt: 'AJ Enterprises' },
-  { src: '/logo/Bold Generation Wordmark.png', alt: 'Bold Generation' },
-  { src: '/logo/Farooq Hospital West Wood Logo.png', alt: 'Farooq Hospital' },
-  { src: '/logo/Golden Family Emblem.png', alt: 'Golden Family' },
-  { src: '/logo/Shalamar Hospital Logo.png', alt: 'Shalamar Hospital' },
-  { src: '/logo/The United Mall Logo.png', alt: 'The United Mall' },
-  // HD Logos
-  { src: '/hdlogo/Al-Fatah Heritage Logo.png', alt: 'Al-Fatah' },
-  { src: '/hdlogo/Aqsa Mall Boutique Display.png', alt: 'Aqsa Mall' },
-  { src: '/hdlogo/Bank AL Habib Heraldic Green Crest.png', alt: 'Bank Al Habib' },
-  { src: '/hdlogo/Bold White ECS Monogram on Red.png', alt: 'ECS' },
-  { src: '/hdlogo/Cambridge® Minimalist Blue Wordmark.png', alt: 'Cambridge' },
-  { src: '/hdlogo/Canal City Housing Society Logo.png', alt: 'Canal City' },
-  { src: '/hdlogo/Counter Terrorism Department Eagle Badge.png', alt: 'Counter Terrorism Department' },
-  { src: '/hdlogo/DIN Group Geometric Logo.png', alt: 'DIN Group' },
-  { src: '/hdlogo/Elegant Gold Floral C Emblem Logo.png', alt: 'Elegant Gold' },
-  { src: '/hdlogo/Garrison Academy Multan Crest.png', alt: 'Garrison Academy Multan' },
-  { src: '/hdlogo/Glossy Gold Nishat Wordmark.png', alt: 'Nishat' },
-  { src: '/hdlogo/MCB Bank for Life Logo.png', alt: 'MCB Bank' },
-  { src: '/hdlogo/Meraj Housing Luxury Living Logo.png', alt: 'Meraj Housing' },
-  { src: '/hdlogo/Metro Shoes Branding Logo.png', alt: 'Metro Shoes' },
-  { src: '/hdlogo/Monochrome Shipping Container Logo.png', alt: 'Shipping Container' },
-  { src: '/hdlogo/Orange Cougar Crest Logo.png', alt: 'Orange Cougar' },
-  { src: '/hdlogo/Raja Sahib Shopping Mall Logo.png', alt: 'Raja Sahib Mall' },
-  { src: '/hdlogo/Red Swoosh and STARLET Logo.png', alt: 'Starlet' },
-  { src: '/hdlogo/Rock Shield Group Emblem.png', alt: 'Rock Shield Group' },
-  { src: '/hdlogo/Royal Residencia Heraldic Crest.png', alt: 'Royal Residencia' },
-  { src: '/hdlogo/Royal Tag Laurel Emblem.png', alt: 'Royal Tag' },
-  { src: '/hdlogo/Uniworth Heritage Shield Logo.png', alt: 'Uniworth' },
-  { src: '/hdlogo/Wapda Town Multan Entrance Gate.png', alt: 'Wapda Town Multan' },
+  // HD Logos l1-l29 (in order)
+  { src: '/hdlogo/l1.png', alt: '' },
+  { src: '/hdlogo/l2.png', alt: '' },
+  { src: '/hdlogo/l3.png', alt: '' },
+  { src: '/hdlogo/l4.png', alt: '' },
+  { src: '/hdlogo/l5.png', alt: '' },
+  { src: '/hdlogo/l7.png', alt: '' },
+  { src: '/hdlogo/l8.png', alt: '' },
+  { src: '/hdlogo/l9.png', alt: '' },
+  { src: '/hdlogo/l10.png', alt: '' },
+  { src: '/hdlogo/l11.jpeg', alt: '' },
+  { src: '/hdlogo/l12.png', alt: '' },
+  { src: '/hdlogo/l13.png', alt: '' },
+  { src: '/hdlogo/l14.png', alt: '' },
+  { src: '/hdlogo/l15.png', alt: '' },
+  { src: '/hdlogo/l16.png', alt: '' },
+  { src: '/hdlogo/l17.png', alt: '' },
+  { src: '/hdlogo/l18.png', alt: '' },
+  { src: '/hdlogo/l19.png', alt: '' },
+  { src: '/hdlogo/l20.png', alt: '' },
+  { src: '/hdlogo/l21.png', alt: '' },
+  { src: '/hdlogo/l22.png', alt: '' },
+  { src: '/hdlogo/l23.png', alt: '' },
+  { src: '/hdlogo/l24.png', alt: '' },
+  { src: '/hdlogo/l25.png', alt: '' },
+  { src: '/hdlogo/l26.png', alt: '' },
+  { src: '/hdlogo/l27.png', alt: '' },
+  { src: '/hdlogo/l28.png', alt: '' },
+  { src: '/hdlogo/l29.png', alt: '' },
+  // Remaining named logos
+  { src: '/hdlogo/ajlogo.png', alt: '' },
+  { src: '/hdlogo/Bold Generation Wordmark.png', alt: '' },
+  { src: '/hdlogo/Elegant Gold Floral C Emblem Logo.png', alt: '' },
+  { src: '/hdlogo/Garrison Academy Multan Crest.png', alt: '' },
+  { src: '/hdlogo/Monochrome Shipping Container Logo.png', alt: '' },
+  { src: '/hdlogo/Royal Residencia Heraldic Crest.png', alt: '' },
+  { src: '/hdlogo/The United Mall Logo.png', alt: '' },
+  { src: '/logo/ajlogo.png', alt: '' },
+  { src: '/logo/Bold Generation Wordmark.png', alt: '' },
+  { src: '/logo/Farooq Hospital West Wood Logo.png', alt: '' },
+  { src: '/logo/Golden Family Emblem.png', alt: '' },
+  { src: '/logo/Shalamar Hospital Logo.png', alt: '' },
+  { src: '/logo/The United Mall Logo.png', alt: '' },
+  { src: '/hdlogo/Al-Fatah Heritage Logo.png', alt: '' },
+  { src: '/hdlogo/Aqsa Mall Boutique Display.png', alt: '' },
+  { src: '/hdlogo/Bank AL Habib Heraldic Green Crest.png', alt: '' },
+  { src: '/hdlogo/Bold White ECS Monogram on Red.png', alt: '' },
+  { src: '/hdlogo/Cambridge® Minimalist Blue Wordmark.png', alt: '' },
+  { src: '/hdlogo/Canal City Housing Society Logo.png', alt: '' },
+  { src: '/hdlogo/Counter Terrorism Department Eagle Badge.png', alt: '' },
+  { src: '/hdlogo/DIN Group Geometric Logo.png', alt: '' },
+  { src: '/hdlogo/Glossy Gold Nishat Wordmark.png', alt: '' },
+  { src: '/hdlogo/MCB Bank for Life Logo.png', alt: '' },
+  { src: '/hdlogo/Meraj Housing Luxury Living Logo.png', alt: '' },
+  { src: '/hdlogo/Metro Shoes Branding Logo.png', alt: '' },
+  { src: '/hdlogo/Orange Cougar Crest Logo.png', alt: '' },
+  { src: '/hdlogo/Raja Sahib Shopping Mall Logo.png', alt: '' },
+  { src: '/hdlogo/Red Swoosh and STARLET Logo.png', alt: '' },
+  { src: '/hdlogo/Rock Shield Group Emblem.png', alt: '' },
+  { src: '/hdlogo/Royal Tag Laurel Emblem.png', alt: '' },
+  { src: '/hdlogo/Uniworth Heritage Shield Logo.png', alt: '' },
+  { src: '/hdlogo/Wapda Town Multan Entrance Gate.png', alt: '' },
 ];
 
 export default function HomeSections() {
@@ -489,13 +520,25 @@ export default function HomeSections() {
                         setIsPlayingHeroVideo(true);
                       }
                     }}
-                    style={{ cursor: selectedProject.youtubeUrl ? 'pointer' : 'default', width: '100%', height: '100%', position: 'relative' }}
+                    style={{
+                      cursor: selectedProject.youtubeUrl ? 'pointer' : 'default',
+                      width: '100%',
+                      height: '100%',
+                      position: 'relative',
+                    }}
                   >
-                    <img
-                      src={modalHeroImage || selectedProject.image}
-                      alt={selectedProject.title}
-                      className="project-modal-hero-img"
-                    />
+                    {selectedProject.imageFit === 'blurred' ? (
+                      <div className="blurred-letterbox-wrap">
+                        <img src={modalHeroImage || selectedProject.image} aria-hidden="true" className="blurred-letterbox-bg" alt="" />
+                        <img src={modalHeroImage || selectedProject.image} alt={selectedProject.title} className="blurred-letterbox-fg" />
+                      </div>
+                    ) : (
+                      <img
+                        src={modalHeroImage || selectedProject.image}
+                        alt={selectedProject.title}
+                        className="project-modal-hero-img"
+                      />
+                    )}
                     {selectedProject.youtubeUrl && (
                       <button
                         type="button"
@@ -559,6 +602,20 @@ export default function HomeSections() {
                           className="project-gallery-img"
                           style={{ objectFit: 'cover', width: '100%', height: '100%' }}
                         />
+                      ) : selectedProject.imageFit === 'blurred' ? (
+                        <div
+                          key={i}
+                          className={`blurred-letterbox-thumb${
+                            (modalHeroImage || selectedProject.image) === mediaUrl ? ' modal-thumb-active' : ''
+                          }`}
+                          onClick={() => {
+                            setModalHeroImage(mediaUrl);
+                            setIsPlayingHeroVideo(false);
+                          }}
+                        >
+                          <img src={mediaUrl} aria-hidden="true" className="blurred-letterbox-bg" alt="" />
+                          <img src={mediaUrl} alt={`${selectedProject.title} view ${i + 1}`} className="blurred-letterbox-fg" />
+                        </div>
                       ) : (
                         <img
                           key={i}

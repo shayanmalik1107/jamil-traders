@@ -14,6 +14,7 @@ export interface Project {
   luminairesUsed: string[];
   gallery: string[];
   youtubeUrl?: string;
+  imageFit?: 'cover' | 'contain' | 'fill' | 'blurred';
 }
 
 export function getYoutubeEmbedUrl(url?: string): string {
@@ -108,6 +109,7 @@ export const PROJECTS: Project[] = [
     category: 'Landscape & Outdoor',
     categorySlug: 'outdoor',
     image: '/c1.jpeg',
+    imageFit: 'blurred',
     client: 'Box Club Hospitality',
     year: '2024',
     challenge: 'Execute turnkey architectural outdoor illumination for Box Club on Pine Avenue, Lahore — a premium open-air hospitality lounge requiring pathway lighting, high-output spike uplights, linear wall-washer lights, and IP67-rated profile lights in the seating area.',
