@@ -58,10 +58,12 @@ export interface Product {
     type?: string;
     effect?: string;
     voltage?: string;
+    frequency?: string;
     controlType?: string;
     control?: string;
     beamAngle?: string;
     chipBrand?: string;
+    ledDensity?: string;
     projectionDistance?: string;
     operatingTemp?: string;
     lifetime?: string;
@@ -242,28 +244,23 @@ export const PROJECTS: Project[] = [
     location: '45B, Model Town, Lahore',
     category: 'Landscape & Outdoor',
     categorySlug: 'outdoor',
-    image: '/1.jpeg',
-    youtubeUrl: 'https://youtube.com/shorts/kvwXw8-syEM',
+    image: '/O1.jpeg',
     client: 'Private Residence',
     year: '2024',
-    challenge: 'Execute complete outdoor lighting for a luxury residence at 45B, Model Town, Lahore, incorporating perimeter walkway grazing, tropical palm tree uplighting, architectural pergola warm coves, and lawn feature spotlights.',
-    approach: 'Engineered an IP67 weather-resistant landscape illumination architecture utilizing continuous warm ground pathway linear profiles, marine-grade adjustable tree spike projectors, and glare-free exterior architectural grazing lights.',
-    solution: 'Turnkey supply and precision electrical installation of outdoor luminaires, transforming the exterior landscape into an enchanting evening sanctuary with seamless optical control and durability.',
+    challenge: 'In this project in Model Town, we completed the landscape lighting work. Scope of work: Residence Model Town project, complete landscape lighting.',
+    approach: 'Before installing the lights, we carried out proper waterproofing along the entire installation line to minimize the risk of water ingress and other potential issues.',
+    solution: 'After completing the waterproofing, our skilled technicians professionally installed the lighting fixtures, ensuring reliable performance and long-term durability.',
     luminairesUsed: [
-      'Terra Bollard Outdoor Path Luminaire',
-      'AquaLed Submersible & Garden Spike Projector IP68',
-      'FacadeGraze IP67 Exterior Projector',
-      'Warm Pathway Linear Grazing Strip IP67',
-      'Architectural Pergola Warm Cove Light'
+      '12W Spike Light (Bridgelux Chip, 0.95 PF, CRI 80)',
+      'Waterproof Rope Light (High Lumens Chip)'
     ],
     gallery: [
-      '/1.jpeg',
-      '/2.jpeg',
-      '/3.jpeg',
-      '/4.jpeg',
-      '/5.jpeg',
-      '/6.jpeg',
-      '/7.jpeg'
+      '/O1.jpeg',
+      '/O2.jpeg',
+      '/O3.jpeg',
+      '/O4.jpeg',
+      '/O5.jpeg',
+      '/O6.jpeg'
     ]
   },
   {
@@ -519,6 +516,7 @@ export const PRODUCTS: Product[] = [
       '/p2.png',
       '/p3.png',
       '/p4.jpeg',
+      '/p5.jpeg',
     ],
     description: 'Premium recessed COB downlight engineered with a high-performance Bridgelux LED chip for exceptional color fidelity and light quality. Available in 7W and 12W options with an outstanding CRI of 95, this downlight delivers accurate, natural-looking illumination across a wide range of color temperatures — ideal for residential, retail, and commercial interior spaces.',
     applications: [
@@ -621,6 +619,121 @@ export const PRODUCTS: Product[] = [
       lifetime: '≥ 50,000 Hours',
       warranty: '3 Years Warranty',
     },
+  },
+  {
+    id: 'prod-15',
+    name: 'Spike Light',
+    category: 'Outdoor Lighting',
+    categorySlug: 'outdoor',
+    environment: 'Outdoor',
+    image: '/spike-light1.jpg',
+    gallery: [
+      '/spike-light1.jpg',
+      '/spike-light2.jpg'
+    ],
+    description: 'High-performance outdoor landscape LED spike light engineered with genuine CREE LED chips and robust die-cast aluminium construction. Featuring 10W power, a focused 30° beam angle, 3000K warm white illumination, 80 CRI, 0.95 power factor, and IP66 weatherproofing with a 3-year warranty for reliable garden, tree uplighting, and exterior architectural illumination.',
+    applications: [
+      'Landscape & Garden Illumination',
+      'Tree & Palm Uplighting',
+      'Pathway & Walkway Accenting',
+      'Architectural Facade Grazing',
+      'Lawn & Shrub Feature Lighting',
+      'Outdoor Courtyards & Private Residences'
+    ],
+    specs: {
+      type: 'Outdoor LED Spike Light',
+      wattage: '10W',
+      cri: '80',
+      beamAngle: '30°',
+      chipBrand: 'CREE',
+      colorTemp: '3000K / Warm White',
+      powerFactor: '0.95 PF',
+      voltage: '220–240VAC',
+      frequency: '50 Hz',
+      ipRating: 'IP66 Weatherproof',
+      material: 'Die-Cast Aluminium',
+      warranty: '3 Years Warranty',
+      lumenOutput: 'High Output CREE LED Lumens',
+      dimensions: 'Compact Outdoor Landscape Spike Fixture with Adjustable Bracket',
+      optics: '30° Concentrated Optical Lens Array',
+      lifetime: '≥ 50,000 Hours'
+    }
+  },
+  {
+    id: 'prod-16',
+    name: 'Diamond Spike Light',
+    category: 'Outdoor Lighting',
+    categorySlug: 'outdoor',
+    environment: 'Outdoor',
+    image: '/diamond-spike.jpeg',
+    gallery: [
+      '/diamond-spike.jpeg'
+    ],
+    description: 'Distinctive faceted geometric architectural outdoor spike light featuring a precision diamond-cut die-cast aluminium housing and authentic CREE LED chips. Delivers clean 3000K warm white accent illumination with an 80 CRI, 30° focused beam angle, 0.95 power factor, and IP66 heavy-duty weatherproofing with a 3-year warranty for contemporary landscape and exterior feature illumination.',
+    applications: [
+      'Architectural & Contemporary Landscape Design',
+      'Tree & Specimen Shrub Uplighting',
+      'Garden Feature & Sculpture Accentuation',
+      'Perimeter Walkways & Courtyard Borders',
+      'Luxury Residential Facade Lighting',
+      'Modern Hospitality Gardens & Terraces'
+    ],
+    specs: {
+      type: 'Diamond Faceted Outdoor Spike Light',
+      wattage: '10W',
+      cri: '80',
+      beamAngle: '30°',
+      chipBrand: 'CREE',
+      colorTemp: '3000K / Warm White',
+      powerFactor: '0.95 PF',
+      voltage: '220–240VAC',
+      frequency: '50 Hz',
+      ipRating: 'IP66 Weatherproof',
+      material: 'Die-Cast Aluminium (Faceted Diamond Design)',
+      warranty: '3 Years Warranty',
+      lumenOutput: 'High Output CREE LED Lumens',
+      dimensions: 'Faceted Diamond Outdoor Landscape Fixture with Directional Bracket',
+      optics: '30° Multi-Facet Concentrated Lens Array',
+      lifetime: '≥ 50,000 Hours'
+    }
+  },
+  {
+    id: 'prod-17',
+    name: 'Flexible LED Wall Washer Strip',
+    category: 'Outdoor Lighting',
+    categorySlug: 'outdoor',
+    environment: 'Outdoor',
+    image: '/S1.jpg',
+    gallery: [
+      '/S1.jpg',
+      '/S2.jpg',
+      '/S3.jpg'
+    ],
+    description: 'Architectural flexible outdoor LED wall washer strip engineered for seamless linear and contoured facade grazing. Operating at 24V DC with high-performance SMD 2835 LEDs at 42 LEDs/m (24W/m), it features precision 30° optical lenses, 4000K clean neutral white illumination, compact 20 × 10 mm dimensions, and robust IP65 weatherproof encapsulation backed by a 2-year warranty.',
+    applications: [
+      'Curved & Linear Architectural Facade Grazing',
+      'Building Exterior Walls & Textured Cladding',
+      'Parapet, Rooflines & Balcony Coves',
+      'Perimeter Grazing & Landscape Retaining Walls',
+      'Hotel, Commercial & Residential Exterior Highlights',
+      'Outdoor Step, Pathway & Canopy Accent Lighting'
+    ],
+    specs: {
+      type: 'Flexible LED Wall Washer Strip',
+      wattage: '24W/m',
+      voltage: '24V DC',
+      chipBrand: 'SMD 2835',
+      ledDensity: '42 LEDs/m',
+      colorTemp: '4000K (Neutral White)',
+      beamAngle: '30° Focused Optical Wall Washer Lens',
+      dimensions: '20 × 10 mm',
+      ipRating: 'IP65 Weatherproof',
+      warranty: '2 Years Warranty',
+      lumenOutput: 'High Output Architectural Wall Grazing Lumens',
+      optics: '30° Individual Precision Optical Lenses',
+      material: 'Flexible UV-Resistant Silicone / Polymer Encapsulation',
+      lifetime: '≥ 50,000 Hours'
+    }
   },
 ];
 

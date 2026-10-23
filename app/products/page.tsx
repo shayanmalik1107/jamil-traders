@@ -23,6 +23,13 @@ function ProductCatalogueContent() {
     if (cat) {
       setSelectedCategory(cat);
     }
+    const prodId = searchParams.get('id') || searchParams.get('product');
+    if (prodId) {
+      const match = PRODUCTS.find((p) => p.id.toLowerCase() === prodId.toLowerCase());
+      if (match) {
+        setSelectedProduct(match);
+      }
+    }
   }, [searchParams]);
 
   const categories = [
@@ -258,6 +265,12 @@ function ProductCatalogueContent() {
                           <strong>{selectedProduct.specs.voltage}</strong>
                         </div>
                       )}
+                      {selectedProduct.specs.frequency && (
+                        <div className="spec-row">
+                          <span>FREQUENCY:</span>
+                          <strong>{selectedProduct.specs.frequency}</strong>
+                        </div>
+                      )}
                       <div className="spec-row">
                         <span>LUMEN OUTPUT:</span>
                         <strong>{selectedProduct.specs.lumenOutput}</strong>
@@ -296,6 +309,12 @@ function ProductCatalogueContent() {
                         <div className="spec-row">
                           <span>LED ENGINE:</span>
                           <strong>{selectedProduct.specs.chipBrand}</strong>
+                        </div>
+                      )}
+                      {selectedProduct.specs.ledDensity && (
+                        <div className="spec-row">
+                          <span>LED DENSITY:</span>
+                          <strong>{selectedProduct.specs.ledDensity}</strong>
                         </div>
                       )}
                       {selectedProduct.specs.cri && (

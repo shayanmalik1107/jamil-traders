@@ -1,17 +1,33 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 import { ArrowRight, X, CheckCircle2, Play } from 'lucide-react';
 import { PROJECTS, Project, getYoutubeEmbedUrl } from '@/lib/data';
 import ProjectCard from '@/components/ProjectCard';
 
-export default function ProjectsPage() {
+function ProjectsPageContent() {
+  const searchParams = useSearchParams();
   const [activeFilter, setActiveFilter] = useState<string>('ALL');
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [activeVideoUrl, setActiveVideoUrl] = useState<string | null>(null);
   const [isPlayingHeroVideo, setIsPlayingHeroVideo] = useState<boolean>(false);
   const [modalHeroImage, setModalHeroImage] = useState<string | null>(null);
+
+  useEffect(() => {
+    const cat = searchParams.get('category');
+    if (cat) {
+      setActiveFilter(cat.toLowerCase());
+    }
+    const projId = searchParams.get('id') || searchParams.get('project');
+    if (projId) {
+      const match = PROJECTS.find((p) => p.id.toLowerCase() === projId.toLowerCase());
+      if (match) {
+        setSelectedProject(match);
+      }
+    }
+  }, [searchParams]);
 
   const filters = [
     { label: 'ALL', value: 'ALL' },
@@ -316,6 +332,14 @@ export default function ProjectsPage() {
         </div>
       )}
     </main>
+  );
+}
+
+export default function ProjectsPage() {
+  return (
+    <Suspense fallback={<div className="page-loading-skeleton" style={{ minHeight: '60vh' }} />}>
+      <ProjectsPageContent />
+    </Suspense>
   );
 }
 
