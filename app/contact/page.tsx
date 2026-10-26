@@ -206,7 +206,7 @@ export default function ContactPage() {
             <div className="contact-details-col">
               {/* WhatsApp Quick Action */}
               <a
-                href="https://wa.me/923008456789?text=Hello%20Jameel%20Traders,%20I%20would%20like%20to%20discuss%20a%20lighting%20project."
+                href="https://wa.me/923334207691?text=Hello%20Jameel%20Traders,%20I%20would%20like%20to%20discuss%20a%20lighting%20project."
                 target="_blank"
                 rel="noopener noreferrer"
                 className="whatsapp-action-card"
@@ -229,21 +229,21 @@ export default function ContactPage() {
                     <MapPin size={18} className="info-icon" />
                     <div>
                       <strong>Lahore Showroom & Head Office</strong>
-                      <span>Main Boulevard, Gulberg III, Lahore, Pakistan</span>
+                      <span>90C, Second Floor, DHA Phase 8, Commercial Broadway, Lahore, Pakistan</span>
                     </div>
                   </li>
                   <li>
                     <Phone size={18} className="info-icon" />
                     <div>
                       <strong>Telephone & WhatsApp</strong>
-                      <span>+92 (042) 3578-9000 / <a href="https://wa.me/923008456789" target="_blank" rel="noopener noreferrer" style={{ color: '#25D366', textDecoration: 'none', fontWeight: 600 }}>+92 300 8456-789 <WhatsAppIcon size={14} color="#25D366" style={{ display: 'inline-block', verticalAlign: 'middle', marginLeft: 3 }} /></a></span>
+                      <span><a href="https://wa.me/923334207691" target="_blank" rel="noopener noreferrer" style={{ color: '#25D366', textDecoration: 'none', fontWeight: 600 }}>03334207691 <WhatsAppIcon size={14} color="#25D366" style={{ display: 'inline-block', verticalAlign: 'middle', marginLeft: 3 }} /></a></span>
                     </div>
                   </li>
                   <li>
                     <Mail size={18} className="info-icon" />
                     <div>
                       <strong>Email Inquiries</strong>
-                      <span>info@jameeltraders.com</span>
+                      <span><a href="mailto:jamiltraders1972@gmail.com" style={{ color: 'inherit', textDecoration: 'none' }}>jamiltraders1972@gmail.com</a></span>
                     </div>
                   </li>
                   <li>
