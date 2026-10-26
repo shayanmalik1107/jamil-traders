@@ -120,6 +120,32 @@ function ProductCatalogueContent() {
                   <div className="product-card-img-wrap" onClick={handleOpen}>
                     <img src={product.image} alt={product.name} className="product-card-img" />
                     <div className="product-card-env-badge">{product.environment}</div>
+                    {product.specs.finishColor && (
+                      <div
+                        style={{
+                          position: 'absolute',
+                          bottom: '10px',
+                          left: '10px',
+                          background: 'rgba(15, 23, 42, 0.88)',
+                          backdropFilter: 'blur(6px)',
+                          color: '#f8fafc',
+                          padding: '3px 8px',
+                          borderRadius: '12px',
+                          fontSize: '0.64rem',
+                          fontWeight: 700,
+                          letterSpacing: '0.04em',
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '6px',
+                          border: '1px solid rgba(255, 255, 255, 0.18)',
+                          boxShadow: '0 2px 8px rgba(0,0,0,0.25)'
+                        }}
+                      >
+                        <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#ffffff', border: '1px solid #cbd5e1' }} />
+                        <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#000000', border: '1px solid #64748b' }} />
+                        <span>WHITE &amp; BLACK</span>
+                      </div>
+                    )}
                   </div>
 
                   <div className="product-card-body">
@@ -131,6 +157,12 @@ function ProductCatalogueContent() {
                       <span>{product.specs.wattage}</span>
                       <span>•</span>
                       <span>{product.specs.colorTemp}</span>
+                      {product.specs.finishColor && (
+                        <>
+                          <span>•</span>
+                          <span style={{ color: '#C8102E', fontWeight: 600 }}>{product.specs.finishColor}</span>
+                        </>
+                      )}
                     </div>
 
                     <div className="product-card-actions">
@@ -297,6 +329,43 @@ function ProductCatalogueContent() {
                         <div className="spec-row">
                           <span>MATERIAL & HOUSING:</span>
                           <strong>{selectedProduct.specs.material}</strong>
+                        </div>
+                      )}
+                      {selectedProduct.specs.finishColor && (
+                        <div className="spec-row">
+                          <span>AVAILABLE COLORS:</span>
+                          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
+                            <span style={{
+                              display: 'inline-flex',
+                              alignItems: 'center',
+                              gap: '5px',
+                              padding: '2px 8px',
+                              borderRadius: '4px',
+                              border: '1px solid #cbd5e1',
+                              background: '#ffffff',
+                              color: '#0f172a',
+                              fontSize: '0.75rem',
+                              fontWeight: 700
+                            }}>
+                              <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#ffffff', border: '1px solid #94a3b8' }} />
+                              White
+                            </span>
+                            <span style={{
+                              display: 'inline-flex',
+                              alignItems: 'center',
+                              gap: '5px',
+                              padding: '2px 8px',
+                              borderRadius: '4px',
+                              border: '1px solid #334155',
+                              background: '#0f172a',
+                              color: '#f8fafc',
+                              fontSize: '0.75rem',
+                              fontWeight: 700
+                            }}>
+                              <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#000000', border: '1px solid #64748b' }} />
+                              Black
+                            </span>
+                          </div>
                         </div>
                       )}
                       {selectedProduct.specs.controlType && (

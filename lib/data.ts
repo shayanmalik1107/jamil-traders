@@ -70,6 +70,7 @@ export interface Product {
     cri?: string;
     powerFactor?: string;
     warranty?: string;
+    finishColor?: string;
   };
 }
 
@@ -732,6 +733,45 @@ export const PRODUCTS: Product[] = [
       lumenOutput: 'High Output Architectural Wall Grazing Lumens',
       optics: '30° Individual Precision Optical Lenses',
       material: 'Flexible UV-Resistant Silicone / Polymer Encapsulation',
+      lifetime: '≥ 50,000 Hours'
+    }
+  },
+  {
+    id: 'prod-18',
+    name: 'Linear Hanging Spot Light',
+    category: 'Commercial Lighting',
+    categorySlug: 'commercial',
+    environment: 'Indoor',
+    image: '/H2.jpeg',
+    gallery: [
+      '/H2.jpeg',
+      '/H1.jpeg',
+      '/H3.jpeg'
+    ],
+    description: 'Suspended architectural linear spot light engineered for contemporary commercial spaces, executive offices, and retail showrooms. Equipped with authentic OSRAM LED chips delivering 48W of crisp 4000K neutral white illumination with high 0.95 power factor and 24° low-glare optical spot reflectors. Precision-machined from extruded aluminium and available in both architectural White and Black finishes with a 2-year warranty.',
+    applications: [
+      'Commercial Offices & Workspaces',
+      'Conference Rooms & Boardrooms',
+      'Retail Stores & Showrooms',
+      'Architectural Design Studios',
+      'Reception Desks & Counters',
+      'Educational & Institutional Facilities'
+    ],
+    specs: {
+      type: 'Suspended Linear Spot Light',
+      wattage: '48W',
+      colorTemp: '4000K (Neutral White)',
+      chipBrand: 'OSRAM',
+      powerFactor: '0.95',
+      beamAngle: '24°',
+      ipRating: 'IP20',
+      voltage: 'AC85–265V',
+      dimensions: 'L1145 * W43 * H75mm',
+      material: 'Aluminium',
+      finishColor: 'White & Black',
+      warranty: '2 Years',
+      lumenOutput: 'High Output Commercial Spot Lumens',
+      optics: '24° Precision Anti-Glare Louvered Reflectors',
       lifetime: '≥ 50,000 Hours'
     }
   },
