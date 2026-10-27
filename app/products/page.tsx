@@ -291,6 +291,44 @@ function ProductCatalogueContent() {
                         <span>WATTAGE:</span>
                         <strong>{selectedProduct.specs.wattage}</strong>
                       </div>
+                      {selectedProduct.specs.chipBrand && (
+                        <div className="spec-row">
+                          <span>LED ENGINE:</span>
+                          <strong>{selectedProduct.specs.chipBrand}</strong>
+                        </div>
+                      )}
+                      {selectedProduct.specs.powerFactor && (
+                        <div className="spec-row">
+                          <span>POWER FACTOR (PF):</span>
+                          <strong>{selectedProduct.specs.powerFactor}</strong>
+                        </div>
+                      )}
+                      {selectedProduct.specs.beamAngle && (
+                        <div className="spec-row">
+                          <span>BEAM ANGLE:</span>
+                          <strong>{selectedProduct.specs.beamAngle}</strong>
+                        </div>
+                      )}
+                      {selectedProduct.specs.optics && (
+                        <div className="spec-row">
+                          <span>OPTICS / BEAM:</span>
+                          <strong>{selectedProduct.specs.optics}</strong>
+                        </div>
+                      )}
+                      {selectedProduct.specs.cri && (
+                        <div className="spec-row">
+                          <span>COLOR RENDERING (CRI):</span>
+                          <strong style={{ color: '#C8102E' }}>{selectedProduct.specs.cri}</strong>
+                        </div>
+                      )}
+                      <div className="spec-row">
+                        <span>COLOR TEMPERATURE:</span>
+                        <strong>{selectedProduct.specs.colorTemp}</strong>
+                      </div>
+                      <div className="spec-row">
+                        <span>LUMEN OUTPUT:</span>
+                        <strong>{selectedProduct.specs.lumenOutput}</strong>
+                      </div>
                       {selectedProduct.specs.voltage && (
                         <div className="spec-row">
                           <span>INPUT VOLTAGE:</span>
@@ -303,32 +341,28 @@ function ProductCatalogueContent() {
                           <strong>{selectedProduct.specs.frequency}</strong>
                         </div>
                       )}
-                      <div className="spec-row">
-                        <span>LUMEN OUTPUT:</span>
-                        <strong>{selectedProduct.specs.lumenOutput}</strong>
-                      </div>
-                      <div className="spec-row">
-                        <span>COLOR TEMPERATURE:</span>
-                        <strong>{selectedProduct.specs.colorTemp}</strong>
-                      </div>
-                      <div className="spec-row">
-                        <span>DIMENSIONS:</span>
-                        <strong>{selectedProduct.specs.dimensions}</strong>
-                      </div>
-                      <div className="spec-row">
-                        <span>IP RATING:</span>
-                        <strong>{selectedProduct.specs.ipRating}</strong>
-                      </div>
-                      {selectedProduct.specs.optics && (
+                      {(selectedProduct.specs.controlType || selectedProduct.specs.control) && (
                         <div className="spec-row">
-                          <span>OPTICS / BEAM:</span>
-                          <strong>{selectedProduct.specs.optics}</strong>
+                          <span>CONTROL TYPE:</span>
+                          <strong>{selectedProduct.specs.controlType || selectedProduct.specs.control}</strong>
                         </div>
                       )}
-                      {selectedProduct.specs.material && (
+                      {selectedProduct.specs.projectionDistance && (
                         <div className="spec-row">
-                          <span>MATERIAL & HOUSING:</span>
-                          <strong>{selectedProduct.specs.material}</strong>
+                          <span>PROJECTION DISTANCE:</span>
+                          <strong>{selectedProduct.specs.projectionDistance}</strong>
+                        </div>
+                      )}
+                      {selectedProduct.specs.ledDensity && (
+                        <div className="spec-row">
+                          <span>LED DENSITY:</span>
+                          <strong>{selectedProduct.specs.ledDensity}</strong>
+                        </div>
+                      )}
+                      {selectedProduct.specs.operatingTemp && (
+                        <div className="spec-row">
+                          <span>OPERATING TEMP:</span>
+                          <strong>{selectedProduct.specs.operatingTemp}</strong>
                         </div>
                       )}
                       {selectedProduct.specs.finishColor && (
@@ -368,52 +402,18 @@ function ProductCatalogueContent() {
                           </div>
                         </div>
                       )}
-                      {selectedProduct.specs.controlType && (
+                      <div className="spec-row">
+                        <span>DIMENSIONS:</span>
+                        <strong>{selectedProduct.specs.dimensions}</strong>
+                      </div>
+                      <div className="spec-row">
+                        <span>IP RATING:</span>
+                        <strong>{selectedProduct.specs.ipRating}</strong>
+                      </div>
+                      {selectedProduct.specs.material && (
                         <div className="spec-row">
-                          <span>CONTROL TYPE:</span>
-                          <strong>{selectedProduct.specs.controlType}</strong>
-                        </div>
-                      )}
-                      {selectedProduct.specs.chipBrand && (
-                        <div className="spec-row">
-                          <span>LED ENGINE:</span>
-                          <strong>{selectedProduct.specs.chipBrand}</strong>
-                        </div>
-                      )}
-                      {selectedProduct.specs.ledDensity && (
-                        <div className="spec-row">
-                          <span>LED DENSITY:</span>
-                          <strong>{selectedProduct.specs.ledDensity}</strong>
-                        </div>
-                      )}
-                      {selectedProduct.specs.cri && (
-                        <div className="spec-row">
-                          <span>COLOR RENDERING (CRI):</span>
-                          <strong style={{ color: '#C8102E' }}>{selectedProduct.specs.cri}</strong>
-                        </div>
-                      )}
-                      {selectedProduct.specs.beamAngle && (
-                        <div className="spec-row">
-                          <span>BEAM ANGLE:</span>
-                          <strong>{selectedProduct.specs.beamAngle}</strong>
-                        </div>
-                      )}
-                      {selectedProduct.specs.powerFactor && (
-                        <div className="spec-row">
-                          <span>POWER FACTOR (PF):</span>
-                          <strong>{selectedProduct.specs.powerFactor}</strong>
-                        </div>
-                      )}
-                      {selectedProduct.specs.projectionDistance && (
-                        <div className="spec-row">
-                          <span>PROJECTION DISTANCE:</span>
-                          <strong>{selectedProduct.specs.projectionDistance}</strong>
-                        </div>
-                      )}
-                      {selectedProduct.specs.operatingTemp && (
-                        <div className="spec-row">
-                          <span>OPERATING TEMP:</span>
-                          <strong>{selectedProduct.specs.operatingTemp}</strong>
+                          <span>MATERIAL & HOUSING:</span>
+                          <strong>{selectedProduct.specs.material}</strong>
                         </div>
                       )}
                       {selectedProduct.specs.lifetime && (
