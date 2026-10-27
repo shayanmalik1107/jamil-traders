@@ -421,7 +421,9 @@ export const PRODUCTS: Product[] = [
       optics: '120° Beam Angle with Dynamic Water Ripple Optical Glass Roller',
       material: 'All-Aluminium Alloy Housing with Dark Grey Anti-Corrosion Spray + 4mm Tempered Glass',
       controlType: 'ON/OFF / DMX512 (4-Channel Controllable)',
-      chipBrand: 'OSRAM High-Performance LED (Ra > 80)',
+      chipBrand: 'OSRAM High-Performance LED',
+      beamAngle: '120°',
+      cri: '80',
       projectionDistance: '3–6M / 5–10M',
       operatingTemp: '-40°C to +60°C (RTD Real-Time Temperature Protection)',
       lifetime: '≥ 50,000 Hours (light attenuation < 10%)'

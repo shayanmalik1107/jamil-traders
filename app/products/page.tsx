@@ -309,22 +309,16 @@ function ProductCatalogueContent() {
                           <strong>{selectedProduct.specs.beamAngle}</strong>
                         </div>
                       )}
-                      {selectedProduct.specs.optics && (
-                        <div className="spec-row">
-                          <span>OPTICS / BEAM:</span>
-                          <strong>{selectedProduct.specs.optics}</strong>
-                        </div>
-                      )}
+                      <div className="spec-row">
+                        <span>COLOR TEMPERATURE:</span>
+                        <strong>{selectedProduct.specs.colorTemp}</strong>
+                      </div>
                       {selectedProduct.specs.cri && (
                         <div className="spec-row">
                           <span>COLOR RENDERING (CRI):</span>
                           <strong style={{ color: '#C8102E' }}>{selectedProduct.specs.cri}</strong>
                         </div>
                       )}
-                      <div className="spec-row">
-                        <span>COLOR TEMPERATURE:</span>
-                        <strong>{selectedProduct.specs.colorTemp}</strong>
-                      </div>
                       <div className="spec-row">
                         <span>LUMEN OUTPUT:</span>
                         <strong>{selectedProduct.specs.lumenOutput}</strong>
