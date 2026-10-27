@@ -45,6 +45,8 @@ export interface Product {
   environment: 'Indoor' | 'Outdoor' | 'Indoor / Outdoor';
   image: string;
   gallery?: string[];
+  shapeImages?: string[];
+  video?: string;
   description: string;
   applications: string[];
   specs: {
@@ -637,7 +639,7 @@ export const PRODUCTS: Product[] = [
       '/spike-light1.jpg',
       '/spike-light2.jpg'
     ],
-    description: 'High-performance outdoor landscape LED spike light engineered with genuine CREE LED chips and robust die-cast aluminium construction. Featuring 10W power, a focused 30° beam angle, 3000K warm white illumination, 80 CRI, 0.95 power factor, and IP66 weatherproofing with a 3-year warranty for reliable garden, tree uplighting, and exterior architectural illumination.',
+    description: 'High-performance outdoor landscape LED spike light engineered with genuine CREE LED chips and robust die-cast aluminium construction. Featuring 10W power, focused 10° / 30° beam angle options, 3000K warm white illumination, 80 CRI, 0.95 power factor, and IP66 weatherproofing with a 3-year warranty for reliable garden, tree uplighting, and exterior architectural illumination.',
     applications: [
       'Landscape & Garden Illumination',
       'Tree & Palm Uplighting',
@@ -650,7 +652,7 @@ export const PRODUCTS: Product[] = [
       type: 'Outdoor LED Spike Light',
       wattage: '10W',
       cri: '80',
-      beamAngle: '30°',
+      beamAngle: '10°, 30°',
       chipBrand: 'CREE',
       colorTemp: '3000K / Warm White',
       powerFactor: '0.95 PF',
@@ -661,7 +663,7 @@ export const PRODUCTS: Product[] = [
       warranty: '3 Years Warranty',
       lumenOutput: 'High Output CREE LED Lumens',
       dimensions: 'Compact Outdoor Landscape Spike Fixture with Adjustable Bracket',
-      optics: '30° Concentrated Optical Lens Array',
+      optics: '10° / 30° Concentrated Optical Lens Array',
       lifetime: '≥ 50,000 Hours'
     }
   },
@@ -675,7 +677,7 @@ export const PRODUCTS: Product[] = [
     gallery: [
       '/diamond-spike.jpeg'
     ],
-    description: 'Distinctive faceted geometric architectural outdoor spike light featuring a precision diamond-cut die-cast aluminium housing and authentic CREE LED chips. Delivers clean 3000K warm white accent illumination with an 80 CRI, 30° focused beam angle, 0.95 power factor, and IP66 heavy-duty weatherproofing with a 3-year warranty for contemporary landscape and exterior feature illumination.',
+    description: 'Distinctive faceted geometric architectural outdoor spike light featuring a precision diamond-cut die-cast aluminium housing and authentic CREE LED chips. Delivers clean 3000K warm white accent illumination with an 80 CRI, 10° / 30° focused beam angle options, 0.95 power factor, and IP66 heavy-duty weatherproofing with a 3-year warranty for contemporary landscape and exterior feature illumination.',
     applications: [
       'Architectural & Contemporary Landscape Design',
       'Tree & Specimen Shrub Uplighting',
@@ -688,7 +690,7 @@ export const PRODUCTS: Product[] = [
       type: 'Diamond Faceted Outdoor Spike Light',
       wattage: '10W',
       cri: '80',
-      beamAngle: '30°',
+      beamAngle: '10°, 30°',
       chipBrand: 'CREE',
       colorTemp: '3000K / Warm White',
       powerFactor: '0.95 PF',
@@ -699,7 +701,7 @@ export const PRODUCTS: Product[] = [
       warranty: '3 Years Warranty',
       lumenOutput: 'High Output CREE LED Lumens',
       dimensions: 'Faceted Diamond Outdoor Landscape Fixture with Directional Bracket',
-      optics: '30° Multi-Facet Concentrated Lens Array',
+      optics: '10° / 30° Multi-Facet Concentrated Lens Array',
       lifetime: '≥ 50,000 Hours'
     }
   },
@@ -865,8 +867,17 @@ export const PRODUCTS: Product[] = [
     environment: 'Outdoor',
     image: '/O1.png',
     gallery: [
-      '/O1.png'
+      '/O1.png',
+      '/K2.jpeg',
+      '/K3.jpeg',
+      '/K4.jpeg'
     ],
+    shapeImages: [
+      '/k5.jpeg',
+      '/K6.jpeg',
+      '/K7.jpeg'
+    ],
+    video: '/KV.mp4',
     description: 'High-power 100W architectural outdoor LED pattern and gobo projector light engineered with premium aluminium alloy housing and high-precision optical projection lenses. Features AC160–260V input with DC12V 8A output, 4 interchangeable pattern pieces, 1:0.3 precision projection ratio (pattern diameter of 0.3 meters at 1 meter projection distance), dual Master-Slave linkage and DMX512 single control modes, and heavy-duty IP65 weatherproofing backed by a 2-year warranty for architectural lighting, facade projections, and event illumination.',
     applications: [
       'Architectural Lighting',
@@ -890,6 +901,76 @@ export const PRODUCTS: Product[] = [
       material: 'Aluminium Alloy with Adjustable Heavy-Duty Bracket',
       warranty: '2 Years Warranty',
       lumenOutput: 'High-Efficiency 100W Optical Projection Lumens',
+      lifetime: '≥ 50,000 Hours'
+    }
+  },
+  {
+    id: 'prod-22',
+    name: 'Outdoor Logo Projector',
+    category: 'Outdoor Lighting',
+    categorySlug: 'outdoor',
+    environment: 'Outdoor',
+    image: '/OP1.jpeg',
+    gallery: [
+      '/OP1.jpeg',
+      '/OP2.jpeg',
+      '/OP3.jpeg'
+    ],
+    description: 'Commercial-grade 60W architectural outdoor LED logo and monogram projector engineered for high-visibility brand projection on building facades, entryways, walkways, and courtyards. Features AC160–260V input with DC12V 4.5A output, dedicated 1-piece custom pattern projection optics, 1:0.3 precision projection ratio (0.3m projected logo diameter per 1m throw distance), and robust IP65 weatherproof aluminium housing designed for continuous exterior operation.',
+    applications: [
+      'Storefront & Commercial Logo Projection',
+      'Architectural Facade Branding',
+      'Hotel & Restaurant Entryway Illumination',
+      'Plaza & Walkway Brand Advertising',
+      'Corporate Headquarters & Building Signage',
+      'Outdoor Event & Exhibition Displays'
+    ],
+    specs: {
+      type: 'Outdoor LED Logo & Gobo Projector',
+      wattage: '60W',
+      colorTemp: 'High-Luminance Optical Projection',
+      voltage: 'AC160–260V',
+      outputParam: 'DC12V, 4.5A',
+      patterns: '1 Piece (Custom Logo / Gobo Pattern)',
+      projectionRatio: '1:0.3 (Ø 0.3m Pattern at 1m Projection Distance)',
+      dimensions: '220 × 195 × 70 mm',
+      ipRating: 'IP65 Weatherproof',
+      material: 'Aluminium Alloy with Adjustable Heavy-Duty Bracket',
+      warranty: '2 Years Warranty',
+      lumenOutput: 'High-Efficiency 60W Optical Projection Lumens',
+      lifetime: '≥ 50,000 Hours'
+    }
+  },
+  {
+    id: 'prod-23',
+    name: 'Adjustable Display Pole Light',
+    category: 'Retail & Display Lighting',
+    categorySlug: 'interior',
+    environment: 'Indoor',
+    image: '/D1.jpeg',
+    gallery: [
+      '/D1.jpeg'
+    ],
+    description: 'Precision architectural LED adjustable display pole light engineered specifically for luxury showcase counters, jewelry vitrines, watch boutiques, and museum pedestals. Features a 3W high-efficiency LED engine delivering 100 lm/W in 4000K neutral white, an ultra-focused 15° beam angle, high 90 CRI for true gemstone and fabric color fidelity, precision-machined aluminium body, and IP20 rating backed by a 2-year warranty.',
+    applications: [
+      'Jewelry Counters & Luxury Vitrines',
+      'Museum Artifact & Showcase Pedestals',
+      'Watch & Fine Jewelry Display Cases',
+      'Retail Exhibition Booths & Shelving',
+      'High-End Boutique Countertop Accents',
+      'Collectible & Gallery Display Cases'
+    ],
+    specs: {
+      type: 'Adjustable LED Display Pole Spotlight',
+      wattage: '3W',
+      colorTemp: '4000K (Neutral White)',
+      beamAngle: '15°',
+      cri: '90',
+      lumenOutput: '100 lm/W (300 Lumens)',
+      dimensions: 'Slim Adjustable Pole Stem with Swivel Spotlight Head',
+      ipRating: 'IP20',
+      material: 'Aluminium',
+      warranty: '2 Years Warranty',
       lifetime: '≥ 50,000 Hours'
     }
   },

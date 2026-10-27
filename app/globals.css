@@ -4405,6 +4405,25 @@ button.about-seal-badge:hover .about-seal-icon {
   padding: 1rem;
 }
 
+.product-modal-badge {
+  position: absolute;
+  top: 0.85rem;
+  left: 0.85rem;
+  padding: 0.28rem 0.75rem;
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(200, 16, 46, 0.3);
+  border-radius: 999px;
+  font-family: var(--font-sans);
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: #C8102E;
+  z-index: 20;
+  pointer-events: none;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
 .product-applications-tags {
   display: flex;
   flex-wrap: wrap;
