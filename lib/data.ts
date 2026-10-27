@@ -438,9 +438,9 @@ export const PRODUCTS: Product[] = [
     image: '/cob1.png?v=2',
     gallery: [
       '/cob1.png?v=2',
-      '/cob2.png',
-      '/cob3.png',
-      '/cob4.png',
+      '/cob2.png?v=2',
+      '/cob3.png?v=2',
+      '/cob4.png?v=2',
       '/cob5.png?v=2'
     ],
     description: 'Ceiling recessed multi-head adjustable COB linear downlight engineered with independent directional tilt spotlights and deep anti-glare reflectors. Powered by high-efficiency Bridgelux LED chips with superior CRI 95 color fidelity, offering multi-wattage options and precision beam angles for contemporary interior architectural spaces.',
