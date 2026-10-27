@@ -53,7 +53,7 @@ export interface Product {
     wattage: string;
     lumenOutput: string;
     colorTemp: string;
-    dimensions: string;
+    dimensions?: string;
     ipRating: string;
     optics?: string;
     material?: string;
@@ -1003,6 +1003,7 @@ export const PRODUCTS: Product[] = [
       colorTemp: '3000K / 4000K',
       ledDensity: '320 LEDs/m',
       beamAngle: '120° Wide Angle Diffusion',
+      dimensions: '10 mm (W) × 4 mm (H) / 5m Standard Reel',
       lumenOutput: '150 lm/W High Luminous Efficiency',
       ipRating: 'IP67 Waterproof & Weatherproof',
       material: 'Flexible UV-Resistant Silicone Encapsulation',

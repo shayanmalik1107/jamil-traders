@@ -710,10 +710,12 @@ function ProductCatalogueContent() {
                           </div>
                         </div>
                       )}
-                      <div className="spec-row">
-                        <span>DIMENSIONS:</span>
-                        <strong>{selectedProduct.specs.dimensions}</strong>
-                      </div>
+                      {selectedProduct.specs.dimensions && (
+                        <div className="spec-row">
+                          <span>DIMENSIONS:</span>
+                          <strong>{selectedProduct.specs.dimensions}</strong>
+                        </div>
+                      )}
                       <div className="spec-row">
                         <span>IP RATING:</span>
                         <strong>{selectedProduct.specs.ipRating}</strong>
