@@ -783,7 +783,8 @@ export const PRODUCTS: Product[] = [
     environment: 'Outdoor',
     image: '/N1.jpeg',
     gallery: [
-      '/N1.jpeg'
+      '/N1.jpeg',
+      '/N2.jpeg'
     ],
     description: 'High-performance architectural narrow beam exterior flood light engineered with authentic OSRAM LED chips and rugged die-cast aluminium housing with an anti-glare visor hood. Delivering 27W of high-efficiency 2700K warm white illumination with an ultra-concentrated 5° beam angle (with 5°, 10°, and 15° options), 80 CRI, 0.95 power factor, and IP65 weatherproofing backed by a 3-year warranty for precision facade and building elevation illumination.',
     applications: [
@@ -809,6 +810,45 @@ export const PRODUCTS: Product[] = [
       lumenOutput: 'High Output OSRAM LED Lumens',
       dimensions: 'Compact Architectural Flood Fixture with Visor & Directional Mounting Bracket',
       optics: '5° / 10° / 15° Precision Concentrated Optical Lens Array',
+      lifetime: '≥ 50,000 Hours'
+    }
+  },
+  {
+    id: 'prod-20',
+    name: 'LED Wall Washer Light',
+    category: 'Outdoor Lighting',
+    categorySlug: 'outdoor',
+    environment: 'Outdoor',
+    image: '/W1.jpeg',
+    gallery: [
+      '/W1.jpeg',
+      '/W2.jpeg',
+      '/W3.jpeg'
+    ],
+    description: 'High-performance outdoor architectural linear LED wall washer light engineered with authentic Philips Lumileds LED chips and heavy-duty die-cast and extruded aluminium housing with an anti-glare shield. Available in 18W (510mm) and 36W (990mm) configurations featuring specialized 10×60° asymmetric beam optics, 2700K warm white illumination, 80 CRI, 0.95 power factor, dual 24V DC / AC220V input voltage compatibility, and IP65 weatherproofing backed by a 3-year warranty for facade grazing and elevation lighting.',
+    applications: [
+      'Facade Lighting',
+      'Building Elevation Grazing',
+      'Architectural Wall Washing',
+      'Bridges & Overpasses',
+      'Commercial & Hotel Exterior Accents',
+      'Perimeter & Boundary Wall Illumination'
+    ],
+    specs: {
+      type: 'Architectural Linear LED Wall Washer',
+      wattage: '18W / 36W',
+      chipBrand: 'Philips Lumileds',
+      colorTemp: '2700K (Warm White)',
+      voltage: '24V DC / AC220V',
+      powerFactor: '0.95 PF',
+      beamAngle: '10×60° (Asymmetric Wall Grazing)',
+      optics: '10×60° Precision Asymmetrical Optical Lens Array',
+      cri: '80',
+      dimensions: '40 × 30 × 510 mm (18W) / 40 × 30 × 990 mm (36W)',
+      ipRating: 'IP65 Weatherproof',
+      material: 'Die-Cast & Extruded Aluminium with Anti-Glare Visor',
+      warranty: '3 Years Warranty',
+      lumenOutput: 'High Output Philips Lumileds Lumens',
       lifetime: '≥ 50,000 Hours'
     }
   },
