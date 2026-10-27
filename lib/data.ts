@@ -775,6 +775,43 @@ export const PRODUCTS: Product[] = [
       lifetime: '≥ 50,000 Hours'
     }
   },
+  {
+    id: 'prod-19',
+    name: 'Narrow Beam Flood Light',
+    category: 'Outdoor Lighting',
+    categorySlug: 'outdoor',
+    environment: 'Outdoor',
+    image: '/N1.jpeg',
+    gallery: [
+      '/N1.jpeg'
+    ],
+    description: 'High-performance architectural narrow beam exterior flood light engineered with authentic OSRAM LED chips and rugged die-cast aluminium housing with an anti-glare visor hood. Delivering 27W of high-efficiency 2700K warm white illumination with an ultra-concentrated 5° beam angle (with 5°, 10°, and 15° options), 80 CRI, 0.95 power factor, and IP65 weatherproofing backed by a 3-year warranty for precision facade and building elevation illumination.',
+    applications: [
+      'Facade Lighting',
+      'Building Elevation',
+      'Architectural Columns & Pillars',
+      'High-Reach Accent Lighting',
+      'Monuments & Landmark Structures',
+      'Exterior Wall Highlighting'
+    ],
+    specs: {
+      type: 'Narrow Beam Exterior Flood Light',
+      wattage: '27W',
+      colorTemp: '2700K (Warm White)',
+      chipBrand: 'OSRAM',
+      beamAngle: '5° (5° / 10° / 15° Options)',
+      cri: '80',
+      powerFactor: '0.95 PF',
+      voltage: 'AC220V',
+      ipRating: 'IP65 Weatherproof',
+      material: 'Die-Cast Aluminium',
+      warranty: '3 Years Warranty',
+      lumenOutput: 'High Output OSRAM LED Lumens',
+      dimensions: 'Compact Architectural Flood Fixture with Visor & Directional Mounting Bracket',
+      optics: '5° / 10° / 15° Precision Concentrated Optical Lens Array',
+      lifetime: '≥ 50,000 Hours'
+    }
+  },
 ];
 
 export const EXPERTISE_AREAS: ExpertiseArea[] = [
