@@ -329,6 +329,12 @@ function ProductCatalogueContent() {
                           <strong>{selectedProduct.specs.voltage}</strong>
                         </div>
                       )}
+                      {selectedProduct.specs.outputParam && (
+                        <div className="spec-row">
+                          <span>OUTPUT PARAMETER:</span>
+                          <strong>{selectedProduct.specs.outputParam}</strong>
+                        </div>
+                      )}
                       {selectedProduct.specs.frequency && (
                         <div className="spec-row">
                           <span>FREQUENCY:</span>
@@ -337,8 +343,20 @@ function ProductCatalogueContent() {
                       )}
                       {(selectedProduct.specs.controlType || selectedProduct.specs.control) && (
                         <div className="spec-row">
-                          <span>CONTROL TYPE:</span>
+                          <span>CONTROL MODE:</span>
                           <strong>{selectedProduct.specs.controlType || selectedProduct.specs.control}</strong>
+                        </div>
+                      )}
+                      {selectedProduct.specs.patterns && (
+                        <div className="spec-row">
+                          <span>NUMBER OF PATTERNS:</span>
+                          <strong>{selectedProduct.specs.patterns}</strong>
+                        </div>
+                      )}
+                      {selectedProduct.specs.projectionRatio && (
+                        <div className="spec-row">
+                          <span>PROJECTION ASPECT RATIO:</span>
+                          <strong>{selectedProduct.specs.projectionRatio}</strong>
                         </div>
                       )}
                       {selectedProduct.specs.projectionDistance && (

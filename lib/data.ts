@@ -58,6 +58,9 @@ export interface Product {
     type?: string;
     effect?: string;
     voltage?: string;
+    outputParam?: string;
+    patterns?: string;
+    projectionRatio?: string;
     frequency?: string;
     controlType?: string;
     control?: string;
@@ -851,6 +854,42 @@ export const PRODUCTS: Product[] = [
       material: 'Die-Cast & Extruded Aluminium with Anti-Glare Visor',
       warranty: '3 Years Warranty',
       lumenOutput: 'High Output Philips Lumileds Lumens',
+      lifetime: '≥ 50,000 Hours'
+    }
+  },
+  {
+    id: 'prod-21',
+    name: 'Outdoor LED Projector Light',
+    category: 'Outdoor Lighting',
+    categorySlug: 'outdoor',
+    environment: 'Outdoor',
+    image: '/O1.png',
+    gallery: [
+      '/O1.png'
+    ],
+    description: 'High-power 100W architectural outdoor LED pattern and gobo projector light engineered with premium aluminium alloy housing and high-precision optical projection lenses. Features AC160–260V input with DC12V 8A output, 4 interchangeable pattern pieces, 1:0.3 precision projection ratio (pattern diameter of 0.3 meters at 1 meter projection distance), dual Master-Slave linkage and DMX512 single control modes, and heavy-duty IP65 weatherproofing backed by a 2-year warranty for architectural lighting, facade projections, and event illumination.',
+    applications: [
+      'Architectural Lighting',
+      'Building Facade & Elevation Projections',
+      'Outdoor Pattern & Logo Illumination',
+      'Plazas, Courtyards & Theme Parks',
+      'Landmark & Monument Feature Lighting',
+      'Landscape & Event Stage Accents'
+    ],
+    specs: {
+      type: 'Outdoor LED Gobo & Pattern Projector',
+      wattage: '100W',
+      colorTemp: 'High-Luminance Optical Projection',
+      voltage: 'AC160–260V',
+      outputParam: 'DC12V, 8A',
+      patterns: '4 Pieces (Interchangeable Patterns)',
+      projectionRatio: '1:0.3 (Ø 0.3m Pattern at 1m Projection Distance)',
+      controlType: 'Master-Slave Linkage or DMX512 Single Control',
+      dimensions: '245 × 220 × 160 mm',
+      ipRating: 'IP65 Weatherproof',
+      material: 'Aluminium Alloy with Adjustable Heavy-Duty Bracket',
+      warranty: '2 Years Warranty',
+      lumenOutput: 'High-Efficiency 100W Optical Projection Lumens',
       lifetime: '≥ 50,000 Hours'
     }
   },
