@@ -399,12 +399,13 @@ export const PRODUCTS: Product[] = [
     image: '/water2.jpeg',
     gallery: [
       '/water2.jpeg',
-      '/water1.jpeg',
+      '/water1.png',
       '/water3.jpeg',
       '/water4.jpeg',
       '/water5.jpeg',
       '/water6.jpeg'
     ],
+    video: '/waterV.mp4',
     description: 'Specialized architectural outdoor linear water wave projector wall washer engineered with an optical high-transparency ripple glass roller and stepper motor. Creates natural, fluid rippling water reflection waves on vertical and horizontal surfaces.',
     applications: [
       'Building Facades',
@@ -970,6 +971,41 @@ export const PRODUCTS: Product[] = [
       dimensions: 'Slim Adjustable Pole Stem with Swivel Spotlight Head',
       ipRating: 'IP20',
       material: 'Aluminium',
+      warranty: '2 Years Warranty',
+      lifetime: '≥ 50,000 Hours'
+    }
+  },
+  {
+    id: 'prod-24',
+    name: 'IP 67 COB Strip',
+    category: 'Outdoor Lighting',
+    categorySlug: 'outdoor',
+    environment: 'Indoor / Outdoor',
+    image: '/S1.jpeg',
+    gallery: [
+      '/S1.jpeg',
+      '/S2.jpeg',
+      '/S3.jpeg'
+    ],
+    description: 'High-performance 14W/m architectural IP67 waterproof COB LED strip engineered with 320 high-density LEDs per meter for smooth, seamless, and completely dot-free linear illumination. Delivers an exceptional luminous efficiency of 150 lm/W, selectable 3000K warm white and 4000K neutral white color temperatures, a wide 120° beam angle for broad light distribution, and durable IP67 silicone encapsulation with a 2-year warranty for exterior facades, wet areas, and architectural coves.',
+    applications: [
+      'Architectural Exterior Facades & Parapet Grazing',
+      'Landscape Pathways, Steps & Retaining Walls',
+      'Poolside, Water Feature Borders & Patio Coves',
+      'High-Humidity Bathrooms, Spas & Wellness Areas',
+      'Commercial Perimeter Illumination & Signage Contours',
+      'Interior Ceiling Slots, Millwork & Under-Cabinet Accents'
+    ],
+    specs: {
+      type: 'IP67 Waterproof COB LED Strip Light',
+      wattage: '14W/m',
+      voltage: '24V DC',
+      colorTemp: '3000K / 4000K',
+      ledDensity: '320 LEDs/m',
+      beamAngle: '120° Wide Angle Diffusion',
+      lumenOutput: '150 lm/W High Luminous Efficiency',
+      ipRating: 'IP67 Waterproof & Weatherproof',
+      material: 'Flexible UV-Resistant Silicone Encapsulation',
       warranty: '2 Years Warranty',
       lifetime: '≥ 50,000 Hours'
     }
