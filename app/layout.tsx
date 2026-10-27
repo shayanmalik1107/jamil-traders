@@ -32,10 +32,10 @@ export default function RootLayout({
         <link rel="icon" type="image/svg+xml" href="/JMTS.svg" />
         <link rel="shortcut icon" href="/JMTS.svg" />
         <link rel="preload" as="image" href="/logojamiltraders.png" />
-        <link rel="preload" as="image" href="/bannerbg1.webp" type="image/webp" fetchPriority="high" />
-        <link rel="preload" as="image" href="/bannerbg2.webp" type="image/webp" />
-        <link rel="preload" as="image" href="/bannerbg3.webp" type="image/webp" />
-        <link rel="preload" as="image" href="/bannerbg4.webp" type="image/webp" />
+        <link rel="preload" as="image" href="/hdlogo/bannerop1.webp?v=3" type="image/webp" fetchPriority="high" />
+        <link rel="preload" as="image" href="/hdlogo/bannerop2.webp?v=3" type="image/webp" />
+        <link rel="preload" as="image" href="/hdlogo/bannerop3.webp?v=3" type="image/webp" />
+        <link rel="preload" as="image" href="/hdlogo/bannerop4.webp?v=3" type="image/webp" />
       </head>
       <body suppressHydrationWarning>
         <ProjectListProvider>

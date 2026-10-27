@@ -17,7 +17,7 @@ interface BannerItem {
 const BANNERS: BannerItem[] = [
   {
     id: 1,
-    src: '/bannerbg1.webp',
+    src: '/hdlogo/bannerop1.webp?v=3',
     title: 'Linear Lighting Architecture',
     subtitle: 'Geometric Suspended Luminaire Profiles',
     tag: 'AUDITORIUM & HALLS',
@@ -25,7 +25,7 @@ const BANNERS: BannerItem[] = [
   },
   {
     id: 2,
-    src: '/bannerbg2.webp',
+    src: '/hdlogo/bannerop2.webp?v=3',
     title: 'Warm Ambient Illumination',
     subtitle: 'Dual-Emission Architectural Wall Sconces',
     tag: 'TRAVERTINE GALLERY',
@@ -33,7 +33,7 @@ const BANNERS: BannerItem[] = [
   },
   {
     id: 3,
-    src: '/bannerbg3.webp',
+    src: '/hdlogo/bannerop3.webp?v=3',
     title: 'Architectural Colonnade',
     subtitle: 'Rhythmic Recessed Beams & Accent Optics',
     tag: 'OUTDOOR & PERGOLA',
@@ -41,7 +41,7 @@ const BANNERS: BannerItem[] = [
   },
   {
     id: 4,
-    src: '/bannerbg4.webp',
+    src: '/hdlogo/bannerop4.webp?v=3',
     title: 'Luxury Living Atmosphere',
     subtitle: 'Seamless Concealed Cove & Spotlights',
     tag: 'RESIDENTIAL SUITE',
@@ -128,7 +128,7 @@ export default function FramePlayer() {
     // 1. High-priority preload for Banner 1 — loader ends when THIS is ready
     const banner1Img = new Image();
     (banner1Img as any).fetchPriority = 'high';
-    banner1Img.src = '/bannerbg1.webp';
+    banner1Img.src = '/hdlogo/bannerop1.webp?v=3';
     banner1Img.onload = () => {
       banner1Loaded = true;
     };
@@ -148,7 +148,7 @@ export default function FramePlayer() {
     };
 
     // 3. Preload remaining banners quietly in background
-    ['/bannerbg2.webp', '/bannerbg3.webp', '/bannerbg4.webp'].forEach((src) => {
+    ['/hdlogo/bannerop2.webp?v=3', '/hdlogo/bannerop3.webp?v=3', '/hdlogo/bannerop4.webp?v=3'].forEach((src) => {
       const img = new Image();
       img.src = src;
     });
