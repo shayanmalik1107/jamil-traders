@@ -47,7 +47,7 @@ function ProductVideoPlayer({
       video.muted = true;
       const p = video.play();
       if (p !== undefined) {
-        p.then(() => setIsPlaying(true)).catch(() => {});
+        p.then(() => setIsPlaying(true)).catch(() => { });
       }
     } else {
       video.pause();
@@ -248,7 +248,12 @@ function ProductCatalogueContent() {
               return (
                 <div key={product.id} className="product-card">
                   <div className="product-card-img-wrap" onClick={handleOpen}>
-                    <img src={product.image} alt={product.name} className="product-card-img" />
+                    <img
+                      src={product.image}
+                      alt={product.name}
+                      className="product-card-img"
+                      style={product.id === 'prod-23' ? { transform: 'scale(1)', transformOrigin: 'center center' } : undefined}
+                    />
                     <div className="product-card-env-badge">{product.environment}</div>
                     {product.video && (
                       <div
@@ -395,7 +400,8 @@ function ProductCatalogueContent() {
                               style={{
                                 background: isShapeMedia ? '#09090b' : '#ffffff',
                                 height: '340px',
-                                objectFit: 'contain'
+                                objectFit: 'contain',
+                                ...(selectedProduct.id === 'prod-23' ? { transform: 'scale(1.2)', transformOrigin: 'center center' } : {})
                               }}
                             />
                           )}
@@ -405,8 +411,8 @@ function ProductCatalogueContent() {
                               isVideoMedia
                                 ? { background: '#C8102E', color: '#ffffff', border: '1px solid #ffffff' }
                                 : isShapeMedia
-                                ? { background: '#09090b', color: '#ffffff', border: '1px solid rgba(200, 16, 46, 0.45)' }
-                                : undefined
+                                  ? { background: '#09090b', color: '#ffffff', border: '1px solid rgba(200, 16, 46, 0.45)' }
+                                  : undefined
                             }
                           >
                             {isVideoMedia ? 'Live Demo Video' : isShapeMedia ? 'Projected Shape' : `${selectedProduct.environment} Luminaire`}
