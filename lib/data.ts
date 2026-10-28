@@ -219,32 +219,6 @@ export const PROJECTS: Project[] = [
     ]
   },
   {
-    id: 'proj-17',
-    title: 'AJ Towers',
-    location: 'Block A, Gulberg Expressway, Gulberg Greens, Islamabad',
-    category: 'Commercial',
-    categorySlug: 'commercial',
-    image: '/aj-1.jpeg',
-    logo: '/aj-logo.png',
-    client: 'AJ Towers Management',
-    year: '2024',
-    challenge: 'Execute turnkey commercial illumination for AJ Towers, located in Block A on the Gulberg Expressway in Gulberg Greens, Islamabad, requiring continuous flush-mounted architectural ceiling linear lighting, corridor downlights, and atrium circulation fixtures across multiple commercial floors.',
-    approach: 'Designed an advanced commercial lighting blueprint combining continuous architectural linear LED slots with wide-angle anti-glare recessed downlights and accent lighting along escalator walkways and glass retail shopfronts.',
-    solution: 'Turnkey supply and precision electrical installation of commercial-grade ceiling luminaires, ensuring seamless lux distribution, modern corporate aesthetics, and long-term energy efficiency.',
-    luminairesUsed: [
-      'Architectural Continuous Ceiling Linear Profile',
-      'Commercial Recessed Wide-Beam Downlight',
-      'Corridor & Escalator Accent Linear LED',
-      'Low-Glare Commercial Downlight'
-    ],
-    gallery: [
-      '/aj-1.jpeg',
-      '/aj-2.jpeg',
-      '/aj-3.jpeg',
-      '/aj-4.jpeg'
-    ]
-  },
-  {
     id: 'proj-18',
     title: '45B Model Town Residence',
     location: '45B, Model Town, Lahore',
@@ -833,7 +807,7 @@ export const PRODUCTS: Product[] = [
       '/W2.jpeg',
       '/W3.jpeg'
     ],
-    description: 'High-performance outdoor architectural linear LED wall washer light engineered with authentic Philips Lumileds LED chips and heavy-duty die-cast and extruded aluminium housing with an anti-glare shield. Available in 18W (510mm) and 36W (990mm) configurations featuring specialized 10×60° asymmetric beam optics, 2700K warm white illumination, 80 CRI, 0.95 power factor, dual 24V DC / AC220V input voltage compatibility, and IP65 weatherproofing backed by a 3-year warranty for facade grazing and elevation lighting.',
+    description: 'High-performance outdoor architectural linear LED wall washer light engineered with authentic Philips Lumileds LED chips and heavy-duty die-cast and extruded aluminium housing with an anti-glare shield. Available in 18W (510mm) and 36W (990mm) configurations featuring specialized 10×60° asymmetric beam optics, 2200K / 2700K / 3000K / 4000K color temperatures, 80 CRI, 0.95 power factor, dual 24V DC / AC220V input voltage compatibility, and IP65 weatherproofing backed by a 3-year warranty for facade grazing and elevation lighting.',
     applications: [
       'Facade Lighting',
       'Building Elevation Grazing',
@@ -846,7 +820,7 @@ export const PRODUCTS: Product[] = [
       type: 'Architectural Linear LED Wall Washer',
       wattage: '18W / 36W',
       chipBrand: 'Philips Lumileds',
-      colorTemp: '2700K (Warm White)',
+      colorTemp: '2200K / 2700K / 3000K / 4000K',
       voltage: '24V DC / AC220V',
       powerFactor: '0.95 PF',
       beamAngle: '10×60° (Asymmetric Wall Grazing)',
@@ -1174,7 +1148,6 @@ export const CLIENT_LOGOS: ClientLogo[] = [
   { name: 'Uni Worth', category: 'Menswear Flagships', highlight: 'Luxury Suiting Outlets' },
   { name: 'The United Mall', category: 'Commercial Shopping Mall', highlight: 'Full Ceiling Linear Lighting Project', location: 'Brand Road, near Tehsil Chowk and Bosan Road in Gulgasht Colony, Multan' },
   { name: 'Meezan Group', category: 'Corporate Commercial', highlight: 'Headquarters Lighting Project', location: 'Islamabad' },
-  { name: 'AJ Towers', category: 'Commercial Complex', highlight: 'Commercial Complex Lighting Project', location: 'Block A, Gulberg Expressway, Gulberg Greens, Islamabad' },
   { name: 'Box Club', category: 'Outdoor Hospitality', highlight: 'Turnkey Pergola & Landscape Lighting', location: 'Pine Avenue, Lahore' },
   { name: 'A.rehman Jewels', category: 'Luxury Jewelry Retail', highlight: 'Complete Indoor & Outdoor Lighting', location: 'DHA Phase 6, Lahore' },
   { name: 'SKMCH Hospital', category: 'Healthcare Institution', highlight: 'Specialty Medical Wings' },
