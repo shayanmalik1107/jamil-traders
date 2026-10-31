@@ -285,7 +285,7 @@ function ProductCatalogueContent() {
                         <span>VIDEO &amp; SHAPES</span>
                       </div>
                     )}
-                    {product.specs.finishColor && (
+                    {product.specs.finishColor === 'White & Black' && (
                       <div
                         style={{
                           position: 'absolute',
@@ -704,58 +704,62 @@ function ProductCatalogueContent() {
                           <strong>{selectedProduct.specs.operatingTemp}</strong>
                         </div>
                       )}
+                      {selectedProduct.id === 'prod-25' && (
+                        <div className="spec-row">
+                          <span>CAP FINISH OPTIONS:</span>
+                          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
+                            <button
+                              type="button"
+                              onClick={() => setActiveModalImg('/R1.jpeg')}
+                              style={{
+                                display: 'inline-flex',
+                                alignItems: 'center',
+                                gap: '6px',
+                                padding: '4px 10px',
+                                borderRadius: '6px',
+                                border: ((activeModalImg || selectedProduct.image) === '/R1.jpeg') ? '2px solid #C8102E' : '1px solid #cbd5e1',
+                                background: ((activeModalImg || selectedProduct.image) === '/R1.jpeg') ? 'rgba(200, 16, 46, 0.05)' : '#ffffff',
+                                color: '#0f172a',
+                                fontSize: '0.75rem',
+                                fontWeight: 700,
+                                cursor: 'pointer',
+                                transition: 'all 0.2s ease'
+                              }}
+                              title="Click to view Stainless Steel Cap"
+                            >
+                              <span style={{ width: '9px', height: '9px', borderRadius: '50%', background: 'linear-gradient(135deg, #f1f5f9 0%, #94a3b8 100%)', border: '1px solid #64748b' }} />
+                              Stainless Steel Cap (R1)
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => setActiveModalImg('/R2.jpeg')}
+                              style={{
+                                display: 'inline-flex',
+                                alignItems: 'center',
+                                gap: '6px',
+                                padding: '4px 10px',
+                                borderRadius: '6px',
+                                border: ((activeModalImg || selectedProduct.image) === '/R2.jpeg') ? '2px solid #C8102E' : '1px solid #ca8a04',
+                                background: ((activeModalImg || selectedProduct.image) === '/R2.jpeg') ? 'rgba(200, 16, 46, 0.05)' : '#fefce8',
+                                color: '#854d0e',
+                                fontSize: '0.75rem',
+                                fontWeight: 700,
+                                cursor: 'pointer',
+                                transition: 'all 0.2s ease'
+                              }}
+                              title="Click to view Solid Brass Material Cap"
+                            >
+                              <span style={{ width: '9px', height: '9px', borderRadius: '50%', background: 'linear-gradient(135deg, #fef08a 0%, #ca8a04 100%)', border: '1px solid #a16207' }} />
+                              Solid Brass Material Cap (R2)
+                            </button>
+                          </div>
+                        </div>
+                      )}
                       {selectedProduct.specs.finishColor && (
                         <div className="spec-row">
-                          <span>{selectedProduct.id === 'prod-25' ? 'CAP FINISH OPTIONS:' : 'AVAILABLE COLORS:'}</span>
+                          <span>AVAILABLE COLORS:</span>
                           <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
-                            {selectedProduct.id === 'prod-25' ? (
-                              <>
-                                <button
-                                  type="button"
-                                  onClick={() => setActiveModalImg('/R1.jpeg')}
-                                  style={{
-                                    display: 'inline-flex',
-                                    alignItems: 'center',
-                                    gap: '6px',
-                                    padding: '4px 10px',
-                                    borderRadius: '6px',
-                                    border: ((activeModalImg || selectedProduct.image) === '/R1.jpeg') ? '2px solid #C8102E' : '1px solid #cbd5e1',
-                                    background: ((activeModalImg || selectedProduct.image) === '/R1.jpeg') ? 'rgba(200, 16, 46, 0.05)' : '#ffffff',
-                                    color: '#0f172a',
-                                    fontSize: '0.75rem',
-                                    fontWeight: 700,
-                                    cursor: 'pointer',
-                                    transition: 'all 0.2s ease'
-                                  }}
-                                  title="Click to view Stainless Steel Cap"
-                                >
-                                  <span style={{ width: '9px', height: '9px', borderRadius: '50%', background: 'linear-gradient(135deg, #f1f5f9 0%, #94a3b8 100%)', border: '1px solid #64748b' }} />
-                                  Stainless Steel Cap (R1)
-                                </button>
-                                <button
-                                  type="button"
-                                  onClick={() => setActiveModalImg('/R2.jpeg')}
-                                  style={{
-                                    display: 'inline-flex',
-                                    alignItems: 'center',
-                                    gap: '6px',
-                                    padding: '4px 10px',
-                                    borderRadius: '6px',
-                                    border: ((activeModalImg || selectedProduct.image) === '/R2.jpeg') ? '2px solid #C8102E' : '1px solid #ca8a04',
-                                    background: ((activeModalImg || selectedProduct.image) === '/R2.jpeg') ? 'rgba(200, 16, 46, 0.05)' : '#fefce8',
-                                    color: '#854d0e',
-                                    fontSize: '0.75rem',
-                                    fontWeight: 700,
-                                    cursor: 'pointer',
-                                    transition: 'all 0.2s ease'
-                                  }}
-                                  title="Click to view Solid Brass Material Cap"
-                                >
-                                  <span style={{ width: '9px', height: '9px', borderRadius: '50%', background: 'linear-gradient(135deg, #fef08a 0%, #ca8a04 100%)', border: '1px solid #a16207' }} />
-                                  Solid Brass Material Cap (R2)
-                                </button>
-                              </>
-                            ) : selectedProduct.specs.finishColor === 'White & Black' ? (
+                            {selectedProduct.specs.finishColor === 'White & Black' ? (
                               <>
                                 <span style={{
                                   display: 'inline-flex',

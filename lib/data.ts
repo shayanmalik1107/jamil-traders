@@ -1015,8 +1015,7 @@ export const PRODUCTS: Product[] = [
       lumenOutput: '160–180 lm High Efficacy Output',
       ipRating: 'IP67 Waterproof & Dustproof',
       optics: 'Honeycomb Anti-Glare Louver + Tempered Glass Lens',
-      material: 'Die-cast Aluminum Body',
-      finishColor: 'Stainless Steel Cap (R1) & Solid Brass Material Cap (R2)',
+      material: 'Die-cast Aluminum Body (Stainless Steel Cap R1 / Solid Brass Cap R2)',
       warranty: '2 Years Warranty',
       dimensions: 'Compact In-Ground Profile with Pre-Installation Sleeve',
       lifetime: '≥ 50,000 Hours'
