@@ -181,7 +181,12 @@ function ProductCatalogueContent() {
 
   const filteredProducts = useMemo(() => {
     return PRODUCTS.filter((p) => {
-      const matchCat = selectedCategory === 'ALL' || p.categorySlug === selectedCategory.toLowerCase() || p.category.toLowerCase().includes(selectedCategory.toLowerCase());
+      const matchCat =
+        selectedCategory === 'ALL' ||
+        p.categorySlug === selectedCategory.toLowerCase() ||
+        p.category.toLowerCase().includes(selectedCategory.toLowerCase()) ||
+        (selectedCategory === 'interior' && p.category.toLowerCase().includes('indoor')) ||
+        (selectedCategory === 'landscape' && p.category.toLowerCase().includes('outdoor'));
       const matchEnv = selectedEnv === 'ALL' || p.environment === selectedEnv || p.environment === 'Indoor / Outdoor';
       return matchCat && matchEnv;
     });
@@ -412,42 +417,68 @@ function ProductCatalogueContent() {
                                 ? { background: '#C8102E', color: '#ffffff', border: '1px solid #ffffff' }
                                 : isShapeMedia
                                   ? { background: '#09090b', color: '#ffffff', border: '1px solid rgba(200, 16, 46, 0.45)' }
-                                  : undefined
+                                  : activeMedia === '/R2.jpeg'
+                                    ? { background: '#854d0e', color: '#fef08a', border: '1px solid #ca8a04', fontWeight: 800 }
+                                    : activeMedia === '/R1.jpeg'
+                                      ? { background: '#1e293b', color: '#f1f5f9', border: '1px solid #94a3b8', fontWeight: 800 }
+                                      : undefined
                             }
                           >
-                            {isVideoMedia ? 'Live Demo Video' : isShapeMedia ? 'Projected Shape' : `${selectedProduct.environment} Luminaire`}
+                            {isVideoMedia
+                              ? 'Live Demo Video'
+                              : isShapeMedia
+                                ? 'Projected Shape'
+                                : activeMedia === '/R2.jpeg'
+                                  ? 'Solid Brass Material Cap'
+                                  : activeMedia === '/R1.jpeg'
+                                    ? 'Stainless Steel Cap'
+                                    : `${selectedProduct.environment} Luminaire`}
                           </div>
                         </div>
 
-                        {/* Normal Gallery: K2 to K4 and main image */}
+                        {/* Normal Gallery: K2 to K4, R1/R2 and main image */}
                         {selectedProduct.gallery && selectedProduct.gallery.length > 0 && (
                           <div style={{ marginTop: '0.9rem' }}>
                             <div style={{ fontSize: '0.72rem', fontWeight: 800, color: '#C8102E', letterSpacing: '0.12em', marginBottom: '0.45rem', textTransform: 'uppercase' }}>
-                              Product Views &amp; Technical Datasheets ({selectedProduct.gallery.length})
+                              {selectedProduct.id === 'prod-25'
+                                ? 'Available Material Caps & Finishes (2)'
+                                : `Product Views & Technical Datasheets (${selectedProduct.gallery.length})`}
                             </div>
                             <div style={{ display: 'grid', gridTemplateColumns: `repeat(${Math.min(selectedProduct.gallery.length + (selectedProduct.video ? 1 : 0), 6)}, 1fr)`, gap: '0.45rem' }}>
                               {selectedProduct.gallery.map((gImg, idx) => {
                                 const isSelected = activeMedia === gImg;
                                 return (
-                                  <img
-                                    key={idx}
-                                    src={gImg}
-                                    alt={`${selectedProduct.name} preview ${idx + 1}`}
-                                    onClick={() => setActiveModalImg(gImg)}
-                                    style={{
-                                      width: '100%',
-                                      height: '56px',
-                                      objectFit: 'contain',
-                                      background: '#ffffff',
-                                      padding: '3px',
-                                      borderRadius: '8px',
-                                      cursor: 'pointer',
-                                      border: isSelected ? '2px solid #C8102E' : '1px solid rgba(200, 16, 46, 0.15)',
-                                      opacity: isSelected ? 1 : 0.75,
-                                      transition: 'all 0.2s ease',
-                                      transform: isSelected ? 'scale(1.04)' : 'scale(1)'
-                                    }}
-                                  />
+                                  <div key={idx} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px' }}>
+                                    <img
+                                      src={gImg}
+                                      alt={`${selectedProduct.name} preview ${idx + 1}`}
+                                      onClick={() => setActiveModalImg(gImg)}
+                                      style={{
+                                        width: '100%',
+                                        height: '56px',
+                                        objectFit: 'contain',
+                                        background: '#ffffff',
+                                        padding: '3px',
+                                        borderRadius: '8px',
+                                        cursor: 'pointer',
+                                        border: isSelected ? '2px solid #C8102E' : '1px solid rgba(200, 16, 46, 0.15)',
+                                        opacity: isSelected ? 1 : 0.75,
+                                        transition: 'all 0.2s ease',
+                                        transform: isSelected ? 'scale(1.04)' : 'scale(1)'
+                                      }}
+                                    />
+                                    {selectedProduct.id === 'prod-25' && (
+                                      <span style={{
+                                        fontSize: '0.62rem',
+                                        fontWeight: isSelected ? 800 : 600,
+                                        color: isSelected ? '#C8102E' : '#64748b',
+                                        textAlign: 'center',
+                                        lineHeight: 1.2
+                                      }}>
+                                        {idx === 0 ? 'Stainless Steel' : 'Brass Cap'}
+                                      </span>
+                                    )}
+                                  </div>
                                 );
                               })}
 
@@ -675,38 +706,91 @@ function ProductCatalogueContent() {
                       )}
                       {selectedProduct.specs.finishColor && (
                         <div className="spec-row">
-                          <span>AVAILABLE COLORS:</span>
-                          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
-                            <span style={{
-                              display: 'inline-flex',
-                              alignItems: 'center',
-                              gap: '5px',
-                              padding: '2px 8px',
-                              borderRadius: '4px',
-                              border: '1px solid #cbd5e1',
-                              background: '#ffffff',
-                              color: '#0f172a',
-                              fontSize: '0.75rem',
-                              fontWeight: 700
-                            }}>
-                              <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#ffffff', border: '1px solid #94a3b8' }} />
-                              White
-                            </span>
-                            <span style={{
-                              display: 'inline-flex',
-                              alignItems: 'center',
-                              gap: '5px',
-                              padding: '2px 8px',
-                              borderRadius: '4px',
-                              border: '1px solid #334155',
-                              background: '#0f172a',
-                              color: '#f8fafc',
-                              fontSize: '0.75rem',
-                              fontWeight: 700
-                            }}>
-                              <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#000000', border: '1px solid #64748b' }} />
-                              Black
-                            </span>
+                          <span>{selectedProduct.id === 'prod-25' ? 'CAP FINISH OPTIONS:' : 'AVAILABLE COLORS:'}</span>
+                          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
+                            {selectedProduct.id === 'prod-25' ? (
+                              <>
+                                <button
+                                  type="button"
+                                  onClick={() => setActiveModalImg('/R1.jpeg')}
+                                  style={{
+                                    display: 'inline-flex',
+                                    alignItems: 'center',
+                                    gap: '6px',
+                                    padding: '4px 10px',
+                                    borderRadius: '6px',
+                                    border: ((activeModalImg || selectedProduct.image) === '/R1.jpeg') ? '2px solid #C8102E' : '1px solid #cbd5e1',
+                                    background: ((activeModalImg || selectedProduct.image) === '/R1.jpeg') ? 'rgba(200, 16, 46, 0.05)' : '#ffffff',
+                                    color: '#0f172a',
+                                    fontSize: '0.75rem',
+                                    fontWeight: 700,
+                                    cursor: 'pointer',
+                                    transition: 'all 0.2s ease'
+                                  }}
+                                  title="Click to view Stainless Steel Cap"
+                                >
+                                  <span style={{ width: '9px', height: '9px', borderRadius: '50%', background: 'linear-gradient(135deg, #f1f5f9 0%, #94a3b8 100%)', border: '1px solid #64748b' }} />
+                                  Stainless Steel Cap (R1)
+                                </button>
+                                <button
+                                  type="button"
+                                  onClick={() => setActiveModalImg('/R2.jpeg')}
+                                  style={{
+                                    display: 'inline-flex',
+                                    alignItems: 'center',
+                                    gap: '6px',
+                                    padding: '4px 10px',
+                                    borderRadius: '6px',
+                                    border: ((activeModalImg || selectedProduct.image) === '/R2.jpeg') ? '2px solid #C8102E' : '1px solid #ca8a04',
+                                    background: ((activeModalImg || selectedProduct.image) === '/R2.jpeg') ? 'rgba(200, 16, 46, 0.05)' : '#fefce8',
+                                    color: '#854d0e',
+                                    fontSize: '0.75rem',
+                                    fontWeight: 700,
+                                    cursor: 'pointer',
+                                    transition: 'all 0.2s ease'
+                                  }}
+                                  title="Click to view Solid Brass Material Cap"
+                                >
+                                  <span style={{ width: '9px', height: '9px', borderRadius: '50%', background: 'linear-gradient(135deg, #fef08a 0%, #ca8a04 100%)', border: '1px solid #a16207' }} />
+                                  Solid Brass Material Cap (R2)
+                                </button>
+                              </>
+                            ) : selectedProduct.specs.finishColor === 'White & Black' ? (
+                              <>
+                                <span style={{
+                                  display: 'inline-flex',
+                                  alignItems: 'center',
+                                  gap: '5px',
+                                  padding: '2px 8px',
+                                  borderRadius: '4px',
+                                  border: '1px solid #cbd5e1',
+                                  background: '#ffffff',
+                                  color: '#0f172a',
+                                  fontSize: '0.75rem',
+                                  fontWeight: 700
+                                }}>
+                                  <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#ffffff', border: '1px solid #94a3b8' }} />
+                                  White
+                                </span>
+                                <span style={{
+                                  display: 'inline-flex',
+                                  alignItems: 'center',
+                                  gap: '5px',
+                                  padding: '2px 8px',
+                                  borderRadius: '4px',
+                                  border: '1px solid #334155',
+                                  background: '#0f172a',
+                                  color: '#f8fafc',
+                                  fontSize: '0.75rem',
+                                  fontWeight: 700
+                                }}>
+                                  <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#000000', border: '1px solid #64748b' }} />
+                                  Black
+                                </span>
+                              </>
+                            ) : (
+                              <strong>{selectedProduct.specs.finishColor}</strong>
+                            )}
                           </div>
                         </div>
                       )}

@@ -985,6 +985,43 @@ export const PRODUCTS: Product[] = [
       lifetime: '≥ 50,000 Hours'
     }
   },
+  {
+    id: 'prod-25',
+    name: 'Recessed LED In-Ground Light',
+    category: 'Indoor & Outdoor Lighting',
+    categorySlug: 'outdoor',
+    environment: 'Indoor / Outdoor',
+    image: '/R1.jpeg',
+    gallery: [
+      '/R1.jpeg',
+      '/R2.jpeg'
+    ],
+    description: 'Precision-engineered 2W miniature recessed LED in-ground luminaire with high-performance CREE LED engine and integrated honeycomb anti-glare louver. Operates on safe DC24V low-voltage, delivering a focused 30° optical beam angle, IP67 waterproof ingress protection, and rugged die-cast aluminum heat-sink body. Available with interchangeable luxury top caps in Stainless Steel (R1) and Solid Brass material (R2) for seamless installation across pathways, interior floor accents, outdoor landscaping, and architectural steps.',
+    applications: [
+      'Landscape Pathways, Patios & Garden Walkways',
+      'Architectural Wall Grazing & Ground Uplighting',
+      'Exterior & Interior Staircases & Riser Steps',
+      'Driveway Borders & Villa Perimeter Borders',
+      'Indoor Atriums, Floor Niches & Column Accents',
+      'Tree, Shrub & Planter Uplighting'
+    ],
+    specs: {
+      type: 'Miniature Recessed LED In-Ground / Step Light',
+      wattage: '2W',
+      chipBrand: 'CREE LED',
+      voltage: 'DC24V',
+      colorTemp: '2700K / 3000K / 4000K',
+      beamAngle: '30° Precision Beam',
+      lumenOutput: '160–180 lm High Efficacy Output',
+      ipRating: 'IP67 Waterproof & Dustproof',
+      optics: 'Honeycomb Anti-Glare Louver + Tempered Glass Lens',
+      material: 'Die-cast Aluminum Body',
+      finishColor: 'Stainless Steel Cap (R1) & Solid Brass Material Cap (R2)',
+      warranty: '2 Years Warranty',
+      dimensions: 'Compact In-Ground Profile with Pre-Installation Sleeve',
+      lifetime: '≥ 50,000 Hours'
+    }
+  },
 ];
 
 export const EXPERTISE_AREAS: ExpertiseArea[] = [
