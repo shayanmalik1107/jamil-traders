@@ -6,6 +6,8 @@ import WhatsAppIcon from '@/components/WhatsAppIcon';
 
 export default function ContactPage() {
   const [submitted, setSubmitted] = useState<boolean>(false);
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [formData, setFormData] = useState({
     name: '',
@@ -23,9 +25,42 @@ export default function ContactPage() {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
+    setIsSubmitting(true);
+    setErrorMessage(null);
+
+    try {
+      const data = new FormData();
+      data.append('name', formData.name);
+      data.append('company', formData.company);
+      data.append('email', formData.email);
+      data.append('phone', formData.phone);
+      data.append('projectType', formData.projectType);
+      data.append('location', formData.location);
+      data.append('description', formData.description);
+
+      if (selectedFile) {
+        data.append('file', selectedFile);
+      }
+
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        body: data,
+      });
+
+      const result = await res.json();
+      if (!res.ok || !result.success) {
+        throw new Error(result.error || 'Failed to submit inquiry.');
+      }
+
+      setSubmitted(true);
+    } catch (err: any) {
+      console.error('Contact form error:', err);
+      setErrorMessage(err?.message || 'Something went wrong while submitting. Please try again or WhatsApp us.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -194,8 +229,27 @@ export default function ContactPage() {
                     </div>
                   </div>
 
-                  <button type="submit" className="hero-cta-btn form-submit-btn">
-                    <span>TELL US ABOUT YOUR PROJECT</span>
+                  {errorMessage && (
+                    <div style={{
+                      padding: '12px 16px',
+                      background: 'rgba(239, 68, 68, 0.1)',
+                      border: '1px solid rgba(239, 68, 68, 0.3)',
+                      color: '#f87171',
+                      borderRadius: '8px',
+                      fontSize: '14px',
+                      marginBottom: '1rem',
+                    }}>
+                      ⚠️ {errorMessage}
+                    </div>
+                  )}
+
+                  <button
+                    type="submit"
+                    className="hero-cta-btn form-submit-btn"
+                    disabled={isSubmitting}
+                    style={{ opacity: isSubmitting ? 0.7 : 1, cursor: isSubmitting ? 'not-allowed' : 'pointer' }}
+                  >
+                    <span>{isSubmitting ? 'TRANSMITTING INQUIRY...' : 'TELL US ABOUT YOUR PROJECT'}</span>
                     <Send size={15} />
                   </button>
                 </form>

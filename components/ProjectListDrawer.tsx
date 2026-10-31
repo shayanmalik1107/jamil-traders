@@ -16,6 +16,8 @@ export default function ProjectListDrawer() {
   } = useProjectList();
 
   const [step, setStep] = useState<'LIST' | 'FORM' | 'SUCCESS'>('LIST');
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -27,12 +29,42 @@ export default function ProjectListDrawer() {
 
   if (!isDrawerOpen) return null;
 
-  const handleSubmitQuote = (e: React.FormEvent) => {
+  const handleSubmitQuote = async (e: React.FormEvent) => {
     e.preventDefault();
-    setStep('SUCCESS');
-    setTimeout(() => {
-      clearList();
-    }, 500);
+    setIsSubmitting(true);
+    setErrorMessage(null);
+
+    try {
+      const res = await fetch('/api/quote', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          ...formData,
+          items: items.map((i) => ({
+            id: i.product.id,
+            name: i.product.name,
+            category: i.product.category,
+            quantity: i.quantity,
+            specs: i.product.specs,
+          })),
+        }),
+      });
+
+      const result = await res.json();
+      if (!res.ok || !result.success) {
+        throw new Error(result.error || 'Failed to submit quote request.');
+      }
+
+      setStep('SUCCESS');
+      setTimeout(() => {
+        clearList();
+      }, 500);
+    } catch (err: any) {
+      console.error('Quote request error:', err);
+      setErrorMessage(err?.message || 'Failed to send quote request. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const resetDrawer = () => {
@@ -152,16 +184,36 @@ export default function ProjectListDrawer() {
                 </div>
               </div>
 
+              {errorMessage && (
+                <div style={{
+                  padding: '10px 14px',
+                  background: 'rgba(239, 68, 68, 0.1)',
+                  border: '1px solid rgba(239, 68, 68, 0.3)',
+                  color: '#f87171',
+                  borderRadius: '6px',
+                  fontSize: '13px',
+                  marginTop: '12px',
+                }}>
+                  ⚠️ {errorMessage}
+                </div>
+              )}
+
               <div className="drawer-form-actions">
                 <button
                   type="button"
                   className="drawer-back-btn"
                   onClick={() => setStep('LIST')}
+                  disabled={isSubmitting}
                 >
                   ← BACK TO LIST
                 </button>
-                <button type="submit" className="hero-cta-btn">
-                  <span>SUBMIT QUOTE REQUEST</span>
+                <button
+                  type="submit"
+                  className="hero-cta-btn"
+                  disabled={isSubmitting}
+                  style={{ opacity: isSubmitting ? 0.7 : 1, cursor: isSubmitting ? 'not-allowed' : 'pointer' }}
+                >
+                  <span>{isSubmitting ? 'TRANSMITTING QUOTE...' : 'SUBMIT QUOTE REQUEST'}</span>
                   <Send size={14} />
                 </button>
               </div>
