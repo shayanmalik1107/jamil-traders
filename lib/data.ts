@@ -686,8 +686,9 @@ export const PRODUCTS: Product[] = [
     category: 'Outdoor Lighting',
     categorySlug: 'outdoor',
     environment: 'Outdoor',
-    image: '/S1.jpg',
+    image: '/S4.jpeg',
     gallery: [
+      '/S4.jpeg',
       '/S1.jpg',
       '/S2.jpg',
       '/S3.jpg'
