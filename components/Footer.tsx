@@ -87,7 +87,7 @@ export default function Footer() {
               <ul className="footer-contact-list">
                 <li>
                   <a
-                    href="https://www.google.com/maps/search/?api=1&query=Green+Studio+90C%2C+Second+Floor%2C+DHA+Phase+8%2C+Commercial+Broadway%2C+Lahore%2C+Pakistan"
+                    href="https://www.google.com/maps/search/?api=1&query=90C%2C+Second+Floor%2C+DHA+Phase+8%2C+Commercial+Broadway%2C+Lahore%2C+Pakistan"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="footer-contact-link"
