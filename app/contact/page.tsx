@@ -283,7 +283,17 @@ export default function ContactPage() {
                     <MapPin size={18} className="info-icon" />
                     <div>
                       <strong>Lahore Showroom & Head Office</strong>
-                      <span>90C, Second Floor, DHA Phase 8, Commercial Broadway, Lahore, Pakistan</span>
+                      <span>
+                        <a
+                          href="https://www.google.com/maps/search/?api=1&query=90C%2C+Second+Floor%2C+DHA+Phase+8%2C+Commercial+Broadway%2C+Lahore%2C+Pakistan"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          style={{ color: 'inherit', textDecoration: 'none' }}
+                          title="Open showroom location in Google Maps"
+                        >
+                          90C, Second Floor, DHA Phase 8, Commercial Broadway, Lahore, Pakistan
+                        </a>
+                      </span>
                     </div>
                   </li>
                   <li>

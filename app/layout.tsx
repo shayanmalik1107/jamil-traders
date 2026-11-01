@@ -4,6 +4,7 @@ import { ProjectListProvider } from '@/context/ProjectListContext';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import ProjectListDrawer from '@/components/ProjectListDrawer';
+import FloatingWhatsApp from '@/components/FloatingWhatsApp';
 
 export const metadata: Metadata = {
   title: 'Jameel Traders — Spaces That Inspire | Architectural Lighting & Illumination',
@@ -43,6 +44,7 @@ export default function RootLayout({
           {children}
           <ProjectListDrawer />
           <Footer />
+          <FloatingWhatsApp />
         </ProjectListProvider>
       </body>
     </html>

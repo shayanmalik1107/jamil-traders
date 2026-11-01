@@ -86,16 +86,40 @@ export default function Footer() {
               <h4 className="footer-col-title">CONTACT & SHOWROOMS</h4>
               <ul className="footer-contact-list">
                 <li>
-                  <MapPin size={16} className="footer-contact-icon" />
-                  <span>90C, Second Floor, DHA Phase 8, Commercial Broadway, Lahore, Pakistan</span>
+                  <a
+                    href="https://www.google.com/maps/search/?api=1&query=90C%2C+Second+Floor%2C+DHA+Phase+8%2C+Commercial+Broadway%2C+Lahore%2C+Pakistan"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="footer-contact-link"
+                    title="View showroom location on Google Maps"
+                  >
+                    <MapPin size={16} className="footer-contact-icon" />
+                    <span>90C, Second Floor, DHA Phase 8, Commercial Broadway, Lahore, Pakistan</span>
+                  </a>
                 </li>
                 <li>
-                  <Phone size={16} className="footer-contact-icon" />
-                  <span><a href="https://wa.me/923334207691" target="_blank" rel="noopener noreferrer" style={{ color: '#25D366', textDecoration: 'none', fontWeight: 600 }}>03334207691 <WhatsAppIcon size={14} color="#25D366" style={{ display: 'inline-block', verticalAlign: 'middle', marginLeft: 3 }} /></a></span>
+                  <a
+                    href="https://wa.me/923334207691"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="footer-contact-link"
+                    title="Chat on WhatsApp"
+                  >
+                    <Phone size={16} className="footer-contact-icon" />
+                    <span style={{ color: '#25D366', fontWeight: 600 }}>
+                      03334207691 <WhatsAppIcon size={14} color="#25D366" style={{ display: 'inline-block', verticalAlign: 'middle', marginLeft: 3 }} />
+                    </span>
+                  </a>
                 </li>
                 <li>
-                  <Mail size={16} className="footer-contact-icon" />
-                  <span><a href="mailto:jamiltraders1972@gmail.com" style={{ color: 'inherit', textDecoration: 'none' }}>jamiltraders1972@gmail.com</a></span>
+                  <a
+                    href="mailto:jamiltraders1972@gmail.com"
+                    className="footer-contact-link"
+                    title="Send an email to jamiltraders1972@gmail.com"
+                  >
+                    <Mail size={16} className="footer-contact-icon" />
+                    <span>jamiltraders1972@gmail.com</span>
+                  </a>
                 </li>
               </ul>
 
