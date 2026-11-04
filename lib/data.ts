@@ -193,6 +193,29 @@ export const PROJECTS: Project[] = [
     ]
   },
   {
+    id: 'proj-21',
+    title: 'Crescent Bahuman Limited (CBL)',
+    location: 'Pindi Bhattian, Punjab',
+    category: 'Commercial',
+    categorySlug: 'commercial',
+    image: '/cb1.jpeg',
+    client: 'Crescent Bahuman Limited',
+    year: '2024',
+    challenge: 'In this project, we supplied linear hanging lights and COB downlights for Crescent Bahuman Limited (CBL) at their facility in Pindi Bhattian, Punjab — delivering high-performance commercial lighting solutions for a leading textile manufacturing group.',
+    approach: 'We supplied linear hanging lights manufactured to a high-quality standard, featuring a double electroplated strip which helps deliver better lumen output and a premium finish. These lights are ideal for modern offices, commercial stores, and other luxury spaces.',
+    solution: 'We also supplied COB downlights with CRI 95, providing excellent colour rendering and making the space look more natural by displaying colours accurately. The combination of linear hanging lights and high-CRI COB downlights creates a professional, well-lit commercial environment.',
+    luminairesUsed: [
+      'Linear Hanging Lights — Double Electroplated Strip, High Lumen Output, Premium Finish',
+      'COB Downlights — CRI 95, Accurate Colour Rendering'
+    ],
+    gallery: [
+      '/cb1.jpeg',
+      '/cb2.jpeg',
+      '/cb3.mp4',
+      '/cb4.jpeg'
+    ]
+  },
+  {
     id: 'proj-16',
     title: 'Meezan Group',
     location: 'Headquarters, Islamabad',
@@ -1185,6 +1208,7 @@ export const CLIENT_LOGOS: ClientLogo[] = [
   { name: 'Uni Worth', category: 'Menswear Flagships', highlight: 'Luxury Suiting Outlets' },
   { name: 'The United Mall', category: 'Commercial Shopping Mall', highlight: 'Full Ceiling Linear Lighting Project', location: 'Brand Road, near Tehsil Chowk and Bosan Road in Gulgasht Colony, Multan' },
   { name: 'Meezan Group', category: 'Corporate Commercial', highlight: 'Headquarters Lighting Project', location: 'Islamabad' },
+  { name: 'Crescent Bahuman Limited (CBL)', category: 'Commercial Textile', highlight: 'Linear Hanging Lights & COB Downlights', location: 'Pindi Bhattian, Punjab' },
   { name: 'Box Club', category: 'Outdoor Hospitality', highlight: 'Turnkey Pergola & Landscape Lighting', location: 'Pine Avenue, Lahore' },
   { name: 'A.rehman Jewels', category: 'Luxury Jewelry Retail', highlight: 'Complete Indoor & Outdoor Lighting', location: 'DHA Phase 6, Lahore' },
   { name: 'SKMCH Hospital', category: 'Healthcare Institution', highlight: 'Specialty Medical Wings' },
