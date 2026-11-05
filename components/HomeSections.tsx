@@ -80,6 +80,19 @@ export default function HomeSections() {
     return () => window.removeEventListener('resize', update);
   }, []);
 
+  // Lock background scroll while the project modal is open
+  useEffect(() => {
+    if (!selectedProject) return;
+    document.body.style.overflow = 'hidden';
+    document.documentElement.style.overflow = 'hidden';
+    document.documentElement.classList.add('lenis-stopped');
+    return () => {
+      document.body.style.overflow = '';
+      document.documentElement.style.overflow = '';
+      document.documentElement.classList.remove('lenis-stopped');
+    };
+  }, [selectedProject]);
+
   const totalPages = Math.ceil(CLIENT_LOGOS.length / logosPerPage);
   const clampedIndex = Math.min(logoIndex, totalPages - 1);
 
@@ -500,13 +513,14 @@ export default function HomeSections() {
       {selectedProject && (
         <div
           className="project-modal-overlay"
+          data-lenis-prevent
           onClick={() => {
             setSelectedProject(null);
             setIsPlayingHeroVideo(false);
             setModalHeroImage(null);
           }}
         >
-          <div className="project-modal-content" onClick={(e) => e.stopPropagation()}>
+          <div className="project-modal-content" data-lenis-prevent onClick={(e) => e.stopPropagation()}>
             <header className="project-modal-header">
               <div className="project-modal-header-left">
                 {selectedProject.logo && (
