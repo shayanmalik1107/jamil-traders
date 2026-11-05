@@ -37,7 +37,7 @@ export default function Header() {
   // Line 2: INDUSTRIES, CONTACT
   const line2Links = [
     { label: 'INDUSTRIES', href: '/industries' },
-    { label: 'LIGHT STUDIO', href: '/light-studio' },
+    // { label: 'LIGHT STUDIO', href: '/light-studio' }, // hidden for now
     { label: 'CONTACT', href: '/contact' },
   ];
 
