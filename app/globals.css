@@ -4370,11 +4370,18 @@ button.about-seal-badge:hover .about-seal-icon {
 .project-gallery-img {
   width: 100%;
   height: 160px;
+  max-height: 160px;
   object-fit: cover;
   border-radius: 12px;
   cursor: pointer;
   transition: transform 0.3s ease, box-shadow 0.3s ease, outline 0.2s ease;
   border: 2px solid transparent;
+}
+
+video.project-gallery-img {
+  height: 160px;
+  max-height: 160px;
+  object-fit: cover;
 }
 
 
